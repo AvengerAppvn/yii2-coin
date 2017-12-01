@@ -33,6 +33,23 @@ $config = [
             'enableAutoLogin' => true,
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
         ],
+        'reCaptcha' => [
+         
+               'name' => 'reCaptcha',
+         
+               'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
+         
+               'siteKey' => '6Ld9LDsUAAAAAAo881DvqAzLbyPj7FWDaGA61QwD',
+         
+               'secret' => '6Ld9LDsUAAAAAMI5hWWKU1i_tUOTaJB-EiIncQ1t',
+         
+               ],
+        'qrcode' => [
+            'class' => 'Da\QrCode\Component\QrCodeComponent',
+            //'label' => 'Tikcoin.com',
+            //'size' => 240 // big and nice :D
+            // ... you can configure more properties of the component here
+        ]
     ],
     'modules' => [
         'i18n' => [

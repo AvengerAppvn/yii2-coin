@@ -34,42 +34,20 @@ $bundle = BackendAsset::register($this);
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <li id="timeline-notifications" class="notifications-menu">
-                        <a href="<?php echo Url::to(['/timeline-event/index']) ?>">
-                            <i class="fa fa-bell"></i>
-                            <span class="label label-success">
-                                    <?php echo TimelineEvent::find()->today()->count() ?>
-                                </span>
-                        </a>
+                    <li id="coin-btc" class="coin-menu">
+                        <i class="fa fa-bitcoin"></i>
+                        <span>
+                            1 BTC = USD 10,010.00
+                        </span>
                     </li>
-                    <!-- Notifications: style can be found in dropdown.less -->
-                    <li id="log-dropdown" class="dropdown notifications-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-warning"></i>
-                            <span class="label label-danger">
-                                <?php echo SystemLog::find()->count() ?>
-                            </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header"><?php echo Yii::t('backend', 'You have {num} log items', ['num' => SystemLog::find()->count()]) ?></li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <?php foreach (SystemLog::find()->orderBy(['log_time' => SORT_DESC])->limit(5)->all() as $logEntry): ?>
-                                        <li>
-                                            <a href="<?php echo Yii::$app->urlManager->createUrl(['/log/view', 'id' => $logEntry->id]) ?>">
-                                                <i class="fa fa-warning <?php echo $logEntry->level === Logger::LEVEL_ERROR ? 'text-red' : 'text-yellow' ?>"></i>
-                                                <?php echo $logEntry->category ?>
-                                            </a>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <?php echo Html::a(Yii::t('backend', 'View all'), ['/log/index']) ?>
-                            </li>
-                        </ul>
+                    
+                    <li id="coin-btc" class="coin-menu">
+                        <i class="fa fa-bitcoin"></i>
+                        <span>
+                            1 UCH = 1 USD
+                        </span>
                     </li>
+
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -102,9 +80,6 @@ $bundle = BackendAsset::register($this);
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <?php echo Html::a('<i class="fa fa-cogs"></i>', ['/site/settings']) ?>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -113,20 +88,7 @@ $bundle = BackendAsset::register($this);
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
-            <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/anonymous.jpg')) ?>"
-                         class="img-circle"/>
-                </div>
-                <div class="pull-left info">
-                    <p><?php echo Yii::t('backend', 'Hello, {username}', ['username' => Yii::$app->user->identity->getPublicIdentity()]) ?></p>
-                    <a href="<?php echo Url::to(['/sign-in/profile']) ?>">
-                        <i class="fa fa-circle text-success"></i>
-                        <?php echo Yii::$app->formatter->asDatetime(time()) ?>
-                    </a>
-                </div>
-            </div>
+            
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <?php echo Menu::widget([
                 'options' => ['class' => 'sidebar-menu'],
@@ -135,16 +97,51 @@ $bundle = BackendAsset::register($this);
                 'activateParents' => true,
                 'items' => [
                     [
-                        'label' => Yii::t('backend', 'Main'),
-                        'options' => ['class' => 'header']
-                    ],
-                    [
-                        'label' => Yii::t('backend', 'Timeline'),
-                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
-                        'url' => ['/timeline-event/index'],
+                        'label' => Yii::t('backend', 'ICO'),
+                        'icon' => '<i class="fa fa-empire"></i>',
+                        'url' => ['/ico'],
                         'badge' => TimelineEvent::find()->today()->count(),
                         'badgeBgClass' => 'label-success',
+                    ],         
+                    [
+                        'label' => Yii::t('backend', 'Wallets'),
+                        'icon' => '<i class="fa fa-google-wallet"></i>',
+                        'url' => ['/wallet'],
                     ],
+                    [
+                        'label' => Yii::t('backend', 'Event Logs'),
+                        'icon' => '<i class="fa fa-calendar"></i>',
+                        'url' => ['/transaction'],
+                        'badge' => TimelineEvent::find()->today()->count(),
+                        'badgeBgClass' => 'label-success',
+                    ],          
+                    [
+                        'label' => Yii::t('backend', 'Team'),
+                        'icon' => '<i class="fa fa-users"></i>',
+                        'url' => ['/team'],
+                        'badge' => TimelineEvent::find()->today()->count(),
+                        'badgeBgClass' => 'label-success',
+                    ],                        
+                    [
+                        'label' => Yii::t('backend', 'Settings'),
+                        'icon' => '<i class="fa fa-cogs"></i>',
+                        'url' => ['/setting'],
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Security(2FA)'),
+                        'icon' => '<i class="fa fa-expeditedssl"></i>',
+                        'url' => ['/security'],
+                    ],     
+                    [
+                        'label' => Yii::t('backend', 'Affilicate Tools'),
+                        'icon' => '<i class="fa fa-handshake-o"></i>',
+                        'url' => ['/tool/index'],
+                    ],     
+                    [
+                        'label' => Yii::t('backend', 'Logout'),
+                        'icon' => '<i class="fa fa-sign-out"></i>',
+                        'url' => ['/sign-in/logout'],
+                    ],                    
                     [
                         'label' => Yii::t('backend', 'Content'),
                         'url' => '#',
@@ -157,12 +154,10 @@ $bundle = BackendAsset::register($this);
                             ['label' => Yii::t('backend', 'Text Widgets'), 'url' => ['/widget-text/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                             ['label' => Yii::t('backend', 'Menu Widgets'), 'url' => ['/widget-menu/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                             ['label' => Yii::t('backend', 'Carousel Widgets'), 'url' => ['/widget-carousel/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
-                        ]
+                        ],
+                        'visible' => Yii::$app->user->can('administrator')
                     ],
-                    [
-                        'label' => Yii::t('backend', 'System'),
-                        'options' => ['class' => 'header']
-                    ],
+
                     [
                         'label' => Yii::t('backend', 'Users'),
                         'icon' => '<i class="fa fa-users"></i>',
@@ -174,6 +169,7 @@ $bundle = BackendAsset::register($this);
                         'url' => '#',
                         'icon' => '<i class="fa fa-cogs"></i>',
                         'options' => ['class' => 'treeview'],
+                        'visible' => Yii::$app->user->can('administrator'),
                         'items' => [
                             [
                                 'label' => Yii::t('backend', 'i18n'),

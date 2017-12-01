@@ -1,12 +1,12 @@
-# Yii 2 Starter Kit
+# Yii 2 Boilerplate
 
 <!-- BADGES/ -->
 
-[![Packagist](https://img.shields.io/packagist/v/trntv/yii2-starter-kit.svg)](https://packagist.org/packages/trntv/yii2-starter-kit)
-[![Packagist](https://img.shields.io/packagist/dt/trntv/yii2-starter-kit.svg)](https://packagist.org/packages/trntv/yii2-starter-kit)
+[![Packagist](https://img.shields.io/packagist/v/avengerappvn/yii2-boilerplate.svg)](https://packagist.org/packages/avengerappvn/yii2-boilerplate)
+[![Packagist](https://img.shields.io/packagist/dt/avengerappvn/yii2-boilerplate.svg)](https://packagist.org/packages/avengerappvn/yii2-boilerplate)
 [![PayPal donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X7UFA3F3ALPM8 "Donate once-off to this project using Paypal")
 [![Dependency Status](https://www.versioneye.com/php/trntv:yii2-starter-kit/badge.svg)](https://www.versioneye.com/php/trntv:yii2-starter-kit)
-[![Build Status](https://travis-ci.org/trntv/yii2-starter-kit.svg?branch=master)](https://travis-ci.org/trntv/yii2-starter-kit)
+[![Build Status](https://travis-ci.org/avengerappvn/yii2-boilerplate.svg?branch=master)](https://travis-ci.org/avengerappvn/yii2-boilerplate)
 
 <!-- /BADGES -->
 
@@ -17,7 +17,7 @@ It was created and developing as a fast start for building an advanced sites bas
 It covers typical use cases for a new project and will help you not to waste your time doing the same work in every project
 
 ## Before you start
-Please, consider helping project via [contributions](https://github.com/trntv/yii2-starter-kit/issues) or [donations](#donations). 
+Please, consider helping project via [contributions](https://github.com/avengerappvn/yii2-boilerplate/issues) or [donations](#donations). 
 
 ## TABLE OF CONTENTS
 - [Demo](#demo)
@@ -102,7 +102,7 @@ Password: user
 - Docker support and Vagrant support
 - Built-in [mailcatcher](http://mailcatcher.me/)
 - Assets compression and concatenation
-- [Some useful shortcuts](https://github.com/trntv/yii2-starter-kit/blob/master/common/helpers.php)
+- [Some useful shortcuts](https://github.com/avengerappvn/yii2-boilerplate/blob/master/common/helpers.php)
 - many other features i'm lazy to write about :-)
 
 

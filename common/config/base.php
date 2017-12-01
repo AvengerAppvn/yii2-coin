@@ -1,6 +1,6 @@
 <?php
 $config = [
-    'name'=>'Yii2 boilerplate',
+    'name'=>'Coin',
     'vendorPath'=>dirname(dirname(__DIR__)).'/vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage'=>'en-US',

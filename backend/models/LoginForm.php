@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Exception;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 
 /**
  * Login form
@@ -15,6 +16,8 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
+    public $authCode;
+    public $reCaptcha;
     public $rememberMe = true;
 
     private $user = false;
@@ -29,6 +32,9 @@ class LoginForm extends Model
             [['username', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
+            ['authCode', 'string'],
+            // verifyCode needs to be entered correctly
+            ['reCaptcha', ReCaptchaValidator::className(), 'secret' => '6Ld9LDsUAAAAAMI5hWWKU1i_tUOTaJB-EiIncQ1t'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
@@ -42,6 +48,8 @@ class LoginForm extends Model
         return [
             'username' => Yii::t('backend', 'Username'),
             'password' => Yii::t('backend', 'Password'),
+            'authCode' => Yii::t('backend', '2FA Code (Only if you enabled 2FA)'),
+            'reCaptcha' => '',
             'rememberMe' => Yii::t('backend', 'Remember Me')
         ];
     }

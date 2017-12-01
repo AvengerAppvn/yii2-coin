@@ -28,11 +28,11 @@ composer global require "fxp/composer-asset-plugin"
 
 ### Get source code
 #### Download sources
-https://github.com/trntv/yii2-starter-kit/archive/master.zip
+https://github.com/avengerappvn/yii2-boilerplate/archive/master.zip
 
 #### Or clone repository manually
 ```
-git clone https://github.com/trntv/yii2-starter-kit.git
+git clone https://github.com/avengerappvn/yii2-boilerplate.git
 ```
 #### Install composer dependencies
 ```
@@ -43,7 +43,7 @@ composer install
 You can install this application template with `composer` using the following command:
 
 ```
-composer create-project --prefer-dist --stability=dev trntv/yii2-starter-kit
+composer create-project --prefer-dist --stability=dev avengerappvn/yii2-boilerplate
 ```
 
 ## Manual installation
@@ -82,7 +82,7 @@ Required PHP extensions:
 ```
 php console/yii app/setup
 npm install
-npm run build
+ 
 ```
 
 ### Configure your web server
