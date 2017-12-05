@@ -1,19 +1,19 @@
 <?php
-/* @var $this yii\web\View */
-/* @var $model common\models\Article */
-/* @var $categories common\models\ArticleCategory[] */
 
-$this->title = Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'Article',
-]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Articles'), 'url' => ['index']];
+use yii\helpers\Html;
+
+
+/* @var $this yii\web\View */
+/* @var $model common\models\Transaction */
+
+$this->title = 'Create Transaction';
+$this->params['breadcrumbs'][] = ['label' => 'Transactions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="article-create">
+<div class="transaction-create">
 
     <?php echo $this->render('_form', [
         'model' => $model,
-        'categories' => $categories
     ]) ?>
 
 </div>

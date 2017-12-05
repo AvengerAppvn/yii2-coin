@@ -13,9 +13,11 @@ body .navbar-nav > .notifications-menu > .dropdown-menu > li .menu > li > a > .i
   background: none;
   color: inherit;
 }
+
 body .user-panel > .info {
   padding-left: 10px;
 }
+
 body{ 
   background: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/SImAn91gin31gtxk/stock-market-fluctuations-in-3d-graphs-business-and-finance-background-animated-stock-market-statistics-on-screen-prices-going-up-and-down-economic-growth_bwgzdn2yx_thumbnail-full01.png) !important;
 }
@@ -26,15 +28,63 @@ body{
   opacity: 1;
 }
 
+.register-box{
+  width:480px;
+}
 
 ul.sidebar-menu > li > a {
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .sidebar-menu > li > a > .fa,
 .sidebar-menu > li > a > .glyphicon,
 .sidebar-menu > li > a > .ion {
     width: 32px;
+}
+
+.base-bg-image{
+    background-image: url(../img/cover_tickcoin.jpg);
+    margin: -10px -10px 10px -10px;
+    min-height: 240px;
+}
+
+.base-font-color{
+  color:#4E5C6E;
+}
+
+.base-font-color-success{
+  color:#61CA00;
+}
+
+.base-background-color{
+  background: darkgreen;
+  padding: 0 10px;
+}
+
+.subbase-background-color{
+  background: white;
+  color:orange;
+  padding: 0 10px;
+}
+
+.m-t-xl {
+    margin: 40px 0;
+}
+
+.m-t-md{
+  margin-bottom: 40px;
+}
+
+.m-t-md button{
+  margin-right: 20px;
+}
+
+.login-logo,.register-logo{
+  font-weight: bold;color:white;
+}
+
+.text-light{
+  font-size: 14px;  
 }
 
 /*# sourceMappingURL=style.map *//*# sourceMappingURL=style.map */

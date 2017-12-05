@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a909a124c9fc4102be91e5a2d5e3527",
+    "content-hash": "7535d702cd8bdb9881657f5f5d0defa2",
     "packages": [
         {
             "name": "2amigos/2fa-library",
@@ -386,16 +386,16 @@
         },
         {
             "name": "bower-asset/blueimp-file-upload",
-            "version": "v9.19.1",
+            "version": "v9.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/jQuery-File-Upload.git",
-                "reference": "fbf442f1a90fdab69f1159951a2308fac0164993"
+                "reference": "b57065549aeae5ace35e869c28b8b739f346b7e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/jQuery-File-Upload/zipball/fbf442f1a90fdab69f1159951a2308fac0164993",
-                "reference": "fbf442f1a90fdab69f1159951a2308fac0164993",
+                "url": "https://api.github.com/repos/blueimp/jQuery-File-Upload/zipball/b57065549aeae5ace35e869c28b8b739f346b7e8",
+                "reference": "b57065549aeae5ace35e869c28b8b739f346b7e8",
                 "shasum": ""
             },
             "require": {
@@ -412,8 +412,8 @@
                 "bower-asset-ignore": [
                     "/*.*",
                     "/cors",
-                    "css/demo-ie8.css",
-                    "css/demo.css",
+                    "css/jquery-ui-demo-ie8.css",
+                    "css/jquery-ui-demo.css",
                     "css/style.css",
                     "js/app.js",
                     "js/main.js",
@@ -446,7 +446,7 @@
                 "upload",
                 "widget"
             ],
-            "time": "2017-09-04T19:36:34+00:00"
+            "time": "2017-12-01T10:27:17+00:00"
         },
         {
             "name": "bower-asset/blueimp-load-image",
@@ -561,6 +561,45 @@
             ],
             "description": "Simple HTML5 charts using the canvas element.",
             "time": "2017-10-28T15:01:52+00:00"
+        },
+        {
+            "name": "bower-asset/clipboard",
+            "version": "v1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zenorocha/clipboard.js.git",
+                "reference": "b6e6b80ab07eab03ce0d277515b3ed540773a330"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zenorocha/clipboard.js/zipball/b6e6b80ab07eab03ce0d277515b3ed540773a330",
+                "reference": "b6e6b80ab07eab03ce0d277515b3ed540773a330",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "dist/clipboard.js",
+                "bower-asset-ignore": [
+                    "/.*/",
+                    "/demo/",
+                    "/test/",
+                    "/.*",
+                    "/bower.json",
+                    "/karma.conf.js",
+                    "/src",
+                    "/lib"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Modern copy to clipboard. No Flash. Just 2kb",
+            "keywords": [
+                "clipboard",
+                "copy",
+                "cut"
+            ],
+            "time": "2017-05-29T23:57:52+00:00"
         },
         {
             "name": "bower-asset/eonasdan-bootstrap-datetimepicker",
@@ -857,6 +896,59 @@
             "time": "2016-09-16T05:47:55+00:00"
         },
         {
+            "name": "bower-asset/jquery.countdown",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hilios/jQuery.countdown.git",
+                "reference": "f4dd04b02be1e0504c03d886efe8a94de7f2da6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hilios/jQuery.countdown/zipball/f4dd04b02be1e0504c03d886efe8a94de7f2da6b",
+                "reference": "f4dd04b02be1e0504c03d886efe8a94de7f2da6b",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7"
+            },
+            "require-dev": {
+                "bower-asset/bootstrap": "~3",
+                "bower-asset/jquery": "~1.11"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/jquery.countdown.js"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "src",
+                    "test",
+                    "package.json",
+                    "Gruntfile.js",
+                    "node_modules",
+                    "bower_components"
+                ]
+            },
+            "license": [
+                {
+                    "type": "MIT",
+                    "url": "https://github.com/hilios/jQuery.countdown/blob/2.0.4/LICENSE.md"
+                }
+            ],
+            "description": "jQuery plugin to display a countdown clock on your page",
+            "keywords": [
+                "auction",
+                "clock",
+                "countdown",
+                "coupons",
+                "date",
+                "datetime"
+            ],
+            "time": "2016-08-08T12:18:04+00:00"
+        },
+        {
             "name": "bower-asset/moment",
             "version": "2.19.3",
             "source": {
@@ -1069,6 +1161,54 @@
                 "coinbase"
             ],
             "time": "2016-07-26T01:32:38+00:00"
+        },
+        {
+            "name": "eddmash/yii2-clipboard",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eddmash/yii2-clipboard.git",
+                "reference": "80ebc747e8b002b992fccb50c69029059b5b34f2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eddmash/yii2-clipboard/zipball/80ebc747e8b002b992fccb50c69029059b5b34f2",
+                "reference": "80ebc747e8b002b992fccb50c69029059b5b34f2",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/clipboard": "*",
+                "yiisoft/yii2": ">=2.0.6"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Eddmash\\Clipboard\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "EDDILBERT MACHARIA",
+                    "email": "edd.cowan@gmail.com",
+                    "homepage": "http://eddmash.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "The Clipboard js extension for the Yii2 framework",
+            "keywords": [
+                "clipboard js",
+                "yii2"
+            ],
+            "time": "2016-11-11T15:41:19+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -1994,6 +2134,43 @@
             "time": "2016-10-10T12:19:37+00:00"
         },
         {
+            "name": "russ666/yii2-countdown",
+            "version": "0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/russ666/yii2-countdown.git",
+                "reference": "0438d14870b9a7f58b523a0ad0cb5aab40f20e49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/russ666/yii2-countdown/zipball/0438d14870b9a7f58b523a0ad0cb5aab40f20e49",
+                "reference": "0438d14870b9a7f58b523a0ad0cb5aab40f20e49",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery.countdown": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "russ666\\widgets\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "jQuery countdown widget for Yii2",
+            "keywords": [
+                "countdown",
+                "jquery",
+                "widget",
+                "yii2"
+            ],
+            "time": "2017-05-31T14:46:43+00:00"
+        },
+        {
             "name": "studio-42/elfinder",
             "version": "2.1.30",
             "source": {
@@ -2107,7 +2284,7 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
@@ -2279,7 +2456,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -3993,16 +4170,16 @@
         },
         {
             "name": "phpunit/php-token-stream",
-            "version": "1.4.11",
+            "version": "1.4.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7"
+                "reference": "1ce90ba27c42e4e44e6d8458241466380b51fa16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/e03f8f67534427a787e21a385a67ec3ca6978ea7",
-                "reference": "e03f8f67534427a787e21a385a67ec3ca6978ea7",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/1ce90ba27c42e4e44e6d8458241466380b51fa16",
+                "reference": "1ce90ba27c42e4e44e6d8458241466380b51fa16",
                 "shasum": ""
             },
             "require": {
@@ -4038,7 +4215,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-02-27T10:12:30+00:00"
+            "time": "2017-12-04T08:55:13+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -4741,7 +4918,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -4798,16 +4975,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "9468ad3fba3a5e1f0dc12a96e50e84cddb923cf0"
+                "reference": "2cdef78de8f54f68ff16a857e710e7302b47d4c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/9468ad3fba3a5e1f0dc12a96e50e84cddb923cf0",
-                "reference": "9468ad3fba3a5e1f0dc12a96e50e84cddb923cf0",
+                "url": "https://api.github.com/repos/symfony/console/zipball/2cdef78de8f54f68ff16a857e710e7302b47d4c7",
+                "reference": "2cdef78de8f54f68ff16a857e710e7302b47d4c7",
                 "shasum": ""
             },
             "require": {
@@ -4863,11 +5040,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-29T13:28:14+00:00"
+            "time": "2017-12-02T18:20:11+00:00"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -4920,7 +5097,7 @@
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -4976,7 +5153,7 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
@@ -5032,7 +5209,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -5095,7 +5272,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -5144,16 +5321,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "b3d0c9c11be3831b84825967dc6b52b5a7b84e04"
+                "reference": "f6a99b95b338799645fe9f7880d7d4ca1bf79cc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/b3d0c9c11be3831b84825967dc6b52b5a7b84e04",
-                "reference": "b3d0c9c11be3831b84825967dc6b52b5a7b84e04",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/f6a99b95b338799645fe9f7880d7d4ca1bf79cc1",
+                "reference": "f6a99b95b338799645fe9f7880d7d4ca1bf79cc1",
                 "shasum": ""
             },
             "require": {
@@ -5198,7 +5375,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-29T13:28:14+00:00"
+            "time": "2017-12-04T18:15:22+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5402,7 +5579,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "asofter/yii2-imperavi-redactor": 20,
-        "trntv/cheatsheet": 20
+        "trntv/cheatsheet": 20,
+        "eddmash/yii2-clipboard": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

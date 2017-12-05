@@ -2,7 +2,7 @@
 $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
     'controllerNamespace' => 'backend\controllers',
-    'defaultRoute' => 'timeline-event/index',
+    'defaultRoute' => 'ico/index',
     'controllerMap' => [
         'file-manager-elfinder' => [
             'class' => mihaildev\elfinder\Controller::class,
@@ -29,25 +29,20 @@ $config = [
         'user' => [
             'class' => yii\web\User::class,
             'identityClass' => common\models\User::class,
-            'loginUrl' => ['sign-in/login'],
+            'loginUrl' => ['login'],
             'enableAutoLogin' => true,
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
         ],
         'reCaptcha' => [
-         
                'name' => 'reCaptcha',
-         
                'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
-         
                'siteKey' => '6Ld9LDsUAAAAAAo881DvqAzLbyPj7FWDaGA61QwD',
-         
                'secret' => '6Ld9LDsUAAAAAMI5hWWKU1i_tUOTaJB-EiIncQ1t',
-         
                ],
         'qrcode' => [
             'class' => 'Da\QrCode\Component\QrCodeComponent',
-            //'label' => 'Tikcoin.com',
-            //'size' => 240 // big and nice :D
+            //'label' => 'Tickcoin.co',
+            'size' => 480 // big and nice :D
             // ... you can configure more properties of the component here
         ]
     ],
@@ -61,11 +56,17 @@ $config = [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
             [
-                'controllers' => ['sign-in'],
+                'controllers' => ['login'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['login']
+                'actions' => ['index']
             ],
+            [
+                'controllers' => ['register'],
+                'allow' => true,
+                'roles' => ['?'],
+                'actions' => ['index']
+            ],            
             [
                 'controllers' => ['sign-in'],
                 'allow' => true,

@@ -3,19 +3,17 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Article */
+/* @var $model common\models\Wallet */
 
-$this->title = Yii::t('backend', 'Update {modelClass}: ', [
-    'modelClass' => 'Article',
-]) . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Articles'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = Yii::t('backend', 'Update');
+$this->title = 'Update Wallet: ' . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Wallets', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="article-update">
+<div class="wallet-update">
 
     <?php echo $this->render('_form', [
         'model' => $model,
-        'categories' => $categories,
     ]) ?>
 
 </div>

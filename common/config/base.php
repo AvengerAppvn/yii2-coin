@@ -1,6 +1,6 @@
 <?php
 $config = [
-    'name'=>'Coin',
+    'name'=>'TickCoin',
     'vendorPath'=>dirname(dirname(__DIR__)).'/vendor',
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
     'sourceLanguage'=>'en-US',
@@ -77,7 +77,11 @@ $config = [
                     },
                     'logVars'=>[],
                     'logTable'=>'{{%system_log}}'
-                ]
+                ],
+                                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error'],
+                ],
             ],
         ],
 

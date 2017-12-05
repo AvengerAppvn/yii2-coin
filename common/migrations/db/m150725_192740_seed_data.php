@@ -169,7 +169,21 @@ class m150725_192740_seed_data extends Migration
             'value' => 'disabled',
             'comment' => 'Set it to "true" to turn on maintenance mode'
         ]);
-
+        $this->insert('{{%key_storage_item}}', [
+            'key' => 'coin.code',
+            'value' => 'TKC',
+            'comment' => 'Shortcut for Coin'
+        ]);
+        $this->insert('{{%key_storage_item}}', [
+            'key' => 'coin.apiKey',
+            'value' => 'trKooONQeBDo2bn5',
+            'comment' => 'API Key of Coinbase'
+        ]);        
+        $this->insert('{{%key_storage_item}}', [
+            'key' => 'coin.apiSecret',
+            'value' => 'v4uEkb9GOEdrBUnrt9VbkWCR9slSZcHv',
+            'comment' => 'API Secret of Coinbase'
+        ]);
     }
 
     public function safeDown()

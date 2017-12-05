@@ -21,7 +21,7 @@ $this->params['body-class'] = array_key_exists('body-class', $this->params) ?
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <?php echo Html::csrfMetaTags() ?>
-    <title><?php echo Html::encode($this->title) ?></title>
+    <title><?php echo Html::encode($this->title? $this->title : 'TickCoin') ?></title>
     <?php $this->head() ?>
 
 </head>

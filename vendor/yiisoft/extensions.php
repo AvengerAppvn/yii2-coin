@@ -165,4 +165,22 @@ return array (
       '@himiklab/yii2/recaptcha' => $vendorDir . '/himiklab/yii2-recaptcha-widget',
     ),
   ),
+  'eddmash/yii2-clipboard' => 
+  array (
+    'name' => 'eddmash/yii2-clipboard',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@Eddmash/Clipboard' => $vendorDir . '/eddmash/yii2-clipboard/src',
+    ),
+  ),
+  'russ666/yii2-countdown' => 
+  array (
+    'name' => 'russ666/yii2-countdown',
+    'version' => '0.2.0.0',
+    'alias' => 
+    array (
+      '@russ666/widgets' => $vendorDir . '/russ666/yii2-countdown',
+    ),
+  ),
 );

@@ -22,6 +22,8 @@ use yii\web\IdentityInterface;
  * @property string $oauth_client
  * @property string $oauth_client_user_id
  * @property string $publicIdentity
+ * @property string $twofa_secret
+ * @property string $referrer
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -124,6 +126,7 @@ class User extends ActiveRecord implements IdentityInterface
             'email' => Yii::t('common', 'E-mail'),
             'status' => Yii::t('common', 'Status'),
             'access_token' => Yii::t('common', 'API access token'),
+            'referrer' => Yii::t('common', 'Referrer'),
             'created_at' => Yii::t('common', 'Created at'),
             'updated_at' => Yii::t('common', 'Updated at'),
             'logged_at' => Yii::t('common', 'Last login'),
