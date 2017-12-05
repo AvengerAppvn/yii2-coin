@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\behaviors\CodeBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "wallet".
@@ -25,14 +27,21 @@ class Wallet extends \yii\db\ActiveRecord
     {
         return 'wallet';
     }
-
+    
+     public function behaviors()
+        {
+            return [
+                TimestampBehavior::className(),
+                CodeBehavior::className(),
+            ];
+        }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['user_id', 'wallet_btc', 'wallet_coin'], 'required'],
+            [['user_id'], 'required'],
             [['user_id', 'status', 'created_at'], 'integer'],
             [['wallet_btc', 'wallet_coin'], 'string', 'max' => 40],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use common\models\Referer;
 
 /**
- * ReferrerSearch represents the model behind the search form about `common\models\Referer`.
+ * RefererSearch represents the model behind the search form about `common\models\Referer`.
  */
-class ReferrerSearch extends Referer
+class RefererSearch extends Referer
 {
     /**
      * @inheritdoc

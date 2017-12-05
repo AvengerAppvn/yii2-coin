@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class WalletController extends Controller
 {
+    public $defaultAction = 'me';
     public function behaviors()
     {
         return [
@@ -25,7 +26,17 @@ class WalletController extends Controller
             ],
         ];
     }
+    
+    public function actionMe()
+    {
+        $searchModel = new WalletSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        return $this->render('me', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     /**
      * Lists all Wallet models.
      * @return mixed
