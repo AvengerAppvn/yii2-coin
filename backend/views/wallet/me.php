@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $bundle = BackendAsset::register($this);
 $code = Yii::$app->keyStorage->get('coin.code', 'TKC');
+$this->registerJs("new Clipboard('.btn-copy');");
 ?>
 
 <div class="base-bg-image p-xl content-title">
@@ -225,9 +226,9 @@ $code = Yii::$app->keyStorage->get('coin.code', 'TKC');
         </div>
 
         <!-- Modal -->
-        <?php echo $this->render('_modal_bitcoin.php') ?>
+        <?php echo $this->render('_modal_bitcoin.php',['wallet_btc'=> $wallet_btc]) ?>
 
         <!-- Modal -->
-        <?php echo $this->render('_modal_coin.php',['code'=> $code]) ?>
+        <?php echo $this->render('_modal_coin.php',['wallet_coin'=> $wallet_coin]) ?>
         
     </div>

@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="wallet-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?php echo Html::a('Create Wallet', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -24,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'user_id',
             'wallet_btc',
             'wallet_coin',

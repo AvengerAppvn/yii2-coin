@@ -15,7 +15,6 @@ use yii\bootstrap\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?php echo $form->field($model, 'id') ?>
 
     <?php echo $form->field($model, 'user_id') ?>
 

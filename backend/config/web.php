@@ -42,7 +42,7 @@ $config = [
         'qrcode' => [
             'class' => 'Da\QrCode\Component\QrCodeComponent',
             //'label' => 'Tickcoin.co',
-            'size' => 480 // big and nice :D
+            'size' => 320 // big and nice :D
             // ... you can configure more properties of the component here
         ]
     ],

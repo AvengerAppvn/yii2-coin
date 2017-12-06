@@ -1,20 +1,20 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\wuser_idgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Wallet */
 
-$this->title = $model->id;
+$this->title = $model->user_id;
 $this->params['breadcrumbs'][] = ['label' => 'Wallets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="wallet-view">
 
     <p>
-        <?php echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?php echo Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?php echo Html::a('Update', ['update', 'user_id' => $model->user_id], ['class' => 'btn btn-primary']) ?>
+        <?php echo Html::a('Delete', ['delete', 'user_id' => $model->user_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -23,11 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?php echo DetailView::widget([
+    <?php echo DetailView::wuser_idget([
         'model' => $model,
         'attributes' => [
-            'id',
             'user_id',
+            'user_user_id',
             'wallet_btc',
             'wallet_coin',
             'status',

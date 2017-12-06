@@ -8,7 +8,7 @@ namespace common\behaviors;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\db\BaseActiveRecord;
-
+use common\helpers\StringHelper;
 /**
  * CodeBehavior automatically fills the specified attributes with the current user ID.
  *

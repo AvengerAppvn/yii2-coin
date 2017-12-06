@@ -9,12 +9,12 @@ use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "wallet".
  *
- * @property integer $id
  * @property integer $user_id
  * @property string $wallet_btc
  * @property string $wallet_coin
  * @property integer $status
  * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property User $user
  */
@@ -42,7 +42,7 @@ class Wallet extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'status', 'created_at'], 'integer'],
+            [['user_id', 'status', 'created_at','updated_at'], 'integer'],
             [['wallet_btc', 'wallet_coin'], 'string', 'max' => 40],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -54,12 +54,12 @@ class Wallet extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'user_id' => 'User ID',
             'wallet_btc' => 'Wallet Btc',
             'wallet_coin' => 'Wallet Coin',
             'status' => 'Status',
             'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 

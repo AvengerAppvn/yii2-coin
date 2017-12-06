@@ -16,7 +16,7 @@ class StringHelper extends \yii\helpers\BaseStringHelper
      * @return string the generated random key
      * @throws Exception on failure.
      */
-    public static function generateRandomString($bytes, $length = 32)
+    public static function generateRandomString($bytes, $length = 35)
     {
         if (!is_int($length)) {
             throw new InvalidParamException('First parameter ($length) must be an integer');
