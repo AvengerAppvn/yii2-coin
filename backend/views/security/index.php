@@ -96,25 +96,6 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="panel panel-filled">
-            <div class="panel-body">
-                <h3 class="m-t-md">
-                    Google Authenticator Guide
-                </h3>
-                 
-                <ol>
-                    <li>Install Google Authenticator for <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank" class="text-black">Android</a> or <a href="https://itunes.apple.com/en/app/google-authenticator/id388497605?mt=8" target="_blank" class="text-black">Apple</a> and open Google Authenticator</li>
-                    <li>Go to <code>Menu</code> -&gt; <code>Setup Account</code></li>
-                    <li>Choose <code>Scan a barcode</code> option, and scan the barcode shown on this page</li>
-                    <li><em><b>If you are unable to scan the barcode</b>: Choose <code>Enter provided key</code> and type in the "Security Key"</em></li>
-                    <li>A six digit number will now appear in your Google Authenticator app home screen, enter this code into the 2FA form on this page</li>
-                    <li>Every time you login to unixcoin.com you must enter the new 2FA code from your Google Authenticator into the 2FA box on the login form</li>
-                </ol>
-            </div>
-      </div>
-  </div>
-
 </div>
 
 

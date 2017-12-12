@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\helpers\StringHelper;
+use backend\models\SendForm;
+use common\commands\SendEmailCommand;
+use yii\helpers\Url;
 /**
  * WalletController implements the CRUD actions for Wallet model.
  */
@@ -32,6 +35,11 @@ class WalletController extends Controller
         return 'alskjflaksjdlfasd';
     }
     
+    private function createWalletEth(){
+          // Create wallet eth. Call API
+        return 'alskjflaksjdlfasd';
+    }
+    
     private function createWalletCoin(){
         $bytes = Yii::$app->getSecurity()->generateRandomKey($length);
         return "T".StringHelper::generateRandomString($bytes,$length);
@@ -45,6 +53,7 @@ class WalletController extends Controller
             $model = new Wallet();
             $model->user_id = Yii::$app->user->identity->id;
             $model->wallet_btc = $this->createWalletBtc();
+            $model->wallet_eth = $this->createWalletEth();
             $model->save();
         }
         
@@ -53,23 +62,34 @@ class WalletController extends Controller
             $model->wallet_btc = $this->createWalletBtc();
             $model->save();
         }
+        
         if(!$model->wallet_coin){
             // Create wallet coin
             $model->wallet_coin = $this->createWalletCoin();
             $model->save();
         }
         
+        if(!$model->wallet_eth){
+            // Create wallet eth
+            $model->wallet_eth = $this->createWalletEth();
+            $model->save();
+        }
+        
         $wallet_btc =  $model->wallet_btc;
+        $wallet_eth = $model->wallet_eth;
         $wallet_coin = $model->wallet_coin;
         
         $searchModel = new WalletSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        
+        $sendModel = new SendForm();
         return $this->render('me', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'wallet_btc' => $wallet_btc,
+            'wallet_eth' => $wallet_eth,
             'wallet_coin' => $wallet_coin,
+            'model' => $sendModel,
         ]);
     }
     
@@ -107,15 +127,15 @@ class WalletController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Wallet();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        Yii::$app->commandBus->handle(new SendEmailCommand([
+            'subject' => Yii::t('backend', 'Activation email'),
+            'view' => 'activation',
+            'from' => 'smartkids210@gmail.com',
+            'to' => 'lex4vn@gmail.com',
+            'params' => [
+                'url' => Url::to(['/account/activation', 'token' => $token->token], true)
+            ]
+        ]));
     }
 
     /**

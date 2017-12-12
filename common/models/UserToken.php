@@ -7,7 +7,7 @@ use Yii;
 use yii\base\InvalidCallException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
-
+use common\helpers\StringHelper;
 /**
  * This is the model class for table "{{%user_token}}".
  *
@@ -26,6 +26,7 @@ class UserToken extends ActiveRecord
     const TOKEN_LENGTH = 40;
     const TYPE_ACTIVATION = 'activation';
     const TYPE_PASSWORD_RESET = 'password_reset';
+    const TYPE_BUY = 'buy';
 
     /**
      * @inheritdoc
@@ -115,6 +116,24 @@ class UserToken extends ActiveRecord
 
     }
 
+    public static function createBuy($user_id, $type, $duration = null)
+    {
+        $model = new self;
+        $model->setAttributes([
+            'user_id' => $user_id,
+            'type' => $type,
+            'token' => StringHelper::generateRandomNumber(),
+            'expire_at' => $duration ? time() + $duration : null
+        ]);
+
+        if (!$model->save()) {
+            throw new InvalidCallException;
+        };
+
+        return $model;
+
+    }
+    
     /**
      * @param int|null $duration
      */

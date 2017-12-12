@@ -28,17 +28,8 @@ $bundle = BackendAsset::register($this);
                     <?php echo $form->field($model, 'referrer') ?>
                     <?php echo $form->field($model, 'username') ?>
                     <?php echo $form->field($model, 'email') ?>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <?php echo $form->field($model, 'fullname') ?>   
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <?php echo $form->field($model, 'phone') ?>
-                        </div>
-                    </div>
-                    
+                    <?php echo $form->field($model, 'phone') ?>
+
                     <div class="row">
                         <div class="col-md-6">
                             <?php echo $form->field($model, 'password')->passwordInput() ?>    

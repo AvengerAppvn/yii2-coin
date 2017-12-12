@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zein
- * Date: 8/2/14
- * Time: 11:20 AM
- */
 
 namespace backend\controllers;
 
@@ -18,7 +12,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;
-
+use common\models\User;
 class RegisterController extends Controller
 {
 
@@ -36,32 +30,24 @@ class RegisterController extends Controller
         ];
     }
 
-    public function actions()
-    {
-        return [
-            'avatar-upload' => [
-                'class' => UploadAction::className(),
-                'deleteRoute' => 'avatar-delete',
-                'on afterSave' => function ($event) {
-                    /* @var $file \League\Flysystem\File */
-                    $file = $event->file;
-                    $img = ImageManagerStatic::make($file->read())->fit(215, 215);
-                    $file->put($img->encode());
-                }
-            ],
-            'avatar-delete' => [
-                'class' => DeleteAction::className()
-            ]
-        ];
-    }
-
     /**
      * @return string|Response
      */
     public function actionIndex()
     {
         $this->layout = 'base';
+        $username = Yii::$app->request->get('referrer');
+        $referrer = '';
+        if($username){
+            // Check referrer
+            $user = User::find()->where(['username'=> $username])->limit(1)->one();
+            if($user){
+                 $referrer = $user->username;    
+            }
+        }
+        
         $model = new SignupForm();
+        $model->referrer = $referrer;
         if ($model->load(Yii::$app->request->post())) {
             $user = $model->signup();
             if ($user) {
@@ -83,37 +69,6 @@ class RegisterController extends Controller
         return $this->render('index', [
             'model' => $model
         ]);
-    }
-
-    /**
-     * @param $token
-     * @return Response
-     * @throws BadRequestHttpException
-     */
-    public function actionActivation($token)
-    {
-        $token = UserToken::find()
-            ->byType(UserToken::TYPE_ACTIVATION)
-            ->byToken($token)
-            ->notExpired()
-            ->one();
-
-        if (!$token) {
-            throw new BadRequestHttpException;
-        }
-
-        $user = $token->user;
-        $user->updateAttributes([
-            'status' => User::STATUS_ACTIVE
-        ]);
-        $token->delete();
-        Yii::$app->getUser()->login($user);
-        Yii::$app->getSession()->setFlash('alert', [
-            'body' => Yii::t('frontend', 'Your account has been successfully activated.'),
-            'options' => ['class' => 'alert-success']
-        ]);
-
-        return $this->goHome();
     }
 
     /**

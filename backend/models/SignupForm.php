@@ -40,17 +40,13 @@ class SignupForm extends Model
     public $phone;    
     
     /**
-     * @var
-     */
-    public $fullname;    
-    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             ['username', 'filter', 'filter' => 'trim'],
-            ['username,fullname,email,phone', 'required'],
+            [['username','email','phone','referrer'], 'required'],
             ['username', 'unique',
                 'targetClass'=>'\common\models\User',
                 'message' => Yii::t('backend', 'This username has already been taken.')
@@ -59,8 +55,7 @@ class SignupForm extends Model
                 'targetClass'=>'\common\models\User',
                 'message' => Yii::t('backend', 'This phone has already been used.')
             ],            
-            ['username,referrer,email', 'string', 'min' => 2, 'max' => 255],
-            ['fullname', 'string', 'min' => 1, 'max' => 255],
+            [['username','referrer','email'], 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'email'],
@@ -102,6 +97,8 @@ class SignupForm extends Model
             $user = new User();
             $user->username = $this->username;
             $user->email = $this->email;
+            $user->phone = $this->phone;
+            $user->referrer = $this->referrer;
             $user->status = $shouldBeActivated ? User::STATUS_NOT_ACTIVE : User::STATUS_ACTIVE;
             $user->setPassword($this->password);
             if(!$user->save()) {
@@ -119,7 +116,7 @@ class SignupForm extends Model
                     'view' => 'activation',
                     'to' => $this->email,
                     'params' => [
-                        'url' => Url::to(['/user/sign-in/activation', 'token' => $token->token], true)
+                        'url' => Url::to(['/account/activation', 'token' => $token->token], true)
                     ]
                 ]));
             }

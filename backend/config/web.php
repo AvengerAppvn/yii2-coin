@@ -44,7 +44,24 @@ $config = [
             //'label' => 'Tickcoin.co',
             'size' => 320 // big and nice :D
             // ... you can configure more properties of the component here
-        ]
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'smartkids210@gmail.com',
+                'password' => 'gqdmjkkjlwxxwcot',
+                'port' => '587',
+               // 'port' => '465',
+                'encryption' => 'tls', 
+            ],
+            //'useFileTransport' => true,
+            'messageConfig' => [
+                'charset' => 'UTF-8',
+                'from' => env('ADMIN_EMAIL')
+            ]
+        ],
     ],
     'modules' => [
         'i18n' => [
@@ -61,6 +78,12 @@ $config = [
                 'roles' => ['?'],
                 'actions' => ['index']
             ],
+             [
+                'controllers' => ['account'],
+                'allow' => true,
+                'roles' => ['?'],
+                'actions' => ['forgot-password']
+            ],
             [
                 'controllers' => ['register'],
                 'allow' => true,
@@ -68,10 +91,10 @@ $config = [
                 'actions' => ['index']
             ],            
             [
-                'controllers' => ['sign-in'],
+                'controllers' => ['logout'],
                 'allow' => true,
                 'roles' => ['@'],
-                'actions' => ['logout']
+                'actions' => ['index']
             ],
             [
                 'controllers' => ['site'],
@@ -90,8 +113,8 @@ $config = [
                 'roles' => ['administrator'],
             ],
             [
-                'controllers' => ['user'],
-                'allow' => false,
+                'allow' => true,
+                'roles' => ['user'],
             ],
             [
                 'allow' => true,

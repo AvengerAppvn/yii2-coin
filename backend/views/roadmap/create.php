@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Wallet */
+/* @var $model common\models\Roadmap */
 
-$this->title = 'Create Wallet';
-$this->params['breadcrumbs'][] = ['label' => 'Wallets', 'url' => ['index']];
+$this->title = 'Create Roadmap';
+$this->params['breadcrumbs'][] = ['label' => 'Roadmaps', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="wallet-create">
+<div class="roadmap-create">
 
     <?php echo $this->render('_form', [
         'model' => $model,

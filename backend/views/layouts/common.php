@@ -14,6 +14,7 @@ use yii\log\Logger;
 use yii\widgets\Breadcrumbs;
 
 $bundle = BackendAsset::register($this);
+$rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.5');
 ?>
 <?php $this->beginContent('@backend/views/layouts/base.php'); ?>
 <div class="wrapper">
@@ -59,10 +60,14 @@ $bundle = BackendAsset::register($this);
                         //die;
                         $json = json_decode($result, true);
                         $amount = $json['data']['amount'];
+                        
+                        $rateBtc = 1/($amount/$rateUsd);
+                        
+                        Yii::$app->keyStorage->set('coin.rate-btc', $rateBtc);
                         //var_dump($amount);die;
                         ?>
                         <span>
-                            1 BTC = USD <?php echo $amount ?>
+                            1 BTC = <?php echo $amount ?> USD 
                         </span>
                          </a>
                     </li>
@@ -71,7 +76,7 @@ $bundle = BackendAsset::register($this);
                         <a href="#">
                         <i class="fa"></i>
                         <span>
-                            1 <?php echo Yii::$app->keyStorage->get('coin.code', 'TKC') ?> = 1 USD
+                            1 <?php echo Yii::$app->keyStorage->get('coin.code', 'TKC') ?> = <?php echo $rateUsd ?> USD
                         </span>
                         </a>
                     </li>
@@ -79,14 +84,14 @@ $bundle = BackendAsset::register($this);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/anonymous.jpg')) ?>"
+                            <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png')) ?>"
                                  class="user-image">
                             <span><?php echo Yii::$app->user->identity->username ?> <i class="caret"></i></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header light-blue">
-                                <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/anonymous.jpg')) ?>"
+                                <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png')) ?>"
                                      class="img-circle" alt="User Image"/>
                                 <p>
                                     <?php echo Yii::$app->user->identity->username ?>

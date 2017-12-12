@@ -13,6 +13,7 @@ class m150725_192740_seed_data extends Migration
             'email' => 'webmaster@example.com',
             'password_hash' => Yii::$app->getSecurity()->generatePasswordHash('webmaster'),
             'auth_key' => Yii::$app->getSecurity()->generateRandomString(),
+            'phone' => '1123123123',
             'access_token' => Yii::$app->getSecurity()->generateRandomString(40),
             'status' => User::STATUS_ACTIVE,
             'created_at' => time(),
@@ -24,6 +25,7 @@ class m150725_192740_seed_data extends Migration
             'email' => 'manager@example.com',
             'password_hash' => Yii::$app->getSecurity()->generatePasswordHash('manager'),
             'auth_key' => Yii::$app->getSecurity()->generateRandomString(),
+            'phone' => '2123123123',
             'access_token' => Yii::$app->getSecurity()->generateRandomString(40),
             'status' => User::STATUS_ACTIVE,
             'created_at' => time(),
@@ -35,6 +37,7 @@ class m150725_192740_seed_data extends Migration
             'email' => 'user@example.com',
             'password_hash' => Yii::$app->getSecurity()->generatePasswordHash('user'),
             'auth_key' => Yii::$app->getSecurity()->generateRandomString(),
+            'phone' => '3123123123',
             'access_token' => Yii::$app->getSecurity()->generateRandomString(40),
             'status' => User::STATUS_ACTIVE,
             'created_at' => time(),
@@ -184,6 +187,16 @@ class m150725_192740_seed_data extends Migration
             'value' => 'v4uEkb9GOEdrBUnrt9VbkWCR9slSZcHv',
             'comment' => 'API Secret of Coinbase'
         ]);
+        $this->insert('{{%key_storage_item}}', [
+            'key' => 'coin.total',
+            'value' => '5000000',
+            'comment' => 'Total of Coinbase'
+        ]);        
+        $this->insert('{{%key_storage_item}}', [
+            'key' => 'coin.sold',
+            'value' => '0',
+            'comment' => 'Sold of Coin'
+        ]);        
     }
 
     public function safeDown()

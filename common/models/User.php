@@ -24,6 +24,7 @@ use yii\web\IdentityInterface;
  * @property string $publicIdentity
  * @property string $twofa_secret
  * @property string $referrer
+ * @property string $phone
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -110,6 +111,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email'], 'unique'],
+            ['phone', 'number'],
             ['status', 'default', 'value' => self::STATUS_NOT_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statuses())],
             [['username'], 'filter', 'filter' => '\yii\helpers\Html::encode']
@@ -127,6 +129,7 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => Yii::t('common', 'Status'),
             'access_token' => Yii::t('common', 'API access token'),
             'referrer' => Yii::t('common', 'Referrer'),
+            'phone' => Yii::t('common', 'Phone'),
             'created_at' => Yii::t('common', 'Created at'),
             'updated_at' => Yii::t('common', 'Updated at'),
             'logged_at' => Yii::t('common', 'Last login'),

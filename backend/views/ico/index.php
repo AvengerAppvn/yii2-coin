@@ -14,7 +14,10 @@ use backend\assets\BackendAsset;
 //$this->params['breadcrumbs'][] = $this->title;
 $bundle = BackendAsset::register($this);
 
-$code = Yii::$app->keyStorage->get('coin.code', 'TKC');
+$code   = Yii::$app->keyStorage->get('coin.code', 'TKC');
+$total  = Yii::$app->keyStorage->get('coin.total', '5000000');
+$sold   = Yii::$app->keyStorage->get('coin.sold', '0');
+
 $this->registerJs("new Clipboard('.btn-copy');");
 ?>
 <div class="base-bg-image p-xl content-title">
@@ -28,7 +31,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
 <div class="box-padding">
     <div class="row">
       <!-- Share link refferer -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <h3><i class="fa fa-database" aria-hidden="true"></i> Initial Coin Offering (ICO)</h3>
         <div class="reffernal-link">
             <div class="input-group">
@@ -43,15 +46,16 @@ $this->registerJs("new Clipboard('.btn-copy');");
                     </button>                
                 </span>
             </div>
-            
+            <br/><br/>
 
         </div>
       </div>
       
       <!-- Count down to  -->
-      <div class="col-md-6">
-            <?php echo $this->render('_countdown.php'); ?>
-      </div>
+      <!--<div class="col-md-6">-->
+            <?php //echo $this->render('_countdown.php'); ?>
+            
+      <!--</div>-->
     </div>
 </div>
 
@@ -82,21 +86,16 @@ $this->registerJs("new Clipboard('.btn-copy');");
           </div>
       </div>
       
-      <!-- Total ICO of system  -->
       <div class="col-md-4">
-        <div class="panel panel-success">
-            <div class="panel-heading"><h2 class="m-b-none"><p class="text-center base-font-color">Total Available Coin</p></h2></div>
-            <div class="panel-body">
-                
-                <h3>
-                    <p class="text-center">
-                        <strong id="app-total-available-coin">5,000,000</strong> <?php echo $code ?><br>
-                        <small>Total Sold <span class="app-total-sold">1,000,000</span> <?php echo $code ?></small>
-                    </p>
-                </h3>
-            </div>
-        </div>
+        <div class="panel panel-primary">
+                <div class="panel-heading"><h2 class="m-b-none">ETH</h2></div>
+              <div class="panel-body">
+                  <h3><p class="text-center"><strong class="app-eth">0.00000000</strong><br><small>&nbsp;</small></p></h3>
+              </div>
+          </div>
       </div>
+      
+
     </div>
 </div>
 <!-- END Account  -->
@@ -104,7 +103,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
 <!-- Buy -->
 <div class="box-padding">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 invisible">
             <div class="panel panel-filled panel-info">
                 <div id="time-box" class="panel-body" style="height: 122px;">
                     <h4>
@@ -128,7 +127,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
             </div>
         </div>
     
-        <div id="ico-sold-box" class="col-md-8">
+        <div id="ico-sold-box" class="col-md-4 invisible">
             <div class="panel panel-filled">
                 <div class="row">
                     <div class="col-md-4">
@@ -145,6 +144,22 @@ $this->registerJs("new Clipboard('.btn-copy');");
                 </div>
             </div>
         </div>
+        
+              <!-- Total ICO of system  -->
+      <div class="col-md-4">
+        <div class="panel panel-success">
+            <div class="panel-heading"><h2 class="m-b-none"><p class="text-center base-font-color">Total Available Coin</p></h2></div>
+            <div class="panel-body">
+                
+                <h3>
+                    <p class="text-center">
+                        <strong id="app-total-available-coin"><?= number_format($total,0,",",".") ?></strong> <?php echo $code ?><br>
+                        <small>Total Sold <span class="app-total-sold"><?= number_format($sold,0,",",".") ?></span> <?php echo $code ?></small>
+                    </p>
+                </h3>
+            </div>
+        </div>
+      </div>
     </div>
 </div>
 <!-- end buy-->
@@ -152,122 +167,9 @@ $this->registerJs("new Clipboard('.btn-copy');");
 <!-- Send -->
 <div class="box-padding">
 <div class="row m-b-md">
-  <div class="col-md-12">
-      <div class="p-sm r-3 base-bg-image">
-          <div class="panel m-n">
-              <div class="panel-body">
-                  <h3>Fill Amount</h3>
-
-                  <form id="ico-form" action="/ico">
-                      <div id="ico-form-success" class="alert alert-success hidden"></div>
-                      <div id="ico-form-error" class="alert alert-danger hidden"></div>
-                      <div id="ico-form-loading" class="alert alert-info hidden">Sending data to server...</div>
-
-                      <div class="row m-b-sm">
-                          <div class="col-md-4">
-                              <h4><?= $code ?></h4>
-                              <input id="<?= $code ?>_amount" class="form-control m-b-sm" placeholder="Amount in <?= $code ?>" name="<?= $code ?>_amount" type="text">
-                              <span class="text-white">Min = 50, Max = 100 <?= $code ?> (<a href="#" class="base-font-color" data-fill="#<?= $code ?>_amount" tabindex="-1">Buy All: <span class="app-buy-all">0</span> <?= $code ?></a>)</span>
-                              <br>
-                              <span class="text-white"><?= $code ?> amount must be multiples of 50 (i.e. 50, 100, 150, ...)</span>
-                          </div>
-                          <div class="col-md-4">
-                              <h4>BTC</h4>
-                              <input id="btc_amount" class="form-control" readonly="" tabindex="-1" name="btc_amount" type="text">
-                          </div>
-                          <div class="col-md-4">
-                              <h4>USD</h4>
-                              <input id="usd_amount" class="form-control" readonly="" tabindex="-1" name="usd_amount" type="text">
-                          </div>
-                      </div>
-
-                      <br>
-
-                      <div class="row m-b-sm">
-                          <div class="col-md-4">
-                              <span class="text-white">Please enter the following number below:</span>
-                              <img id="captcha-img" src="">
-                              <input class="form-control" name="captcha_secret" type="hidden" value="">
-                              <input class="form-control" name="captcha_key" type="hidden" value="">
-                              <input class="form-control" name="captcha_key2" type="text" value="">
-                          </div>
-                      </div>
-
-                      <button type="submit" class="btn btn-lg btn-success">Buy <?= $code ?></button>
-                      <button type="reset" class="btn btn-lg btn-warning">Clear</button>
-                  </form>
-              </div>
-          </div>
-      </div>
+  <div class="col-md-6">
+      <?php echo $this->render('_buy.php',['model'=> $model]) ?>
   </div>
 </div>
-</div>
-
-<!--MY ORDER      -->
-<div class="row">
-  <div class="col-md-12">
-      <div class="panel panel-filled">
-          <div class="panel-body">
-              <h3 class="m-t-md">
-                  My Orders
-              </h3>
-
-              <div class="table-responsive">
-                  <table class="table table-bordered">
-                      <thead>
-                      <tr>
-                          <th width="25%">Ordered At</th>
-                          <th width="25%">Amount (<?= $code ?>)</th>
-                          <th width="25%">Processed At</th>
-                          <th width="25%">Status</th>
-                      </tr>
-                      </thead>
-
-                      <tbody id="ico-orders"></tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-
-<!-- Last 50 match -->
-<div class="row">
-  <div class="col-md-12">
-      <div class="panel panel-filled">
-          <div class="panel-body">
-              <h3 class="m-t-md">
-                  Last 50 matched orders
-              </h3>
-
-              <div class="table-responsive">
-                  <table class="table table-bordered">
-                      <thead>
-                      <tr>
-                          <th width="33%">Processed At</th>
-                          <th width="33%">Address</th>
-                          <th width="34%">Amount (<?= $code ?>)</th>
-                      </tr>
-                      </thead>
-
-                      <tbody id="completed-orders"><tr><td colspan="3"><center>Available after ICO ends</center></td></tr></tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-
-<!-- MAP & BOX PANE -->
-<div class="row">
-  <div class="col-lg-12">
-      <div class="panel">
-          <div class="panel-body">
-              <h4 class="m-t-n-sm m-b-xs">ICO activity</h4>
-              <samll>ICO sales by geography</samll>
-              <?php echo $this->render('_map.php'); ?>
-            </div>      
-      </div>
-  </div>
 </div>
 

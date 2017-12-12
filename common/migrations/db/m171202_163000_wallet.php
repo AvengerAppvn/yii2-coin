@@ -16,6 +16,7 @@ class m171202_163000_wallet extends Migration
         $this->createTable('{{%wallet}}', [
             'user_id' => $this->integer()->primaryKey(),
             'wallet_btc' => $this->string(40)->notNull(),
+            'wallet_eth' => $this->string(40)->notNull(),
             'wallet_coin' => $this->string(40)->notNull(),
             'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
             'created_at' => $this->integer(),

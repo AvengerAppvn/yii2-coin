@@ -47,6 +47,15 @@ $config = [
 
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => '74.125.204.109',
+                'username' => 'smartkids210@gmail.com',
+                'password' => 'asdfjkl;.123',
+                //'port' => '587',
+                'port' => '465',
+                'encryption' => 'tls', 
+            ],
             //'useFileTransport' => true,
             'messageConfig' => [
                 'charset' => 'UTF-8',

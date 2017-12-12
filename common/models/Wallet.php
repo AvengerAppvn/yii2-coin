@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property integer $user_id
  * @property string $wallet_btc
+ * @property string $wallet_eth
  * @property string $wallet_coin
  * @property integer $status
  * @property integer $created_at
@@ -43,7 +44,7 @@ class Wallet extends \yii\db\ActiveRecord
         return [
             [['user_id'], 'required'],
             [['user_id', 'status', 'created_at','updated_at'], 'integer'],
-            [['wallet_btc', 'wallet_coin'], 'string', 'max' => 40],
+            [['wallet_btc', 'wallet_eth', 'wallet_coin'], 'string', 'max' => 40],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -55,7 +56,8 @@ class Wallet extends \yii\db\ActiveRecord
     {
         return [
             'user_id' => 'User ID',
-            'wallet_btc' => 'Wallet Btc',
+            'wallet_btc' => 'Wallet BTC',
+            'wallet_eth' => 'Wallet ETH',
             'wallet_coin' => 'Wallet Coin',
             'status' => 'Status',
             'created_at' => 'Created At',

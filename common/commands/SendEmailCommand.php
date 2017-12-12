@@ -62,6 +62,7 @@ class SendEmailCommand extends Object implements SelfHandlingCommand
      */
     public function handle($command)
     {
+        
         if (!$command->body) {
             $message = \Yii::$app->mailer->compose($command->view, $command->params);
         } else {
@@ -75,6 +76,7 @@ class SendEmailCommand extends Object implements SelfHandlingCommand
         $message->setFrom($command->from);
         $message->setTo($command->to ?: \Yii::$app->params['robotEmail']);
         $message->setSubject($command->subject);
-        return $message->send();
+        var_dump($message->send());die;
+        return null;
     }
 }

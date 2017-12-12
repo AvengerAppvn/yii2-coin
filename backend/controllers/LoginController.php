@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: zein
- * Date: 8/2/14
- * Time: 11:20 AM
- */
 
 namespace backend\controllers;
 
@@ -35,26 +29,6 @@ class LoginController extends Controller
         ];
     }
 
-    public function actions()
-    {
-        return [
-            'avatar-upload' => [
-                'class' => UploadAction::className(),
-                'deleteRoute' => 'avatar-delete',
-                'on afterSave' => function ($event) {
-                    /* @var $file \League\Flysystem\File */
-                    $file = $event->file;
-                    $img = ImageManagerStatic::make($file->read())->fit(215, 215);
-                    $file->put($img->encode());
-                }
-            ],
-            'avatar-delete' => [
-                'class' => DeleteAction::className()
-            ]
-        ];
-    }
-
-
     public function actionIndex()
     {
         $this->layout = 'base';
@@ -70,12 +44,6 @@ class LoginController extends Controller
                 'model' => $model
             ]);
         }
-    }
-
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-        return $this->goHome();
     }
 
     public function actionProfile()

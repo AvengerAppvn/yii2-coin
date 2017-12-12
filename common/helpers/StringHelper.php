@@ -33,4 +33,16 @@ class StringHelper extends \yii\helpers\BaseStringHelper
         $code = strtr(base64_encode($bytes), $arr);
         return substr($code, 0, $length);
     }
+    
+    public static function generateRandomNumber($quantity = 6) {
+        $first = range(1, 9);
+        shuffle($first);
+        
+        $numbers = range(0, 9);
+        shuffle($numbers);
+        
+        $numbers[0] = $first[0];
+        
+        return implode(array_slice($numbers, 0, $quantity));
+    }
 }

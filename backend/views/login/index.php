@@ -27,9 +27,8 @@ $this->params['body-class'] = 'login-page';
         <div class="body">
             <?php echo $form->field($model, 'username') ?>
             <?php echo $form->field($model, 'password')->passwordInput() ?>
-            <?php echo $form->field($model, 'authCode') ?>
             <?php echo $form->field($model, 'reCaptcha')->widget(ReCaptcha::className()) ?>
-            <?php echo $form->field($model, 'rememberMe')->checkbox(['class'=>'simple']) ?>
+            <?php //echo $form->field($model, 'rememberMe')->checkbox(['class'=>'simple']) ?>
         </div>
         <div class="footer">
             <?php echo Html::submitButton(Yii::t('backend', 'Login'), [
@@ -41,12 +40,14 @@ $this->params['body-class'] = 'login-page';
                 'class' => 'btn btn-success btn-flat',
                 'name' => 'register-button'
             ]) ?>
-
+        </div>
+        <div style="padding:10px 0">
+            <?= Html::a('Forget password?',['account/forgot-password']); ?>
         </div>
         <?php ActiveForm::end(); ?>
     </div>
     <div style="padding:10px 0">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-        <?= Html::a('Back to Information Site','http://yii2-coin-avengerappvn.c9users.io/frontend/web/'); ?>
+        <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
     </div>
 </div>

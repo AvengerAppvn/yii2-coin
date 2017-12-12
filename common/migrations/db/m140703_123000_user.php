@@ -22,6 +22,7 @@ class m140703_123000_user extends Migration
             'oauth_client' => $this->string(),
             'oauth_client_user_id' => $this->string(),
             'twofa_secret' => $this->string(16),
+            'phone' => $this->string(20)->notNull(),
             'referrer' => $this->integer(),
             'email' => $this->string()->notNull(),
             'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
