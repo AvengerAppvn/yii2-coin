@@ -91,26 +91,26 @@ class CoinbaseHelper
         return $json['data']['amount'];
     }
     
-    public function createAddress($type = 'BTC')
+    public function createAddress($type = null)
     {
-        //$apiKey = Yii::$app->keyStorage->get('coin.apiKey');
-        // $apiSecret = Yii::$app->keyStorage->get('coin.apiSecret');
-        // $configuration = Configuration::apiKey($apiKey, $apiSecret);
-        // $configuration->setLogger($logger);
-        // $client = Client::create($configuration);
+        $user = Yii::$app->user->identity;
         $accounts = $this->client->getAccounts();
-        foreach($accounts as $account){
-            //var_dump($resource);die;
-            //$account = $this->client->getAccount($resource->id);
-            echo $account->id;
-            $address = new Address([
-                'name' => 'New Address'
-            ]);
-             $this->client->createAccountAddress($account, $address);
-             var_dump($this->client->createAccountAddress($account, $address));die;
+        $addresses = [];
+        foreach($accounts->all() as $account){
+            if($type == null){
+                $address = new Address(['name' => $account->getCurrency().' - '.$user->username]);
+                $this->client->createAccountAddress($account, $address);
+                $addresses[$account->getCurrency()] = $address;
+            }else{
+                if($type == $account->getCurrency()){
+                    $address = new Address(['name' => $account->getCurrency().' - '.$user->username]);
+                    $this->client->createAccountAddress($account, $address);
+                    $addresses[$type] = $address;
+                }else{
+                    break;
+                }
+            }
         }
-        //$account = $this->client->getPrimaryAccount();
-        //$account = $this->client->getAccount('f6be4e10-c91e-5f24-a238-4fd6c919a473');
-        //var_dump($accounts);
+        return $addresses;
     }
 }
