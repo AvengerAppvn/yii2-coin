@@ -29,7 +29,17 @@ class UserTokenQuery extends ActiveQuery
         $this->andWhere(['type' => $type]);
         return $this;
     }
-
+    
+    /**
+     * @param $user_id
+     * @return $this
+     */
+    public function byUser($user_id)
+    {
+        $this->andWhere(['user_id' => $user_id]);
+        return $this;
+    }
+    
     /**
      * @param $token
      * @return $this

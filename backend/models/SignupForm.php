@@ -3,6 +3,7 @@ namespace backend\models;
 
 use cheatsheet\Time;
 use common\commands\SendEmailCommand;
+use borales\extensions\phoneInput\PhoneInputValidator;
 use common\models\User;
 use common\models\UserToken;
 use backend\modules\user\Module;
@@ -46,19 +47,28 @@ class SignupForm extends Model
     {
         return [
             ['username', 'filter', 'filter' => 'trim'],
+            
             [['username','email','phone','referrer'], 'required'],
+            
             ['username', 'unique',
                 'targetClass'=>'\common\models\User',
                 'message' => Yii::t('backend', 'This username has already been taken.')
             ],
+            
             ['phone', 'unique',
                 'targetClass'=>'\common\models\User',
                 'message' => Yii::t('backend', 'This phone has already been used.')
-            ],            
+            ],
+            
+            [['phone'], PhoneInputValidator::className(),
+                'message' => Yii::t('backend', 'This phone has not valid.')],
+                
             [['username','referrer','email'], 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
+            
             ['email', 'email'],
+            
             ['email', 'unique',
                 'targetClass'=> '\common\models\User',
                 'message' => Yii::t('backend', 'This email address has already been taken.')

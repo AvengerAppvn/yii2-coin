@@ -54,7 +54,8 @@
     "coinbase/coinbase": "~2.0",
     "2amigos/2fa-library": "~1.0",
     "eddmash/yii2-clipboard": "@dev",
-    "russ666/yii2-countdown": "*"
+    "russ666/yii2-countdown": "*",
+    "borales/yii2-phone-input": "*"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "^2.0.0",

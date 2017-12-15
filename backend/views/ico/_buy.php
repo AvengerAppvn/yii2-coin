@@ -5,21 +5,36 @@ use trntv\yii\datetime\DateTimeWidget;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap\Alert;
 /* @var $this yii\web\View */
 /* @var $model common\models\Article */
 /* @var $categories common\models\ArticleCategory[] */
 /* @var $form yii\bootstrap\ActiveForm */
 
 $types = array(
-    ['type'=>'BTC','title'=>'BTC'],
-    ['type'=>'ETH','title'=>'ETH'],
+    ['type'=>'1','title'=>'BTC'],
+    ['type'=>'2','title'=>'ETH'],
     );
     
 
+$rateCoinBtc = Yii::$app->keyStorage->get('coin.rate-btc');
+$rateCoinEth = Yii::$app->keyStorage->get('coin.rate-eth');
+
+if (Yii::$app->session->hasFlash('message')):
+    $this->registerJs('$("#get_token").focus();');
+endif;
 ?>
 
 <div class="article-form">
     <h3>Buy TickCoin</h3>
+    <?php if (Yii::$app->session->hasFlash('message')): ?>
+                
+                <?php echo Alert::widget([
+                    'body' => ArrayHelper::getValue(Yii::$app->session->getFlash('message'), 'body'),
+                    'options' => ArrayHelper::getValue(Yii::$app->session->getFlash('message'), 'options'),
+                ]) ?>
+            <?php endif; ?>
     <?php $form = ActiveForm::begin(); ?>
 
     <?php echo $form->field($model, 'type')->dropDownList(\yii\helpers\ArrayHelper::map(
@@ -29,14 +44,9 @@ $types = array(
         ))->label('') ?>
 
     
-
-    <?php echo $form->field($model, 'amount_coin')->textInput(['onkeydown' => '
-            $.get( "' . Url::toRoute('amount') . '", {
-                    amount_coin: $(this).val(),
-                    type: $("#' . Html::getInputId($model, 'type') . '").val()
-                } ).done(function( data ) {
-                $( "#' . Html::getInputId($model, 'amount') . '" ).val( data );
-            });']) ?>
+    <?php echo Html::hiddenInput('rate-coin-btc', $rateCoinBtc,['id'=>'rate-coin-btc']); ?>
+    <?php echo Html::hiddenInput('rate-coin-eth', $rateCoinEth,['id'=>'rate-coin-eth']); ?>
+    <?php echo $form->field($model, 'amount_coin')->textInput() ?>
     
     <?php echo $form->field($model, 'amount')->textInput() ?>
 

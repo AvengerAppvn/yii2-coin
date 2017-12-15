@@ -34,15 +34,16 @@ $this->registerJs("new Clipboard('.btn-copy');");
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <?php echo $this->render('_deposit_btc_line.php') ?>
+                    <?php echo $this->render('_deposit_btc_line.php',['wallet'=>$wallet]) ?>
                 </div>
                 <div class="col-md-12">
-                    <?php echo $this->render('_deposit_eth_line.php',['bundle'=>$bundle]) ?>
+                    <?php echo $this->render('_deposit_eth_line.php',['bundle'=>$bundle,'wallet'=>$wallet]) ?>
                 </div>
                 <div class="col-md-12">
                     <?php echo $this->render('_deposit_coin_line.php',[
                         'bundle'=>$bundle,
                         'code'=>$code,
+                        'wallet'=>$wallet
                     ]) ?>
                 </div>
             </div>
@@ -56,15 +57,15 @@ $this->registerJs("new Clipboard('.btn-copy');");
 <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
-                <?php echo $this->render('_withdraw_btc.php',['model' =>$model]) ?>
+                <?php echo $this->render('_withdraw_btc.php',['model' =>$modelBtc]) ?>
             </div>
 
             <div class="col-md-4">
-                <?php echo $this->render('_withdraw_eth.php',['model' =>$model]) ?>
+                <?php echo $this->render('_withdraw_eth.php',['model' =>$modelEth]) ?>
             </div>
             
             <div class="col-md-4">
-                <?php echo $this->render('_withdraw_coin.php',['model' =>$model]) ?>
+                <?php echo $this->render('_withdraw_coin.php',['model' =>$modelCoin]) ?>
             </div>
 
         </div>

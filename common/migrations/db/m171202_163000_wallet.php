@@ -14,10 +14,16 @@ class m171202_163000_wallet extends Migration
         }
 
         $this->createTable('{{%wallet}}', [
-            'user_id' => $this->integer()->primaryKey(),
+            'id' => $this->primaryKey(),
+            'user_id' => $this->integer()->notNull(),
             'wallet_btc' => $this->string(40)->notNull(),
             'wallet_eth' => $this->string(40)->notNull(),
             'wallet_coin' => $this->string(40)->notNull(),
+            'amount_btc' => $this->float()->defaultValue(0),
+            'amount_eth' => $this->float()->defaultValue(0),
+            'amount_coin' => $this->float()->defaultValue(0),
+            'amount_bonus' => $this->float()->defaultValue(0),
+            'amount_ico' => $this->float()->defaultValue(0),
             'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer()

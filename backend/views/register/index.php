@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use backend\assets\BackendAsset;
-
+use borales\extensions\phoneInput\PhoneInput;
 $this->title = Yii::t('backend', 'Register');
 $this->params['breadcrumbs'][] = $this->title;
 $bundle = BackendAsset::register($this);
@@ -28,8 +28,13 @@ $bundle = BackendAsset::register($this);
                     <?php echo $form->field($model, 'referrer') ?>
                     <?php echo $form->field($model, 'username') ?>
                     <?php echo $form->field($model, 'email') ?>
-                    <?php echo $form->field($model, 'phone') ?>
-
+                    <?php //echo $form->field($model, 'phone') ?>
+                    <?php echo $form->field($model, 'phone')->widget(PhoneInput::className(), [
+                            'jsOptions' => [
+                                'preferredCountries' => ['us', 'vn', 'jn'],
+                            ]
+                        ]);
+                    ?>
                     <div class="row">
                         <div class="col-md-6">
                             <?php echo $form->field($model, 'password')->passwordInput() ?>    

@@ -3,16 +3,20 @@
 namespace common\models;
 
 use Yii;
-use common\behaviors\CodeBehavior;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "wallet".
  *
+ * @property integer $id
  * @property integer $user_id
  * @property string $wallet_btc
  * @property string $wallet_eth
  * @property string $wallet_coin
+ * @property double $amount_btc
+ * @property double $amount_eth
+ * @property double $amount_coin
+ * @property double $amount_bonus
+ * @property double $amount_ico
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -28,22 +32,16 @@ class Wallet extends \yii\db\ActiveRecord
     {
         return 'wallet';
     }
-    
-     public function behaviors()
-        {
-            return [
-                TimestampBehavior::className(),
-                CodeBehavior::className(),
-            ];
-        }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['user_id'], 'required'],
-            [['user_id', 'status', 'created_at','updated_at'], 'integer'],
+            [['user_id', 'wallet_btc', 'wallet_eth', 'wallet_coin'], 'required'],
+            [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['amount_btc', 'amount_eth', 'amount_coin', 'amount_bonus', 'amount_ico'], 'number'],
             [['wallet_btc', 'wallet_eth', 'wallet_coin'], 'string', 'max' => 40],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -55,10 +53,16 @@ class Wallet extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'user_id' => 'User ID',
-            'wallet_btc' => 'Wallet BTC',
-            'wallet_eth' => 'Wallet ETH',
+            'wallet_btc' => 'Wallet Btc',
+            'wallet_eth' => 'Wallet Eth',
             'wallet_coin' => 'Wallet Coin',
+            'amount_btc' => 'Amount Btc',
+            'amount_eth' => 'Amount Eth',
+            'amount_coin' => 'Amount Coin',
+            'amount_bonus' => 'Amount Bonus',
+            'amount_ico' => 'Amount Ico',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

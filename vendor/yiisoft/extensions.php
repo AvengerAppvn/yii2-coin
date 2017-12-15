@@ -183,4 +183,13 @@ return array (
       '@russ666/widgets' => $vendorDir . '/russ666/yii2-countdown',
     ),
   ),
+  'borales/yii2-phone-input' => 
+  array (
+    'name' => 'borales/yii2-phone-input',
+    'version' => '0.1.1.0',
+    'alias' => 
+    array (
+      '@borales/extensions/phoneInput' => $vendorDir . '/borales/yii2-phone-input/src',
+    ),
+  ),
 );

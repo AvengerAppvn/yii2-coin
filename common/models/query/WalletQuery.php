@@ -24,6 +24,16 @@ class WalletQuery extends \yii\db\ActiveQuery
     }
 
     /**
+     * @param $user_id
+     * @return $this
+     */
+    public function byUser($user_id)
+    {
+        $this->andWhere(['user_id' => $user_id]);
+        return $this;
+    }
+    
+    /**
      * @inheritdoc
      * @return \common\models\Wallet|array|null
      */

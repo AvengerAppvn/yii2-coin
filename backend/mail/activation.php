@@ -4,5 +4,4 @@
  * @var $url \common\models\User
  */
 ?>
-<h1>Token: <?= $token ?></h1>
-
+<?php echo Yii::t('backend', 'Your activation link: {url}', ['url' => Yii::$app->formatter->asUrl($url)]) ?>

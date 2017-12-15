@@ -10,8 +10,11 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use common\helpers\StringHelper;
 use backend\models\SendForm;
+use backend\models\SendBtc;
+use backend\models\SendEth;
 use common\commands\SendEmailCommand;
 use yii\helpers\Url;
+use common\helpers\CoinbaseHelper;
 /**
  * WalletController implements the CRUD actions for Wallet model.
  */
@@ -41,55 +44,64 @@ class WalletController extends Controller
     }
     
     private function createWalletCoin(){
+        $length = 35;
         $bytes = Yii::$app->getSecurity()->generateRandomKey($length);
         return "T".StringHelper::generateRandomString($bytes,$length);
     }
     
     public function actionMe()
     {
-        $model = $this->findModel(Yii::$app->user->identity->id);
-        if(!$model){
+        $coin = new CoinbaseHelper();
+        $btcAddress = $coin->createAddress();
+        var_dump($btcAddress);die;
+        $wallet = $this->findModel(Yii::$app->user->identity->id);
+        if(!$wallet){
             //Create wallet
-            $model = new Wallet();
-            $model->user_id = Yii::$app->user->identity->id;
-            $model->wallet_btc = $this->createWalletBtc();
-            $model->wallet_eth = $this->createWalletEth();
-            $model->save();
+            $wallet = new Wallet();
+            $wallet->user_id = Yii::$app->user->identity->id;
+            $wallet->wallet_btc = $this->createWalletBtc();
+            $wallet->wallet_eth = $this->createWalletEth();
+            $wallet->save();
         }
         
         if(!$model->wallet_btc){
             // Create wallet btc. Call API
-            $model->wallet_btc = $this->createWalletBtc();
-            $model->save();
+            $wallet->wallet_btc = $this->createWalletBtc();
+            $wallet->save();
         }
         
-        if(!$model->wallet_coin){
+        if(!$wallet->wallet_coin){
             // Create wallet coin
-            $model->wallet_coin = $this->createWalletCoin();
-            $model->save();
+            $wallet->wallet_coin = $this->createWalletCoin();
+            $wallet->save();
         }
         
         if(!$model->wallet_eth){
             // Create wallet eth
-            $model->wallet_eth = $this->createWalletEth();
-            $model->save();
+            $wallet->wallet_eth = $this->createWalletEth();
+            $wallet->save();
         }
         
-        $wallet_btc =  $model->wallet_btc;
-        $wallet_eth = $model->wallet_eth;
-        $wallet_coin = $model->wallet_coin;
+        $wallet_btc =  $wallet->wallet_btc;
+        $wallet_eth = $wallet->wallet_eth;
+        $wallet_coin = $wallet->wallet_coin;
         
         $searchModel = new WalletSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
-        $sendModel = new SendForm();
+        $sendBtc = new SendBtc();
+        $sendEth = new SendEth();
+        $sendCoin = new SendForm();
         return $this->render('me', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'wallet_btc' => $wallet_btc,
             'wallet_eth' => $wallet_eth,
             'wallet_coin' => $wallet_coin,
-            'model' => $sendModel,
+            'wallet' => $wallet,
+            'modelBtc' => $sendBtc,
+            'modelEth' => $sendEth,
+            'modelCoin' => $sendCoin,
         ]);
     }
     

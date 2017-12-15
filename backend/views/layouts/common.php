@@ -6,6 +6,7 @@ use backend\assets\BackendAsset;
 use backend\models\SystemLog;
 use backend\widgets\Menu;
 use common\models\TimelineEvent;
+use common\helpers\CoinbaseHelper;
 use yii\bootstrap\Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -15,6 +16,8 @@ use yii\widgets\Breadcrumbs;
 
 $bundle = BackendAsset::register($this);
 $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.5');
+//$coinbaseHelper = new CoinbaseHelper();
+//var_dump($coinbaseHelper->createAddress());die;
 ?>
 <?php $this->beginContent('@backend/views/layouts/base.php'); ?>
 <div class="wrapper">
@@ -39,39 +42,46 @@ $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.5');
                         <a href="#">
                         <i class="fa fa-bitcoin"></i>
                         <?php
-                        //https://api.coinbase.com/v2/prices/spot?currency=USD
-                        //http://www.coloring.ws/pandas.htm
-                        $url = 'https://api.coinbase.com/v2/prices/spot?currency=USD';
-
-                        $cURL = curl_init();
-                        curl_setopt($cURL, CURLOPT_URL, $url);
-                        curl_setopt($cURL, CURLOPT_HTTPGET, true);
-                        curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
+                        $rateBtcUsd = Yii::$app->keyStorage->get('coin.rate-btc-usd');
+                        if(!$rateBtcUsd){
+                            $rateBtcUsd = CoinbaseHelper::fetchRate('BTC');
+                            Yii::$app->keyStorage->set('coin.rate-btc-usd', $rateBtcUsd);
+                        }
                         
-                        curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
-                            'Content-Type: application/json',
-                            'Accept: application/json',
-                            'CB-VERSION : 2017-11-29'
-                        ));
+                        $rateCoinBtc = Yii::$app->keyStorage->get('coin.rate-btc');
+                        if(!$rateCoinBtc){
+                            $rateCoinBtc = $rateBtcUsd !== 0 && $rateUsd !== 0 ? (1/$rateBtcUsd)/$rateUsd : 0;
+                            Yii::$app->keyStorage->set('coin.rate-btc', $rateCoinBtc);
+                        }
                         
-                        $result = curl_exec($cURL);
-                        curl_close($cURL);
-                        //var_dump($result);
-                        //die;
-                        $json = json_decode($result, true);
-                        $amount = $json['data']['amount'];
+                        $rateEthUsd = Yii::$app->keyStorage->get('coin.rate-eth-usd');
+                        if(!$rateEthUsd){
+                            $rateEthUsd = CoinbaseHelper::fetchRate('ETH');
+                            Yii::$app->keyStorage->set('coin.rate-eth-usd', $rateEthUsd);
+                        }
                         
-                        $rateBtc = 1/($amount/$rateUsd);
-                        
-                        Yii::$app->keyStorage->set('coin.rate-btc', $rateBtc);
+                        $rateCoinEth = Yii::$app->keyStorage->get('coin.rate-eth');
+                        if(!$rateCoinEth){
+                            $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? (1/$rateEthUsd)/$rateUsd : 0;
+                            Yii::$app->keyStorage->set('coin.rate-eth', $rateCoinEth);
+                        }
+                                                
                         //var_dump($amount);die;
                         ?>
                         <span>
-                            1 BTC = <?php echo $amount ?> USD 
+                            1 BTC = <?php echo $rateBtcUsd ?> USD 
                         </span>
                          </a>
                     </li>
                     
+                     <li id="coin-eth" class="coin-menu">
+                        <a href="#">
+                        <i class="fa"></i>
+                        <span>
+                            1 ETH = <?php echo $rateEthUsd ?> USD
+                        </span>
+                        </a>
+                    </li>  
                     <li id="coin-btc" class="coin-menu">
                         <a href="#">
                         <i class="fa"></i>

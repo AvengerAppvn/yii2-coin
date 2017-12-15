@@ -11,7 +11,7 @@ use yii\helpers\Url;
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning">
-                    Please note that withdrawing BTC will be available after you have purchased at least 50 <?= $code ?> from ICO. Otherwise, You have to wait for December, 26th 2017
+                    Please note that withdrawing ETH will be available after you have purchased at least 50 <?= $code ?> from ICO. Otherwise, You have to wait for ...
                 </div>
 
                 <img class="bg-white center-block p-xxs"  alt="barcode"

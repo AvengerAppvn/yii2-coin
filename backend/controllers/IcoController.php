@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\User;
+use common\models\Wallet;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,6 +12,7 @@ use backend\models\BuyForm;
 use common\commands\SendEmailCommand;
 use cheatsheet\Time;
 use common\models\UserToken;
+use yii\web\BadRequestHttpException;
 /**
  * IcoController
  */
@@ -31,11 +33,54 @@ class IcoController extends Controller
      */
     public function actionIndex()
     {
-        $model = new BuyForm();
+        $user = Yii::$app->user->identity;
+        $wallet = Wallet::find()->where(['user_id'=>$user->id])->limit(1)->one();
         $ref_url = Yii::$app->getHomeUrl().'/register?referrer='.Yii::$app->user->identity->username;
+        
+        $model = new BuyForm();
+        try {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['/ico']);
+            }   
+            
+        } catch (Exception $e) {
+             if ($e instanceof NotFoundHttpException) {
+                Yii::$app->getSession()->setFlash('message', [
+                    'body' => Yii::t(
+                        'frontend',
+                        'Please click to get token and check your email for further instructions.'
+                    ),
+                    'options' => ['class' => 'alert-error']
+                ]);
+            }elseif ($e instanceof BadRequestHttpException) {
+                Yii::$app->getSession()->setFlash('message', [
+                    'body' => Yii::t(
+                        'frontend',
+                        'Wrong token'
+                    ),
+                    'options' => ['class' => 'alert-error']
+                ]);
+            } else {
+                Yii::$app->getSession()->setFlash('message', [
+                    'body' => Yii::t(
+                        'frontend',
+                        'Please click to get token and check your email for further instructions.'
+                    ),
+                    'options' => ['class' => 'alert-error']
+                ]);
+            }
+            
+                return $this->render('index', [
+                    'model' => $model,
+                ]);
+
+        }
+        
+        
         return $this->render('index', [
             'ref_url' => $ref_url,
-            'model' => $model
+            'model' => $model,
+            'wallet' => $wallet,
         ]);
     }
 
@@ -58,11 +103,10 @@ class IcoController extends Controller
     
     public function actionAmount($amount_coin = 0, $type = 'BTC')
     {
-        
         if($type == 'BTC'){
-            $rate = Yii::$app->keyStorage->get('coin.rate-btc', '1');
+            $rate = Yii::$app->keyStorage->get('coin.rate-btc');
         }else{
-            $rate = Yii::$app->keyStorage->get('coin.rate-eth', '2');
+            $rate = Yii::$app->keyStorage->get('coin.rate-eth');
         }
         echo number_format($amount_coin * $rate,8);
     }
@@ -81,7 +125,7 @@ class IcoController extends Controller
         // Save Token to User
         Yii::$app->commandBus->handle(new SendEmailCommand([
             'subject' => Yii::t('backend', 'Token'),
-            'view' => 'activation',
+            'view' => 'token',
             'from' => 'smartkids210@gmail.com',
             'to' => 'lex4vn@gmail.com',
             'params' => [

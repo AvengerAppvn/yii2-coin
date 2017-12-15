@@ -60,44 +60,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
 </div>
 
 <!-- Account  -->
-<div class="box-padding">
-    <div class="row">
-      <div class="col-md-4">
-          <div class="panel panel-primary">
-              <div class="panel-heading"><h2 class="m-b-none"><?php echo $code ?></h2></div>
-              <div class="panel-body">
-                  
-                  <h3>
-                      <p class="text-center">
-                          <strong class="app-<?= $code ?>">0.00000000</strong><br>
-                          <small>ICO <span class="app-<?= $code ?>-ico">0.00</span> / BONUS <span class="app-<?= $code ?>-bonus">0.00</span></small>
-                      </p>
-                  </h3>
-              </div>
-          </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="panel panel-primary">
-                <div class="panel-heading"><h2 class="m-b-none">BTC</h2></div>
-              <div class="panel-body">
-                  <h3><p class="text-center"><strong class="app-btc">0.00000000</strong><br><small>&nbsp;</small></p></h3>
-              </div>
-          </div>
-      </div>
-      
-      <div class="col-md-4">
-        <div class="panel panel-primary">
-                <div class="panel-heading"><h2 class="m-b-none">ETH</h2></div>
-              <div class="panel-body">
-                  <h3><p class="text-center"><strong class="app-eth">0.00000000</strong><br><small>&nbsp;</small></p></h3>
-              </div>
-          </div>
-      </div>
-      
-
-    </div>
-</div>
+<?php echo $this->render('_account.php',['wallet'=> $wallet, 'code'=>$code ]) ?>
 <!-- END Account  -->
 
 <!-- Buy -->

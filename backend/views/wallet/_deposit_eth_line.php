@@ -17,7 +17,7 @@
     </h2>
 </div>
 <div class="col-md-4">
-     <h2 class="text-success" style="line-height: 48px;">0.00000000</h2>
+     <h2 class="text-success" style="line-height: 48px;"><?= number_format($wallet->amount_eth,8) ?></h2>
 </div>
 
 </div>
