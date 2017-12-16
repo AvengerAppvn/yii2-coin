@@ -103,33 +103,34 @@ class SignupForm extends Model
     public function signup()
     {
         if ($this->validate()) {
-            $shouldBeActivated = $this->shouldBeActivated();
+            
             $user = new User();
             $user->username = $this->username;
             $user->email = $this->email;
             $user->phone = $this->phone;
             $user->referrer = $this->referrer;
-            $user->status = $shouldBeActivated ? User::STATUS_NOT_ACTIVE : User::STATUS_ACTIVE;
+            $user->status = User::STATUS_NOT_ACTIVE;
             $user->setPassword($this->password);
             if(!$user->save()) {
-                throw new Exception("User couldn't be  saved");
+                throw new Exception("User couldn't be  created.");
             };
+            
             $user->afterSignup();
-            if ($shouldBeActivated) {
-                $token = UserToken::create(
-                    $user->id,
-                    UserToken::TYPE_ACTIVATION,
-                    Time::SECONDS_IN_A_DAY
-                );
-                Yii::$app->commandBus->handle(new SendEmailCommand([
-                    'subject' => Yii::t('backend', 'Activation email'),
-                    'view' => 'activation',
-                    'to' => $this->email,
-                    'params' => [
-                        'url' => Url::to(['/account/activation', 'token' => $token->token], true)
-                    ]
-                ]));
-            }
+        
+            $token = UserToken::create(
+                $user->id,
+                UserToken::TYPE_ACTIVATION,
+                Time::SECONDS_IN_A_DAY
+            );
+            Yii::$app->commandBus->handle(new SendEmailCommand([
+                'subject' => Yii::t('backend', 'Activation email'),
+                'view' => 'activation',
+                'to' => $this->email,
+                'params' => [
+                    'url' => Url::to(['/account/activation', 'token' => $token->token], true)
+                ]
+            ]));
+        
             return $user;
         }
 
