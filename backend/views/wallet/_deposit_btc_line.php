@@ -1,8 +1,8 @@
 <div class="row">
 <div class="col-md-4">
    <h1 style="margin-bottom: 30px;padding-left:10%;">
-       <i class="fa fa-bitcoin" style="font-size: 48px;color: orange;"></i>
-        BTC
+       <i class="fa fa-bitcoin" style="width:48px;font-size: 48px;color: orange;text-align:center;"></i>
+       BTC
    </h1>
 </div>
 <div class="col-md-4">
