@@ -34,7 +34,7 @@ class LoginForm extends Model
             ['rememberMe', 'boolean'],
             ['authCode', 'string'],
             // verifyCode needs to be entered correctly
-            ['reCaptcha', ReCaptchaValidator::className(), 'secret' => '6Ld9LDsUAAAAAMI5hWWKU1i_tUOTaJB-EiIncQ1t'],
+            ['reCaptcha', ReCaptchaValidator::className(), 'secret' => env('CAPTCHA_SERVERVERIFY')],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
