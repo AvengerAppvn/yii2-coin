@@ -131,7 +131,12 @@ class AccountController extends Controller
             'status' => User::STATUS_ACTIVE
         ]);
         $token->delete();
-        Yii::$app->getUser()->login($user);
+        
+        $user = $this->auth->createRole(User::ROLE_USER);
+        $auth = \Yii::$app->get('authManager');
+        $auth->assign($user, $user->id);
+        
+        //Yii::$app->getUser()->login($user);
         Yii::$app->getSession()->setFlash('alert', [
             'body' => Yii::t('frontend', 'Your account has been successfully activated.'),
             'options' => ['class' => 'alert-success']
