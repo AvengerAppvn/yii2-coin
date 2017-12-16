@@ -25,13 +25,13 @@ $bundle = BackendAsset::register($this);
                 </div>
 
                 <div class="body">
-                    <?php echo $form->field($model, 'referrer') ?>
+                    <?php //echo $form->field($model, 'referrer') ?>
                     <?php echo $form->field($model, 'username') ?>
                     <?php echo $form->field($model, 'email') ?>
                     <?php //echo $form->field($model, 'phone') ?>
                     <?php echo $form->field($model, 'phone')->widget(PhoneInput::className(), [
                             'jsOptions' => [
-                                'preferredCountries' => ['us', 'vn', 'jn'],
+                                'preferredCountries' => ['us', 'vn', 'jp'],
                             ]
                         ]);
                     ?>
@@ -64,6 +64,6 @@ $bundle = BackendAsset::register($this);
     </div>
     <div style="padding:10px 0">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-        <?= Html::a('Back to Information Site','http://yii2-coin-avengerappvn.c9users.io/frontend/web/'); ?>
+        <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
     </div>
 </div>

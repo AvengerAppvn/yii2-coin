@@ -42,7 +42,7 @@ class WalletController extends Controller
     public function actionMe()
     {
         $coin = new CoinbaseHelper();
-
+        //$addresses = $coin->createAddress();
         //var_dump($addresses);die;
         $wallet = $this->findModel(Yii::$app->user->identity->id);
         if(!$wallet){
@@ -50,14 +50,15 @@ class WalletController extends Controller
             $wallet = new Wallet();
             $addresses = $coin->createAddress();
             $wallet->user_id = Yii::$app->user->identity->id;
-            $wallet->wallet_btc = $addresses['BTC']->getId();
-            $wallet->wallet_eth = $addresses['ETH']->getId();
+            $wallet->wallet_btc = $addresses['BTC']->getAddress();
+            $wallet->wallet_eth = $addresses['ETH']->getAddress();
             $wallet->save();
         }
         
-        if(!$model->wallet_btc){
+        if(!$wallet->wallet_btc){
             // Create wallet btc. Call API
-            $wallet->wallet_btc = $coin->createAddress('BTC');
+            $addresses = $coin->createAddress('BTC');
+            $wallet->wallet_btc = $addresses['BTC']->getAddress();;
             $wallet->save();
         }
         
@@ -67,9 +68,10 @@ class WalletController extends Controller
             $wallet->save();
         }
         
-        if(!$model->wallet_eth){
+        if(!$wallet->wallet_eth){
             // Create wallet eth
-            $wallet->wallet_eth = $coin->createAddress('ETH');
+             $addresses = $coin->createAddress('ETH');
+            $wallet->wallet_eth = $addresses['ETH']->getAddress();;
             $wallet->save();
         }
         

@@ -47,7 +47,11 @@ class RegisterController extends Controller
         }
         
         $model = new SignupForm();
-        $model->referrer = $referrer;
+        if($referrer){
+            $model->referrer = $referrer;
+        }else{
+            $model->referrer = Yii::$app->keyStorage->get('coin.defaultRefferer', 'manager');
+        }
         if ($model->load(Yii::$app->request->post())) {
             $user = $model->signup();
             if ($user) {

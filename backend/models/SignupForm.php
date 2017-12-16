@@ -60,8 +60,8 @@ class SignupForm extends Model
                 'message' => Yii::t('backend', 'This phone has already been used.')
             ],
             
-            [['phone'], PhoneInputValidator::className(),
-                'message' => Yii::t('backend', 'This phone has not valid.')],
+            // [['phone'], PhoneInputValidator::className(),
+                // 'message' => Yii::t('backend', 'This phone has not valid.')],
                 
             [['username','referrer','email'], 'string', 'min' => 2, 'max' => 255],
 

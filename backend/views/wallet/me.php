@@ -77,7 +77,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
         <?php echo $this->render('_modal_coin.php',['wallet_coin'=> $wallet_coin]) ?>
         
          <!-- Modal -->
-        <?php echo $this->render('_modal_eth.php',['wallet_coin'=> $wallet_eth]) ?>
+        <?php echo $this->render('_modal_eth.php',['wallet_eth'=> $wallet_eth]) ?>
         
 </div>
 

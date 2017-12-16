@@ -197,6 +197,11 @@ class m150725_192740_seed_data extends Migration
             'value' => '0',
             'comment' => 'Sold of Coin'
         ]);        
+        $this->insert('{{%key_storage_item}}', [
+            'key' => 'defaultRefferer',
+            'value' => 'manager',
+            'comment' => 'Default Refferer'
+        ]);        
     }
 
     public function safeDown()
