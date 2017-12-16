@@ -137,7 +137,8 @@ class AccountController extends Controller
         $user_auth = $auth->getRole(User::ROLE_USER);
         $auth->assign($user_auth, $user->id);
         
-        //Yii::$app->getUser()->login($user);
+        Yii::$app->getUser()->login($user);
+        
         Yii::$app->getSession()->setFlash('alert', [
             'body' => Yii::t('frontend', 'Your account has been successfully activated.'),
             'options' => ['class' => 'alert-success']
