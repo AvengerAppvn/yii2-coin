@@ -21,7 +21,7 @@ class CoinbaseHelper
         $apiKey = Yii::$app->keyStorage->get('coin.apiKey');
         $apiSecret = Yii::$app->keyStorage->get('coin.apiSecret');
         $this->configuration = Configuration::apiKey($apiKey, $apiSecret);
-        $this->configuration->setLogger($logger);
+        //$this->configuration->setLogger($logger);
         $this->client = Client::create($this->configuration);
     }
 
