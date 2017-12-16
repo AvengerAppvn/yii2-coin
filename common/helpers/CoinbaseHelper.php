@@ -113,4 +113,10 @@ class CoinbaseHelper
         }
         return $addresses;
     }
+    
+    public function createWalletCoin(){
+        $length = 35;
+        $bytes = Yii::$app->getSecurity()->generateRandomKey($length);
+        return "T".StringHelper::generateRandomString($bytes,$length);
+    }
 }

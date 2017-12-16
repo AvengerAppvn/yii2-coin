@@ -13,6 +13,7 @@ use common\commands\SendEmailCommand;
 use cheatsheet\Time;
 use common\models\UserToken;
 use yii\web\BadRequestHttpException;
+use common\helpers\CoinbaseHelper;
 /**
  * IcoController
  */
@@ -35,6 +36,19 @@ class IcoController extends Controller
     {
         $user = Yii::$app->user->identity;
         $wallet = Wallet::find()->where(['user_id'=>$user->id])->limit(1)->one();
+        $coin = new CoinbaseHelper();
+
+        if(!$wallet){
+            //Create wallet
+            $wallet = new Wallet();
+            $addresses = $coin->createAddress();
+            $wallet->user_id = Yii::$app->user->identity->id;
+            $wallet->wallet_coin = $coin->createWalletCoin();
+            $wallet->wallet_btc = $addresses['BTC']->getAddress();
+            $wallet->wallet_eth = $addresses['ETH']->getAddress();
+            $wallet->save();
+        }
+        
         $ref_url = Yii::$app->getHomeUrl().'/register?referrer='.Yii::$app->user->identity->username;
         
         $model = new BuyForm();

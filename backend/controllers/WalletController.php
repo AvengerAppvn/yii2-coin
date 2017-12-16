@@ -33,11 +33,7 @@ class WalletController extends Controller
         ];
     }
     
-    private function createWalletCoin(){
-        $length = 35;
-        $bytes = Yii::$app->getSecurity()->generateRandomKey($length);
-        return "T".StringHelper::generateRandomString($bytes,$length);
-    }
+
     
     public function actionMe()
     {
@@ -50,6 +46,7 @@ class WalletController extends Controller
             $wallet = new Wallet();
             $addresses = $coin->createAddress();
             $wallet->user_id = Yii::$app->user->identity->id;
+            $wallet->wallet_coin = $coin->createWalletCoin();
             $wallet->wallet_btc = $addresses['BTC']->getAddress();
             $wallet->wallet_eth = $addresses['ETH']->getAddress();
             $wallet->save();
@@ -64,7 +61,7 @@ class WalletController extends Controller
         
         if(!$wallet->wallet_coin){
             // Create wallet coin
-            $wallet->wallet_coin = $this->createWalletCoin();
+            $wallet->wallet_coin = $coin->createWalletCoin();
             $wallet->save();
         }
         
