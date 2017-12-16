@@ -132,9 +132,9 @@ class AccountController extends Controller
         ]);
         $token->delete();
         
-        $user = $this->auth->createRole(User::ROLE_USER);
         $auth = \Yii::$app->get('authManager');
-        $auth->assign($user, $user->id);
+        $user_auth = $auth->getRole(User::ROLE_USER);
+        $auth->assign($user_auth, $user->id);
         
         //Yii::$app->getUser()->login($user);
         Yii::$app->getSession()->setFlash('alert', [
