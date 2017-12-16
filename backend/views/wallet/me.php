@@ -71,13 +71,13 @@ $this->registerJs("new Clipboard('.btn-copy');");
         </div>
 
         <!-- Modal -->
-        <?php echo $this->render('_modal_bitcoin.php',['wallet_btc'=> $wallet_btc]) ?>
+        <?php echo $this->render('_modal_bitcoin.php',['wallet_btc'=> $wallet_btc,'code'=>$code]) ?>
 
         <!-- Modal -->
-        <?php echo $this->render('_modal_coin.php',['wallet_coin'=> $wallet_coin]) ?>
+        <?php echo $this->render('_modal_coin.php',['wallet_coin'=> $wallet_coin,'code'=>$code]) ?>
         
          <!-- Modal -->
-        <?php echo $this->render('_modal_eth.php',['wallet_eth'=> $wallet_eth]) ?>
+        <?php echo $this->render('_modal_eth.php',['wallet_eth'=> $wallet_eth,'code'=>$code]) ?>
         
 </div>
 
