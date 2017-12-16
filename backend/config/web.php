@@ -36,8 +36,8 @@ $config = [
         'reCaptcha' => [
                'name' => 'reCaptcha',
                'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
-               'siteKey' => '6Ld9LDsUAAAAAAo881DvqAzLbyPj7FWDaGA61QwD',
-               'secret' => '6Ld9LDsUAAAAAMI5hWWKU1i_tUOTaJB-EiIncQ1t',
+               'siteKey' => env('CAPTCHA_SITEKEY'),
+               'secret' => env('CAPTCHA_SECRET'),
                ],
         'qrcode' => [
             'class' => 'Da\QrCode\Component\QrCodeComponent',
