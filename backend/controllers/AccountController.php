@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;
 use backend\models\PasswordResetRequestForm;
+use common\models\UserToken;
 class AccountController extends Controller
 {
 
