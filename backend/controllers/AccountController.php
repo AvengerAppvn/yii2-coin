@@ -14,6 +14,7 @@ use yii\web\Controller;
 use backend\models\PasswordResetRequestForm;
 use common\models\User;
 use common\models\UserToken;
+use yii\web\BadRequestHttpException;
 class AccountController extends Controller
 {
 
