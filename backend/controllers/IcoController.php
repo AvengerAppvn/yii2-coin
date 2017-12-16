@@ -140,8 +140,8 @@ class IcoController extends Controller
         Yii::$app->commandBus->handle(new SendEmailCommand([
             'subject' => Yii::t('backend', 'Token'),
             'view' => 'token',
-            'from' => 'smartkids210@gmail.com',
-            'to' => 'lex4vn@gmail.com',
+            'from' => env('USERNAME_EMAIL'),
+            'to' => $user->email,
             'params' => [
                 'token' => $token,
             ]

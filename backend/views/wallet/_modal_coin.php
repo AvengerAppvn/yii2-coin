@@ -2,7 +2,6 @@
 
 use yii\helpers\Url;
 
-$code = Yii::$app->keyStorage->get('coin.code', 'TKC');
 ?>
 
 <div class="modal fade" id="deposit-coin" tabindex="-1" role="dialog">
