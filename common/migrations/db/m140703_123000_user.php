@@ -21,11 +21,16 @@ class m140703_123000_user extends Migration
             'password_hash' => $this->string()->notNull(),
             'oauth_client' => $this->string(),
             'oauth_client_user_id' => $this->string(),
-            'twofa_secret' => $this->string(16),
             'phone' => $this->string(20)->notNull(),
-            'referrer' => $this->integer(),
+            'referrer' => $this->integer()->defaultValue(0),
             'email' => $this->string()->notNull(),
             'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
+            'has2fa' => $this->smallInteger()->defaultValue(0),
+            'twofa_secret' => $this->string(16),
+            'twofa_ex_create_order' => $this->smallInteger()->defaultValue(0),
+            'twofa_ex_cancel_order' => $this->smallInteger()->defaultValue(0),
+            'twofa_lending' => $this->smallInteger()->defaultValue(0),
+            'twofa_withdraw' => $this->smallInteger()->defaultValue(0),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
             'logged_at' => $this->integer()
@@ -39,6 +44,7 @@ class m140703_123000_user extends Migration
             'avatar_path' => $this->string(),
             'avatar_base_url' => $this->string(),
             'locale' => $this->string(32)->notNull(),
+            'country_id' => $this->integer(),
             'gender' => $this->smallInteger(1)
         ], $tableOptions);
 

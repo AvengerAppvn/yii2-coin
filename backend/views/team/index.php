@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\models\User;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\search\TeamSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -17,7 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'user_id',
+            [
+                'attribute' => 'related_id',
+                'value' => function ($model) {
+                    return $model->user ? $model->user->username : 'Admin';
+                },
+                'filter' => ArrayHelper::map(User::find()->all(), 'id', 'username')
+            ],
             'level',
             'amount_btc',
             'amount_btc_bonus',
@@ -29,7 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'created_at',
             // 'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 <?php Pjax::end(); ?></div>

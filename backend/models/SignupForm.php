@@ -48,7 +48,7 @@ class SignupForm extends Model
         return [
             ['username', 'filter', 'filter' => 'trim'],
             
-            [['username','email','phone','referrer'], 'required'],
+            [['username','email','phone'], 'required'],
             
             ['username', 'unique',
                 'targetClass'=>'\common\models\User',
@@ -63,7 +63,7 @@ class SignupForm extends Model
             // [['phone'], PhoneInputValidator::className(),
                 // 'message' => Yii::t('backend', 'This phone has not valid.')],
                 
-            [['username','referrer','email'], 'string', 'min' => 2, 'max' => 255],
+            [['username','email'], 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'filter', 'filter' => 'trim'],
             

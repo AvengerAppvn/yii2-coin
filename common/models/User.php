@@ -23,14 +23,19 @@ use yii\web\IdentityInterface;
  * @property string $oauth_client_user_id
  * @property string $publicIdentity
  * @property string $twofa_secret
- * @property string $referrer
+ * @property integer $referrer
  * @property string $phone
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $logged_at
  * @property string $password write-only password
- *
+ * @property integer $has2fa
+ * @property integer $twofa_ex_create_order
+ * @property integer $twofa_ex_cancel_order
+ * @property integer $twofa_lending
+ * @property integer $twofa_withdraw
+ * 
  * @property \common\models\UserProfile $userProfile
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -114,7 +119,8 @@ class User extends ActiveRecord implements IdentityInterface
             ['phone', 'number'],
             ['status', 'default', 'value' => self::STATUS_NOT_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statuses())],
-            [['username'], 'filter', 'filter' => '\yii\helpers\Html::encode']
+            [['username'], 'filter', 'filter' => '\yii\helpers\Html::encode'],
+            [['referrer','has2fa','twofa_ex_create_order','twofa_ex_cancel_order','twofa_lending','twofa_withdraw'], 'integer'],
         ];
     }
 

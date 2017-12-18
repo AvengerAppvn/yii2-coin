@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property integer $user_id
+ * @property integer $related_id
  * @property double $amount_btc
  * @property double $amount_btc_bonus
  * @property double $amount_eth
@@ -36,7 +37,7 @@ class Team extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'level', 'type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['user_id','related_id', 'level', 'type', 'status', 'created_at', 'updated_at'], 'integer'],
             [['amount_btc', 'amount_btc_bonus', 'amount_eth', 'amount_eth_bonus', 'amount_total_bonus'], 'required'],
             [['amount_btc', 'amount_btc_bonus', 'amount_eth', 'amount_eth_bonus', 'amount_total_bonus'], 'number'],
         ];
@@ -50,12 +51,13 @@ class Team extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'amount_btc' => 'Amount Btc',
+            'related_id' => 'Username',
+            'level' => 'Level',
+            'amount_btc' => 'Amount BTC',
             'amount_btc_bonus' => 'Amount Btc Bonus',
             'amount_eth' => 'Amount Eth',
-            'amount_eth_bonus' => 'Amount Eth Bonus',
+            'amount_eth_bonus' => 'Amount ETH Bonus',
             'amount_total_bonus' => 'Amount Total Bonus',
-            'level' => 'Level',
             'type' => 'Type',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -63,6 +65,13 @@ class Team extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'related_id']);
+    }
     /**
      * @inheritdoc
      * @return \common\models\query\TeamQuery the active query used by this AR class.

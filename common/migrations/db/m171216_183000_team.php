@@ -16,6 +16,7 @@ class m171216_183000_team extends Migration
         $this->createTable('{{%team}}', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
+            'related_id' => $this->integer(),
             'amount_btc' => $this->float()->notNull(),
             'amount_btc_bonus' => $this->float()->notNull(),
             'amount_eth' => $this->float()->notNull(),

@@ -36,6 +36,7 @@ class TeamController extends Controller
     public function actionIndex()
     {
         $searchModel = new TeamSearch();
+        $searchModel->user_id = Yii::$app->user->identity->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

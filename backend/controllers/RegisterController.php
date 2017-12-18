@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;
 use common\models\User;
+use common\commands\AddToTreeTeamCommand;
 class RegisterController extends Controller
 {
 
@@ -42,7 +43,7 @@ class RegisterController extends Controller
             // Check referrer
             $user = User::find()->where(['username'=> $username])->limit(1)->one();
             if($user){
-                 $referrer = $user->username;    
+                 $referrer = $user->id;    
             }
         }
         
@@ -50,23 +51,27 @@ class RegisterController extends Controller
         if($referrer){
             $model->referrer = $referrer;
         }else{
-            $model->referrer = Yii::$app->keyStorage->get('coin.defaultRefferer', 'manager');
+            $model->referrer = Yii::$app->keyStorage->get('coin.defaultRefferer', '2');
         }
         if ($model->load(Yii::$app->request->post())) {
             $user = $model->signup();
             if ($user) {
-                if ($model->shouldBeActivated()) {
-                    Yii::$app->getSession()->setFlash('alert', [
-                        'body' => Yii::t(
-                            'frontend',
-                            'Your account has been successfully created. Check your email for further instructions.'
-                        ),
-                        'options' => ['class' => 'alert-success']
-                    ]);
-                } else {
-                    Yii::$app->getUser()->login($user);
-                }
-                return $this->goHome();
+                Yii::$app->commandBus->handle(new AddToTreeTeamCommand([
+                    'user_id' => $model->referrer,
+                    'related_id' => $user->id,
+                ]));
+                Yii::$app->getSession()->setFlash('alert', [
+                    'body' => Yii::t(
+                        'frontend',
+                        'Your account has been successfully created. Check your email for further instructions.'
+                    ),
+                    'options' => ['class' => 'alert-success']
+                ]);
+                // Successfull
+                
+                return $this->render('success', [
+                    'model' => $user
+                ]);
             }
         }
 
@@ -101,7 +106,7 @@ class RegisterController extends Controller
             'model' => $model,
         ]);
     }
-
+    
     /**
      * @param $token
      * @return string|Response
