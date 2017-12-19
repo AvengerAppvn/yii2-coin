@@ -50,20 +50,21 @@ $bundle = BackendAsset::register($this);
                  <div class="footer">
                     <?php echo Html::submitButton(Yii::t('frontend', 'Register'), 
                         [
-                            'class' => 'btn btn-primary btn-flat',
-                            'name' => 'signup-button'
+                            'class' => 'btn btn-lg btn-primary btn-flat',
+                            'name' => 'signup-button',
+                            'style' => 'margin-right:15px'
                         ]
                         ) ?>
                     <?php echo Html::a(Yii::t('frontend', 'Login'), ['/login'],[
-                        'class' => 'btn btn-success btn-flat',
+                        'class' => 'btn btn-lg btn-success btn-flat',
                         'name' => 'register-button'
                     ]) ?>
                 </div>
             <?php ActiveForm::end(); ?>
-       
+            <div style="padding:10px 0">
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+                <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
+            </div>
     </div>
-    <div style="padding:10px 0">
-        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-        <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
-    </div>
+
 </div>

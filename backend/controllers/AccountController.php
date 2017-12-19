@@ -15,59 +15,28 @@ use backend\models\PasswordResetRequestForm;
 use common\models\User;
 use common\models\UserToken;
 use yii\web\BadRequestHttpException;
+use yii\filters\AccessControl;
 class AccountController extends Controller
 {
 
     public $defaultAction = 'profile';
 
+
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    //'logout' => ['post']
+                    'logout' => ['post']
                 ]
             ]
         ];
     }
 
-    public function actions()
-    {
-        return [
-            'avatar-upload' => [
-                'class' => UploadAction::className(),
-                'deleteRoute' => 'avatar-delete',
-                'on afterSave' => function ($event) {
-                    /* @var $file \League\Flysystem\File */
-                    $file = $event->file;
-                    $img = ImageManagerStatic::make($file->read())->fit(215, 215);
-                    $file->put($img->encode());
-                }
-            ],
-            'avatar-delete' => [
-                'class' => DeleteAction::className()
-            ]
-        ];
-    }
-
-
-    public function actionLogin()
-    {
-        $this->layout = 'base';
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model
-            ]);
-        }
-    }
 
     public function actionLogout()
     {
@@ -117,25 +86,27 @@ class AccountController extends Controller
      */
     public function actionActivation($token)
     {
+        $this->layout = 'base';
         $token = UserToken::find()
             ->byType(UserToken::TYPE_ACTIVATION)
             ->byToken($token)
             ->notExpired()
             ->one();
-
+        
         if (!$token) {
             throw new BadRequestHttpException;
         }
 
         $user = $token->user;
+
         $user->updateAttributes([
             'status' => User::STATUS_ACTIVE
         ]);
         $token->delete();
         
-        $auth = \Yii::$app->get('authManager');
-        $user_auth = $auth->getRole(User::ROLE_USER);
-        $auth->assign($user_auth, $user->id);
+        // $auth = \Yii::$app->get('authManager');
+        // $user_auth = $auth->getRole(User::ROLE_USER);
+        // $auth->assign($user_auth, $user->id);
         
         Yii::$app->getUser()->login($user);
         
@@ -152,6 +123,7 @@ class AccountController extends Controller
      */
     public function actionForgotPassword()
     {
+        $this->layout = 'base';
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -175,12 +147,41 @@ class AccountController extends Controller
     }
 
     /**
+     * @return string|Response
+     */
+    public function actionResendMail()
+    {
+        $this->layout = 'base';
+        $model = new PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->getSession()->setFlash('alert', [
+                    'body' => Yii::t('frontend', 'Check your email for further instructions.'),
+                    'options' => ['class' => 'alert-success']
+                ]);
+
+                return $this->goHome();
+            } else {
+                Yii::$app->getSession()->setFlash('alert', [
+                    'body' => Yii::t('frontend', 'Sorry, we are unable to reset password for email provided.'),
+                    'options' => ['class' => 'alert-danger']
+                ]);
+            }
+        }
+
+        return $this->render('requestPasswordResetToken', [
+            'model' => $model,
+        ]);
+    }
+    
+    /**
      * @param $token
      * @return string|Response
      * @throws BadRequestHttpException
      */
     public function actionResetPassword($token)
     {
+        $this->layout = 'base';
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {

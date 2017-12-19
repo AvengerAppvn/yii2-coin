@@ -33,8 +33,6 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        // Yii::$app->user->identity->id
-        
         // Yii::$app->commandBus->handle(new AddToTreeTeamCommand([
         //             'user_id' => 6,
         //             'related_id' => 6,

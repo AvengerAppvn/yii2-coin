@@ -32,12 +32,13 @@ $this->params['body-class'] = 'login-page';
         </div>
         <div class="footer">
             <?php echo Html::submitButton(Yii::t('backend', 'Login'), [
-                'class' => 'btn btn-primary btn-flat',
-                'name' => 'login-button'
+                'class' => 'btn btn-lg btn-primary btn-flat',
+                'name' => 'login-button',
+                'style' => 'margin-right:15px'
             ]) ?>
             
             <?php echo Html::a(Yii::t('backend', 'Register'), ['/register'],[
-                'class' => 'btn btn-success btn-flat',
+                'class' => 'btn btn-lg btn-success btn-flat',
                 'name' => 'register-button'
             ]) ?>
         </div>

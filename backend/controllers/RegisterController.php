@@ -69,7 +69,7 @@ class RegisterController extends Controller
                 ]);
                 // Successfull
                 
-                return $this->render('success', [
+                return $this->render('verify', [
                     'model' => $user
                 ]);
             }
@@ -77,59 +77,6 @@ class RegisterController extends Controller
 
         return $this->render('index', [
             'model' => $model
-        ]);
-    }
-
-    /**
-     * @return string|Response
-     */
-    public function actionRequestPasswordReset()
-    {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('alert', [
-                    'body' => Yii::t('frontend', 'Check your email for further instructions.'),
-                    'options' => ['class' => 'alert-success']
-                ]);
-
-                return $this->goHome();
-            } else {
-                Yii::$app->getSession()->setFlash('alert', [
-                    'body' => Yii::t('frontend', 'Sorry, we are unable to reset password for email provided.'),
-                    'options' => ['class' => 'alert-danger']
-                ]);
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-    
-    /**
-     * @param $token
-     * @return string|Response
-     * @throws BadRequestHttpException
-     */
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->getSession()->setFlash('alert', [
-                'body' => Yii::t('frontend', 'New password was saved.'),
-                'options' => ['class' => 'alert-success']
-            ]);
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
         ]);
     }
 }

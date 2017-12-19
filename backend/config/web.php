@@ -78,11 +78,11 @@ $config = [
                 'roles' => ['?'],
                 'actions' => ['index']
             ],
-             [
+            [
                 'controllers' => ['account'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['forgot-password']
+                'actions' => ['forgot-password','activation']
             ],
             [
                 'controllers' => ['register'],
