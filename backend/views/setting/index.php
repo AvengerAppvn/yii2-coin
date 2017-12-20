@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-body">
           <div class="form-group">
             <label for="username" class="text-white">Username</label>
-            <input class="form-control" readonly="" name="username" type="text" value="khoanguyen" id="username">
+            <input class="form-control" readonly="" name="username" type="text" value="<?= $referrer ?>" id="username">
         </div>
         
         <div class="form-group">

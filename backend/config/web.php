@@ -73,6 +73,12 @@ $config = [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
             [
+                'controllers' => ['notification'],
+                'allow' => true,
+                'roles' => ['?'],
+                'actions' => ['index']
+            ],
+            [
                 'controllers' => ['login'],
                 'allow' => true,
                 'roles' => ['?'],

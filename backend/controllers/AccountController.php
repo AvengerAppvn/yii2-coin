@@ -94,7 +94,10 @@ class AccountController extends Controller
             ->one();
         
         if (!$token) {
-            throw new BadRequestHttpException;
+            // TODO Yeu cau token moi hoac login
+            return $this->redirect('https://yii2-coin-avengerappvn.c9users.io/backend/web/login');
+            //return $this->redirect('@backendUrl/login');
+            //throw new BadRequestHttpException;
         }
 
         $user = $token->user;
@@ -114,8 +117,10 @@ class AccountController extends Controller
             'body' => Yii::t('frontend', 'Your account has been successfully activated.'),
             'options' => ['class' => 'alert-success']
         ]);
-
-        return $this->goHome();
+        
+        return $this->redirect('https://yii2-coin-avengerappvn.c9users.io/backend/web/');
+        
+        //return $this->goHome();
     }
 
     /**

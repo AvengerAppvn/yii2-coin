@@ -9,7 +9,12 @@ use yii\widgets\ActiveForm;
 $this->title =  Yii::t('frontend', 'Request password reset');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-request-password-reset">
+<div class="register-box">
+    <div class="register-logo">
+        <?= Html::img('img/coin_logo.png',['alt'=>'Logo','data-holder-rendered'=>'true','style'=>'width: 140px; height: 140px;']) ?>
+    </div><!-- /.register-logo -->
+
+    <div class="register-box-body">
     <h2>Verify Your Email</h2>
     <p>
     We sent a verification email to <strong><?= $model->email ?></strong>.
@@ -29,5 +34,5 @@ $this->params['breadcrumbs'][] = $this->title;
         Try <a href="/signout">signing up</a> using another email address.
         </li> 
     </ul>
-    
+    </div>
 </div>

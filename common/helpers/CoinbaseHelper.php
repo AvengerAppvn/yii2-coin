@@ -93,6 +93,7 @@ class CoinbaseHelper
     
     public function createAddress($type = null)
     {
+        return null;
         $user = Yii::$app->user->identity;
         $accounts = $this->client->getAccounts();
         $addresses = [];

@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="register-box">
     <div class="register-logo">
-                <img class="img-circle center-block" src="<?= $this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png') ?>" data-holder-rendered="true" style="width: 140px; height: 140px;">    
+        <?= Html::img('img/coin_logo.png',['alt'=>'Logo','data-holder-rendered'=>'true','style'=>'width: 140px; height: 140px;']) ?>
     </div><!-- /.register-logo -->
 
     <div class="register-box-body">

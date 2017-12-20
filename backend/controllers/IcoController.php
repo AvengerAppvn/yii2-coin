@@ -42,11 +42,13 @@ class IcoController extends Controller
             //Create wallet
             $wallet = new Wallet();
             $addresses = $coin->createAddress();
-            $wallet->user_id = Yii::$app->user->identity->id;
-            $wallet->wallet_coin = $coin->createWalletCoin();
-            $wallet->wallet_btc = $addresses['BTC']->getAddress();
-            $wallet->wallet_eth = $addresses['ETH']->getAddress();
-            $wallet->save();
+            if($addresses){
+                $wallet->user_id = Yii::$app->user->identity->id;
+                $wallet->wallet_coin = $coin->createWalletCoin();
+                $wallet->wallet_btc = $addresses['BTC']->getAddress();
+                $wallet->wallet_eth = $addresses['ETH']->getAddress();
+                $wallet->save();
+            }
         }
         
         $ref_url = Yii::$app->getHomeUrl().'/register?referrer='.Yii::$app->user->identity->username;

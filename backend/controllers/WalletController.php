@@ -46,16 +46,20 @@ class WalletController extends Controller
             $wallet = new Wallet();
             $addresses = $coin->createAddress();
             $wallet->user_id = Yii::$app->user->identity->id;
-            $wallet->wallet_coin = $coin->createWalletCoin();
-            $wallet->wallet_btc = $addresses['BTC']->getAddress();
-            $wallet->wallet_eth = $addresses['ETH']->getAddress();
+            if($addresses){
+                $wallet->wallet_coin = $coin->createWalletCoin();
+                $wallet->wallet_btc = $addresses['BTC']->getAddress();
+                $wallet->wallet_eth = $addresses['ETH']->getAddress();
+            }
             $wallet->save();
         }
         
         if(!$wallet->wallet_btc){
             // Create wallet btc. Call API
             $addresses = $coin->createAddress('BTC');
-            $wallet->wallet_btc = $addresses['BTC']->getAddress();;
+            if($addresses){
+                $wallet->wallet_btc = $addresses['BTC']->getAddress();;
+            }
             $wallet->save();
         }
         
@@ -68,8 +72,10 @@ class WalletController extends Controller
         if(!$wallet->wallet_eth){
             // Create wallet eth
              $addresses = $coin->createAddress('ETH');
-            $wallet->wallet_eth = $addresses['ETH']->getAddress();;
-            $wallet->save();
+             if($addresses){
+                $wallet->wallet_eth = $addresses['ETH']->getAddress();
+                $wallet->save();
+             }
         }
         
         $wallet_btc =  $wallet->wallet_btc;

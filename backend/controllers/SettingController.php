@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Setting;
+use common\models\User;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -59,7 +60,14 @@ class SettingController extends Controller
             ]);
             return $this->refresh();
         }
-        return $this->render('index', ['model'=>$model,'profile'=>$profile]);
+        $ref_name = '';
+        if($user->referrer){
+            $ref = User::findOne($user->referrer);
+            if($ref){
+                $ref_name = $ref->username;
+            }
+        }
+        return $this->render('index', ['model'=>$model,'profile'=>$profile,'referrer'=> $ref_name]);
     }
 
 

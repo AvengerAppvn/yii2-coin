@@ -6,6 +6,14 @@ $config = [
     'sourceLanguage'=>'en-US',
     'language'=>'en-US',
     'bootstrap' => ['log'],
+    // 'on beforeRequest' => function ($event) {
+    //     if(!Yii::$app->request->isSecureConnection){
+    //         $url = Yii::$app->request->getAbsoluteUrl();
+    //         $url = str_replace('http:', 'https:', $url);
+    //         Yii::$app->getResponse()->redirect($url);
+    //         Yii::$app->end();
+    //     }
+    // },
     'components' => [
 
         'authManager' => [
