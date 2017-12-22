@@ -49,10 +49,10 @@
     "bower-asset/flot": "^0.8",
     "symfony/process": "^3.0",
     "2amigos/qrcode-library": "~1.1",
+    "2amigos/2fa-library": "~1.0",
     "2amigos/yii2-chartjs-widget": "~2.0",
     "himiklab/yii2-recaptcha-widget": "*",
     "coinbase/coinbase": "~2.0",
-    "2amigos/2fa-library": "~1.0",
     "eddmash/yii2-clipboard": "@dev",
     "russ666/yii2-countdown": "*",
     "borales/yii2-phone-input": "*"

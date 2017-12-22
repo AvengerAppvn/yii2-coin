@@ -4,6 +4,7 @@ use common\grid\EnumColumn;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -12,89 +13,62 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('backend', 'Security');
 $this->params['breadcrumbs'][] = $this->title;
+$items = [1=>'On',0=>'Off'];
 ?>
 
-<div class="row">
-    <div class="col-md-6">
+<div class="row security-page">
+    <div class="col-md-8 col-xs-12">
         <div class="panel panel-filled">
             <div class="panel-body">
                 <h3 class="m-t-md">
                     Account Security
                 </h3>
                 
-                <form method="POST" action="https://wake.unixcoin.com/security" accept-charset="UTF-8" class="form-horizontal"><input name="_method" type="hidden" value="PUT"><input name="_token" type="hidden" value="jmYMHqjvkiNHXcZdl2bFHxjUPHJ1eugzpqZAPiu7">
+                <?php $form = ActiveForm::begin(); ?>
+                
+                <?php echo $form->field($model, 'has2fa',[
+                    'labelOptions' => ['class' => 'col-sm-3 control-label'],
+                    'template'=> "{label}<div class='col-sm-9 input-group'>{input}</div>\n{hint}\n{error}"
+                    ])->radioList($items,['id'=>'input-has2fa']) ?>
+                <?php echo $form->field($model, 'one_time_password',[
+                    'labelOptions' => ['class' => 'col-sm-3 control-label'],
+                    'template'=> "{label}<div class='col-sm-9 input-group input-group-lg'><span class='input-group-addon'><i class='fa fa-qrcode fa-lg'></i></span>{input}</div>\n{hint}\n{error}"
+                    ])
+                    ->textInput(['maxlength' => 6]) ?>
                     
-                    
-                    
-                    <fieldset>
-                        <p>Two Factor Authentication</p>
-
-                        <div class="form-group">
-                            <label for="enable2fa" class="control-label col-md-3 text-white">Enable Two-Factor</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline text-white"><input name="enable2fa" type="radio" value="1" id="enable2fa"> On</label>
-                                <label class="radio-inline text-white"><input checked="checked" name="enable2fa" type="radio" value="0" id="enable2fa"> Off</label>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                                                    <fieldset id="2fa-options" class="collapse ">
-                                                    <p>Require 2FA code for</p>
-
-                        <div class="form-group">
-                            <label for="2fa_create" class="control-label col-md-3 text-white">Exchange: Create Order</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline text-white"><input name="2fa_create" type="radio" value="1" id="2fa_create"> On</label>
-                                <label class="radio-inline text-white"><input checked="checked" name="2fa_create" type="radio" value="0" id="2fa_create"> Off</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="2fa_cancel" class="control-label col-md-3 text-white">Exchange: Cancel Order</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline text-white"><input name="2fa_cancel" type="radio" value="1" id="2fa_cancel"> On</label>
-                                <label class="radio-inline text-white"><input checked="checked" name="2fa_cancel" type="radio" value="0" id="2fa_cancel"> Off</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="2fa_lending" class="control-label col-md-3 text-white">Lending</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline text-white"><input name="2fa_lending" type="radio" value="1" id="2fa_lending"> On</label>
-                                <label class="radio-inline text-white"><input checked="checked" name="2fa_lending" type="radio" value="0" id="2fa_lending"> Off</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="2fa_withdrawal" class="control-label col-md-3 text-white">Withdrawal</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline text-white"><input name="2fa_withdrawal" type="radio" value="1" id="2fa_withdrawal"> On</label>
-                                <label class="radio-inline text-white"><input checked="checked" name="2fa_withdrawal" type="radio" value="0" id="2fa_withdrawal"> Off</label>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <div class="form-group">
-                        <label for="2fa" class="control-label col-md-3 text-white">Enter 2FA Code</label>
-                        <div class="col-md-9">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-qrcode fa-lg"></i></span>
-                                <input class="form-control" name="one_time_password" type="text">
-                            </div>
-                        </div>
+                <div id="extra-2fa" style="<?php $model->has2fa? : 'display:none' ?>">
+                <?php echo $form->field($model, 'twofa_ex_create_order',[
+                    'labelOptions' => ['class' => 'col-sm-3 control-label'],
+                    'template'=> "{label}<div class='col-sm-9 input-group'>{input}</div>\n{hint}\n{error}"
+                    ])->radioList($items) ?>
+                <?php echo $form->field($model, 'twofa_ex_cancel_order',[
+                    'labelOptions' => ['class' => 'col-sm-3 control-label'],
+                    'template'=> "{label}<div class='col-sm-9 input-group'>{input}</div>\n{hint}\n{error}"
+                    ])->radioList($items) ?>
+                <?php echo $form->field($model, 'twofa_lending',[
+                    'labelOptions' => ['class' => 'col-sm-3 control-label'],
+                    'template'=> "{label}<div class='col-sm-9 input-group'>{input}</div>\n{hint}\n{error}"
+                    ])->radioList($items) ?>
+                <?php echo $form->field($model, 'twofa_withdraw',[
+                    'labelOptions' => ['class' => 'col-sm-3 control-label'],
+                    'template'=> "{label}<div class='col-sm-9 input-group'>{input}</div>\n{hint}\n{error}"
+                    ])->radioList($items) ?>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-3 text-right">
+                        <?php echo Html::submitButton(Yii::t('backend', 'Submit'),['class' =>'btn btn-primary']) ?>
                     </div>
-
-                    <div class="form-group">
-                        <div class="col-md-3"></div>
-                        <div class="form-actions col-md-9">
-                            <button type="submit" class="btn btn-accent">Submit</button>
-                            <button type="reset" class="btn btn-default">Cancel</button>
-                        </div>
+                    <div class="col-sm-9 text-left">
+                        <?php echo Html::button(Yii::t('backend', 'Cancel'),['class' =>'btn btn-default']) ?>    
                     </div>
-                </form>
+                </div>
+                
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
+
 
 </div>
 

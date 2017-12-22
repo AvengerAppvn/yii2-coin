@@ -34,4 +34,13 @@ $(function() {
     
             
     $(document).on("change, keyup", "#buyform-amount_coin", updateAmount);
+    $('#input-has2fa input').on('change', function() {
+        var value = ($('input[name="SecurityForm[has2fa]"]:checked', '#input-has2fa').val()); 
+        if(value==0){
+            $('#extra-2fa').hide();
+        }else{
+            $('#extra-2fa').show();
+        }
+    });
+    
 })

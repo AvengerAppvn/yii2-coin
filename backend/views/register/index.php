@@ -18,7 +18,7 @@ $bundle = BackendAsset::register($this);
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
                 <div class="head">
                     <h1 class="text-center">
-                    <i class="fa fa-lock text-success" aria-hidden="true"></i>
+                       <i class="fa fa-user-plus" style="color:#dccb8b" aria-hidden="true"></i>
                     <?php echo Html::encode($this->title) ?>
                     </h1>
                     <p class="header text-light">Please enter your data to register.</p>
@@ -60,11 +60,14 @@ $bundle = BackendAsset::register($this);
                         'name' => 'register-button'
                     ]) ?>
                 </div>
+                <div style="padding:10px 0">
+                    <?= Html::a('Forget password?',['account/forgot-password']); ?>
+                </div>
             <?php ActiveForm::end(); ?>
-            <div style="padding:10px 0">
-                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-                <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
-            </div>
+            
     </div>
-
+    <div class="text-info" style="padding:10px 0">
+        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+        <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
+    </div>
 </div>

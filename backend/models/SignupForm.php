@@ -11,7 +11,7 @@ use yii\base\Exception;
 use yii\base\Model;
 use Yii;
 use yii\helpers\Url;
-
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 /**
  * Signup form
  */
@@ -39,7 +39,7 @@ class SignupForm extends Model
      * @var
      */
     public $phone;    
-    
+    public $reCaptcha;
     /**
      * @inheritdoc
      */
@@ -80,6 +80,7 @@ class SignupForm extends Model
             //don't use scenarios() here. Use 'on' instead 
             ['password_repeat', 'required', 'on' => 'update'],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match", 'on' => 'update' ],    
+            ['reCaptcha', ReCaptchaValidator::className(), 'secret' => env('CAPTCHA_SERVERVERIFY')],
         ];
     }
 
@@ -92,6 +93,7 @@ class SignupForm extends Model
             'username'=>Yii::t('backend', 'Username'),
             'email'=>Yii::t('backend', 'E-mail'),
             'password'=>Yii::t('backend', 'Password'),
+            'reCaptcha' => '',
         ];
     }
 

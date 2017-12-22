@@ -120,4 +120,83 @@ class CoinbaseHelper
         $bytes = Yii::$app->getSecurity()->generateRandomKey($length);
         return "T".StringHelper::generateRandomString($bytes,$length);
     }
+    
+    public function getAccountByCurrency($currency = 'BTC'){
+        $accounts = $this->client->getAccounts();
+        $addresses = [];
+        foreach($accounts->all() as $account){
+            if($currency == $account->currency){
+                return $account;
+            }
+        }
+    }
+    
+    public function getNotifications(){
+
+        $notifications = $this->client->getNotifications();
+        
+        // $url = 'https://api.coinbase.com/v2/notifications';
+
+        // $cURL = curl_init();
+        // curl_setopt($cURL, CURLOPT_URL, $url);
+        // curl_setopt($cURL, CURLOPT_HTTPGET, true);
+        // curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
+
+        // curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
+        //     'Content-Type: application/json',
+        //     'Accept: application/json',
+        //     'CB-VERSION : 2017-11-29'
+        // ));
+        
+        // $result = curl_exec($cURL);
+        // curl_close($cURL);
+        
+        
+        
+        var_dump($notifications);
+        die;
+        $json = json_decode($result, true);
+        return $json['data']['amount'];
+    }
+    
+    private function webhook(){
+        // $raw_body = file_get_contents('php://input');
+        // $signature = $_SERVER['HTTP_CB_SIGNATURE'];
+        // $authenticity = $client->verifyCallback($raw_body, $signature); // boolean
+    }
+    
+     public function getTransactions(){
+        $accounts = $this->client->getAccounts();
+        $addresses = [];
+        foreach($accounts->all() as $account){
+            //var_dump($account);
+            //die;
+            $notifications = $this->client->getAccountTransactions($account);
+            var_dump($notifications);
+            //die;
+        }
+        
+        // $url = 'https://api.coinbase.com/v2/notifications';
+
+        // $cURL = curl_init();
+        // curl_setopt($cURL, CURLOPT_URL, $url);
+        // curl_setopt($cURL, CURLOPT_HTTPGET, true);
+        // curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
+
+        // curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
+        //     'Content-Type: application/json',
+        //     'Accept: application/json',
+        //     'CB-VERSION : 2017-11-29'
+        // ));
+        
+        // $result = curl_exec($cURL);
+        // curl_close($cURL);
+        
+        
+        
+        // var_dump($notifications);
+        // die;
+        // $json = json_decode($result, true);
+        // return $json['data']['amount'];
+    }
 }

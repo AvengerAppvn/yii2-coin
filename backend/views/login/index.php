@@ -3,9 +3,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use backend\assets\BackendAsset;
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \backend\models\LoginForm */
+
 $bundle = BackendAsset::register($this);
 $this->title = Yii::t('backend', 'Login');
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,7 +11,12 @@ $this->params['body-class'] = 'login-page';
 ?>
 <div class="login-box">
     <div class="login-logo">
-        <img class="img-circle center-block" src="<?= $this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png') ?>" data-holder-rendered="true" style="width: 140px; height: 140px;">    
+        <?= Html::img(['/img/coin_logo.png'],[
+            'alt'=>'logo',
+            'data-holder-rendered'=>'true',
+            'style'=>'width: 140px; height: 140px;',
+            'class'=>'img-circle center-block']); ?>
+
     </div><!-- /.login-logo -->
     <div class="login-box-body">
         <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
@@ -47,7 +50,7 @@ $this->params['body-class'] = 'login-page';
         </div>
         <?php ActiveForm::end(); ?>
     </div>
-    <div style="padding:10px 0">
+    <div class="text-info" style="padding:10px 0">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
         <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
     </div>

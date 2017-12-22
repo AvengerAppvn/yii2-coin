@@ -19,15 +19,32 @@ body .user-panel > .info {
 }
 
 body{ 
-  background: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/SImAn91gin31gtxk/stock-market-fluctuations-in-3d-graphs-business-and-finance-background-animated-stock-market-statistics-on-screen-prices-going-up-and-down-economic-growth_bwgzdn2yx_thumbnail-full01.png) !important;
+  background: url(../img/background.png) !important;
 }
 .login-page, .register-page {
     background: transparent;
 }
-.login-box-body, .register-box-body{
-  opacity: 1;
+
+.login-box-body, .register-box-body {
+    background-color: rgba(20,70,130,0.8);
+    padding: 10px 25px;
+    color: #eee;
+    border: 4px solid #dccb8b;
 }
 
+.security-page .control-label {
+    padding-top: 9px;
+    margin-bottom: 0;
+    text-align: right;
+}
+.security-page .radio{
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.intl-tel-input {
+    display: block !important;
+}
 .register-box{
   width:480px;
 }
