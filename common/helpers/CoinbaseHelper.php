@@ -134,7 +134,10 @@ class CoinbaseHelper
     public function getNotifications(){
 
         $notifications = $this->client->getNotifications();
-        
+        var_dump($notifications);die;
+        foreach($notifications->all() as $notification){
+            var_dump($notification->getData());die;
+        }
         // $url = 'https://api.coinbase.com/v2/notifications';
 
         // $cURL = curl_init();
@@ -165,7 +168,85 @@ class CoinbaseHelper
         // $authenticity = $client->verifyCallback($raw_body, $signature); // boolean
     }
     
+     public function authenticity($raw_body,$signature){
+         
+        return $this->client->verifyCallback($raw_body, $signature);
+     }
+     
      public function getTransactions(){
+        $accounts = $this->client->getAccounts();
+        $addresses = [];
+         //$transaction = new Transaction();
+         
+        foreach($accounts->all() as $account){
+            //var_dump($account);
+            //die;
+            $transactions = $this->client->getAccountTransactions($account);
+            foreach($transactions->all() as $transaction){
+                var_dump($transaction);
+                var_dump($transaction->getAmount()->getAmount());
+            }
+
+            //var_dump($notifications);
+            //die;
+        }
+         die;
+         
+         
+        $accounts = $this->client->getAccounts();
+        $addresses = [];
+        foreach($accounts->all() as $account){
+            //var_dump($account);
+            //die;
+            $notifications = $this->client->getAccountTransactions($account);
+            var_dump($notifications);
+            //die;
+        }
+        
+        // $url = 'https://api.coinbase.com/v2/notifications';
+
+        // $cURL = curl_init();
+        // curl_setopt($cURL, CURLOPT_URL, $url);
+        // curl_setopt($cURL, CURLOPT_HTTPGET, true);
+        // curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
+
+        // curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
+        //     'Content-Type: application/json',
+        //     'Accept: application/json',
+        //     'CB-VERSION : 2017-11-29'
+        // ));
+        
+        // $result = curl_exec($cURL);
+        // curl_close($cURL);
+        
+        
+        
+        // var_dump($notifications);
+        // die;
+        // $json = json_decode($result, true);
+        // return $json['data']['amount'];
+    }
+     public function getOrders(){
+        $orders = $this->client->getOrders();
+        var_dump($orders);
+        $addresses = [];
+         //$transaction = new Transaction();
+         
+        foreach($orders->all() as $order){
+            var_dump($account);
+            //die;
+            // $transactions = $this->client->getAccountTransactions($account);
+            // foreach($transactions->all() as $transaction){
+            //     var_dump($transaction);
+            //     var_dump($transaction->getAmount()->getAmount());
+            // }
+
+            //var_dump($notifications);
+            //die;
+        }
+        die;
+         
+         
         $accounts = $this->client->getAccounts();
         $addresses = [];
         foreach($accounts->all() as $account){
