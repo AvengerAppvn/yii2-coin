@@ -34,10 +34,10 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         // Yii::$app->commandBus->handle(new AddToTreeTeamCommand([
-        //             'user_id' => 6,
-        //             'related_id' => 6,
+        //             'user_id' => 11,
+        //             'related_id' => 21,
         // ]));
-        
+
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort = [

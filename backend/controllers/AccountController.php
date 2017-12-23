@@ -94,8 +94,9 @@ class AccountController extends Controller
             ->one();
         
         if (!$token) {
+            return $this->goHome();
             // TODO Yeu cau token moi hoac login
-            return $this->redirect('https://yii2-coin-avengerappvn.c9users.io/backend/web/login');
+            //return $this->redirect('https://yii2-coin-avengerappvn.c9users.io/backend/web/login');
             //return $this->redirect('@backendUrl/login');
             //throw new BadRequestHttpException;
         }
