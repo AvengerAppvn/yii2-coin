@@ -23,12 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <hr>
     <p>
-        <a href="#email_options" class="slide-toggle">
-            Email didn't arrive or want to use a different email?</a>
+            Email didn't arrive or want to use a different email?
     </p>
     <ul id="email_options" style="">
         <li>Check your spam folder and mark the message as 'Not Spam'.</li>
-        <?= Html::a('Resend email',['/account/resend-email'],['data-remote'=>'true','rel'=>'nofollow','data-method'=>'post']) ?>
+        <li><?= Html::a('Resend email',['/account/resend-email'],['data-remote'=>'true','rel'=>'nofollow','data-method'=>'post']) ?>
          to 
         <strong><?= $model->email ?></strong><span id="email_notice"></span></li>
         <li>

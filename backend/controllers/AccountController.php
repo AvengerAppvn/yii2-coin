@@ -118,9 +118,9 @@ class AccountController extends Controller
             'options' => ['class' => 'alert-success']
         ]);
         
-        return $this->redirect('https://yii2-coin-avengerappvn.c9users.io/backend/web/');
+        //return $this->redirect('https://yii2-coin-avengerappvn.c9users.io/backend/web/');
         
-        //return $this->goHome();
+        return $this->goHome();
     }
 
     /**
