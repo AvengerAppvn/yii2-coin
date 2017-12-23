@@ -95,7 +95,6 @@ class CoinbaseHelper
     {
         $user = Yii::$app->user->identity;
         $accounts = $this->client->getAccounts();
-        $addresses = [];
         foreach($accounts->all() as $account){
             if($type == null){
                 $address = new Address(['name' => $account->getCurrency().' - '.$user->username]);
