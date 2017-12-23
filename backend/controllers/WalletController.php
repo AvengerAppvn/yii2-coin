@@ -21,22 +21,16 @@ use common\helpers\CoinbaseHelper;
 class WalletController extends Controller
 {
     public $defaultAction = 'me';
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
-    
 
-    
     public function actionMe()
     {
+        $user = Yii::$app->user->identity;
+        if (!Yii::$app->user->isGuest) {
+            if($user && $user->has2fa && !$user->authen_2fa){
+                return $this->redirect(['/authen']);
+            }
+        }
+        
         $coin = new CoinbaseHelper();
         //$addresses = $coin->createAddress();
         //var_dump($addresses);die;
@@ -101,83 +95,6 @@ class WalletController extends Controller
         ]);
     }
     
-    /**
-     * Lists all Wallet models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new WalletSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Wallet model.
-     * @param integer $user_id
-     * @return mixed
-     */
-    public function actionView($user_id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($user_id),
-        ]);
-    }
-
-    /**
-     * Creates a new Wallet model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        Yii::$app->commandBus->handle(new SendEmailCommand([
-            'subject' => Yii::t('backend', 'Activation email'),
-            'view' => 'activation',
-            'from' => 'smartkids210@gmail.com',
-            'to' => 'lex4vn@gmail.com',
-            'params' => [
-                'url' => Url::to(['/account/activation', 'token' => $token->token], true)
-            ]
-        ]));
-    }
-
-    /**
-     * Updates an existing Wallet model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $user_id
-     * @return mixed
-     */
-    public function actionUpdate($user_id)
-    {
-        $model = $this->findModel($user_id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Wallet model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $user_id
-     * @return mixed
-     */
-    public function actionDelete($user_id)
-    {
-        $this->findModel($user_id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
     /**
      * Finds the Wallet model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

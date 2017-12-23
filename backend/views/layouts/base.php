@@ -35,6 +35,7 @@ $this->params['body-class'] = array_key_exists('body-class', $this->params) ?
     ])
 ])?>
     <?php $this->beginBody() ?>
+
         <?php echo $content ?>
     <?php $this->endBody() ?>
 <?php echo Html::endTag('body') ?>

@@ -124,11 +124,14 @@ class SignupForm extends Model
                 UserToken::TYPE_ACTIVATION,
                 Time::SECONDS_IN_A_DAY
             );
+            
             Yii::$app->commandBus->handle(new SendEmailCommand([
                 'subject' => Yii::t('backend', 'Activation email'),
                 'view' => 'activation',
                 'to' => $this->email,
                 'params' => [
+                    'name' => $user->username,
+                    'logo'=> Url::to('@app/web/img/coin_logo.png'),
                     'url' => Url::to(['/account/activation', 'token' => $token->token], true)
                 ]
             ]));

@@ -28,10 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <ul id="email_options" style="">
         <li>Check your spam folder and mark the message as 'Not Spam'.</li>
-        <li><a href="/account/resend_email" data-remote="true" rel="nofollow" data-method="post">Resend email</a> to 
+        <?= Html::a('Resend email',['/account/resend-email'],['data-remote'=>'true','rel'=>'nofollow','data-method'=>'post']) ?>
+         to 
         <strong><?= $model->email ?></strong><span id="email_notice"></span></li>
         <li>
-        Try <a href="/signout">signing up</a> using another email address.
+        Try <?= Html::a('register',['/register']) ?> using another email address.
         </li> 
     </ul>
     </div>

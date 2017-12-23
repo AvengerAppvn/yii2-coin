@@ -39,7 +39,7 @@ class AddToTreeTeamCommand extends Object implements SelfHandlingCommand
         $model->save(false);
         $this->scanRelated($model->related_id,$model->user_id,$model->related_id);
 
-        return $result;
+        return 1;
     }
     
     private function scanRelated($related_id,$user_id,$primary){

@@ -103,6 +103,12 @@ $config = [
                 'actions' => ['index']
             ],
             [
+                'controllers' => ['authen'],
+                'allow' => true,
+                'roles' => ['@'],
+                'actions' => ['index']
+            ],
+            [
                 'controllers' => ['site'],
                 'allow' => true,
                 'roles' => ['?', '@'],

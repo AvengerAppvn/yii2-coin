@@ -35,6 +35,12 @@ class SettingController extends Controller
         $this->layout = 'box';
         
         $user = Yii::$app->user->identity;
+        if (!Yii::$app->user->isGuest) {
+            if($user && $user->has2fa && !$user->authen_2fa){
+                return $this->redirect(['/authen']);
+            }
+        }
+        
         $model = new AccountForm();
         $model->username = $user->username;
         $model->email = $user->email;

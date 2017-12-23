@@ -31,6 +31,11 @@ class SecurityController extends Controller
     public function actionIndex()
     {
         $user = Yii::$app->user->identity;
+        if (!Yii::$app->user->isGuest) {
+            if($user && $user->has2fa && !$user->authen_2fa){
+                return $this->redirect(['/authen']);
+            }
+        }
         
         if ($user->twofa_secret) {
             $secret = Yii::$app->user->identity->twofa_secret;

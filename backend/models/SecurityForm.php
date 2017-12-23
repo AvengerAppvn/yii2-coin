@@ -3,7 +3,7 @@ namespace backend\models;
 
 use Yii;
 use yii\base\Model;
-
+use Da\TwoFA\Manager;
 /**
  * Login form
  */
@@ -48,5 +48,20 @@ class SecurityForm extends Model
             'twofa_withdraw' => Yii::t('backend', 'Withdraw'),
             'one_time_password' => Yii::t('backend', 'Enter 2FA Code'),
         ];
+    }
+    
+    public function authen(){
+        $user = Yii::$app->user->identity;
+        $manager = new Manager();
+        $valid = $manager
+            //->setCycles(2) // 120 seconds (60 seconds past and future respectively) 
+            ->verify($this->one_time_password, $user->twofa_secret);
+            
+        if($valid){
+            $user->authen_2fa = true;
+        }else{
+            $user->authen_2fa = false;
+        }
+        return $valid;
     }
 }

@@ -35,6 +35,7 @@ use yii\web\IdentityInterface;
  * @property integer $twofa_ex_cancel_order
  * @property integer $twofa_lending
  * @property integer $twofa_withdraw
+ * @property integer $authen_2fa
  * 
  * @property \common\models\UserProfile $userProfile
  */
@@ -50,7 +51,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     const EVENT_AFTER_SIGNUP = 'afterSignup';
     const EVENT_AFTER_LOGIN = 'afterLogin';
-
+    
+    public $authen_2fa;
     /**
      * @inheritdoc
      */

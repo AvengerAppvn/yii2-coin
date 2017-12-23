@@ -34,6 +34,12 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        $user = Yii::$app->user->identity;
+        if (!Yii::$app->user->isGuest) {
+            if($user && $user->has2fa && !$user->authen_2fa){
+                return $this->redirect(['/authen']);
+            }
+        }
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

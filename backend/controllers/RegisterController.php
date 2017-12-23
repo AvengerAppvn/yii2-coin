@@ -68,7 +68,7 @@ class RegisterController extends Controller
                     'options' => ['class' => 'alert-success']
                 ]);
                 // Successfull
-                //return $this->redirect(['account/verify']);
+                return $this->redirect(['account/verify']);
                 return $this->render('verify', [
                     'model' => $user
                 ]);

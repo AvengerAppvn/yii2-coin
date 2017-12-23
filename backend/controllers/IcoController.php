@@ -14,6 +14,7 @@ use cheatsheet\Time;
 use common\models\UserToken;
 use yii\web\BadRequestHttpException;
 use common\helpers\CoinbaseHelper;
+use yii\helpers\Url;
 /**
  * IcoController
  */
@@ -35,6 +36,13 @@ class IcoController extends Controller
     public function actionIndex()
     {
         $user = Yii::$app->user->identity;
+        
+        if (!Yii::$app->user->isGuest) {
+            if($user && $user->has2fa && !$user->authen_2fa){
+                return $this->redirect(['/authen']);
+            }
+        }
+        
         $wallet = Wallet::find()->where(['user_id'=>$user->id])->limit(1)->one();
         $coin = new CoinbaseHelper();
 
@@ -131,6 +139,13 @@ class IcoController extends Controller
     public function actionToken()
     {
         $user = Yii::$app->user->identity;
+
+        if (!Yii::$app->user->isGuest) {
+            if($user && $user->has2fa && !$user->authen_2fa){
+                return $this->redirect(['/authen']);
+            }
+        }
+        
         //$token = Yii::$app->getSecurity()->generateRandomKey(6);
          $token = UserToken::createBuy(
              $user->id,
@@ -145,6 +160,8 @@ class IcoController extends Controller
             'from' => env('USERNAME_EMAIL'),
             'to' => $user->email,
             'params' => [
+                'name' => $user->username,
+                'logo'=> Url::to('@app/web/img/coin_logo.png'),
                 'token' => $token,
             ]
         ]));

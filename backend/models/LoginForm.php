@@ -89,7 +89,18 @@ class LoginForm extends Model
 
         return false;
     }
-
+    
+    public function hasTwofa()
+    {
+        $user = Yii::$app->user->identity;
+        return $user->has2fa == 1;
+    }
+    
+    public function authen_2fa()
+    {
+        $user = Yii::$app->user->identity;
+        return $user->authen_2fa;
+    }
     /**
      * Finds user by [[username]]
      *
