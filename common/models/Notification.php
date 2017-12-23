@@ -13,6 +13,10 @@ use Yii;
  * @property string $data
  * @property string $user_id
  * @property string $account_id
+ * @property string $address
+ * @property string $currency
+ * @property double $amount
+ * @property string $transaction_id
  * @property integer $delivery_attempts
  * @property string $delivery_response
  * @property string $rawdata
@@ -36,11 +40,11 @@ class Notification extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['notification_id', 'type', 'user_id', 'account_id'], 'required'],
             [['data', 'rawdata'], 'string'],
+            [['amount'], 'number'],
             [['delivery_attempts', 'status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['notification_id', 'type', 'user_id', 'account_id', 'delivery_response'], 'string', 'max' => 50],
+            [['notification_id', 'type', 'user_id', 'account_id', 'address', 'currency', 'transaction_id', 'delivery_response'], 'string', 'max' => 50],
         ];
     }
 
@@ -56,6 +60,10 @@ class Notification extends \yii\db\ActiveRecord
             'data' => 'Data',
             'user_id' => 'User ID',
             'account_id' => 'Account ID',
+            'address' => 'Address',
+            'currency' => 'Currency',
+            'amount' => 'Amount',
+            'transaction_id' => 'Transaction ID',
             'delivery_attempts' => 'Delivery Attempts',
             'delivery_response' => 'Delivery Response',
             'rawdata' => 'Rawdata',
