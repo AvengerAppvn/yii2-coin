@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;
 use common\models\User;
+use common\models\Wallet;
 use common\commands\AddToTreeTeamCommand;
 class RegisterController extends Controller
 {
@@ -43,7 +44,10 @@ class RegisterController extends Controller
             // Check referrer
             $user = User::find()->where(['username'=> $username])->limit(1)->one();
             if($user){
-                 $referrer = $user->id;    
+                $wallet = Wallet::find()->where(['user_id'=>$user->id])->limit(1)->one();
+                if($wallet && $wallet->amount_coin){
+                    $referrer = $user->id;    
+                }
             }
         }
         

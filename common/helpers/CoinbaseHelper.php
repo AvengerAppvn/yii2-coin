@@ -133,32 +133,34 @@ class CoinbaseHelper
     public function getNotifications(){
 
         $notifications = $this->client->getNotifications();
-        var_dump($notifications);die;
-        foreach($notifications->all() as $notification){
-            var_dump($notification->getData());die;
+        $notification = new \Coinbase\Wallet\Resource\Notification();
+        foreach($notifications->all() as $notification1){
+            $model = new Notification();
+            $model->notification_id = $notification->getId();
+            $model->data = $notification->getData();
+            $model->type = $notification->getType();
+            if($notification->getAdditionalData()){
+                $additionalData = $notification->getAdditionalData();
+                if(isset($additionalData['currency'])){
+                    $model->currency = $additionalData['currency'];    
+                }
+                if(isset($additionalData['amount'])){
+                    $model->amount = $additionalData['amount'];    
+                }
+            }
+            
+            $model->rawdata = $notification->getRawData();
+            
+            $model->created_at = $notification->getCreatedAt();
+            $model->updated_at = $notification->getUpdatedAt();
+            $model->delivery_attempts = $notification->getDeliveryAttempts();
+            $model->resource_path = $notification->getResourcePath();
+            $model->account = $notification->getAccount();
+            
+            $model->save();
+            
         }
-        // $url = 'https://api.coinbase.com/v2/notifications';
 
-        // $cURL = curl_init();
-        // curl_setopt($cURL, CURLOPT_URL, $url);
-        // curl_setopt($cURL, CURLOPT_HTTPGET, true);
-        // curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
-
-        // curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
-        //     'Content-Type: application/json',
-        //     'Accept: application/json',
-        //     'CB-VERSION : 2017-11-29'
-        // ));
-        
-        // $result = curl_exec($cURL);
-        // curl_close($cURL);
-        
-        
-        
-        var_dump($notifications);
-        die;
-        $json = json_decode($result, true);
-        return $json['data']['amount'];
     }
     
     private function webhook(){

@@ -63,8 +63,11 @@ class IcoController extends Controller
             }
         }
         
-        $ref_url = Yii::$app->getHomeUrl().'/register?referrer='.Yii::$app->user->identity->username;
-        
+        $ref_url = null;
+        if($wallet->amount_coin){
+            $ref_url = Yii::$app->getHomeUrl().'/register?referrer='.Yii::$app->user->identity->username;
+        }
+
         $model = new BuyForm();
         try {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {

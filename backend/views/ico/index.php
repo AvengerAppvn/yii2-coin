@@ -33,6 +33,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
       <!-- Share link refferer -->
       <div class="col-md-8">
         <h3><i class="fa fa-database" aria-hidden="true"></i> Initial Coin Offering (ICO)</h3>
+        <?php if($ref_url){ ?>
         <div class="reffernal-link">
             <div class="input-group">
                 <!-- Target -->
@@ -49,6 +50,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
             <br/><br/>
 
         </div>
+        <?php } ?>
       </div>
       
       <!-- Count down to  -->
