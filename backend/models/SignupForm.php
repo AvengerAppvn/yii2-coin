@@ -131,7 +131,7 @@ class SignupForm extends Model
                 'to' => $this->email,
                 'params' => [
                     'name' => $user->username,
-                    'logo'=> Url::to('@app/web/img/coin_logo.png'),
+                    'logo'=> Url::to('@backendUrl/img/coin_logo.png'),
                     'url' => Url::to(['/account/activation', 'token' => $token->token], true)
                 ]
             ]));

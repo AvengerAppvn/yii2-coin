@@ -21,7 +21,7 @@ class TestController extends Controller
         $deposit->user_id = 3;
         $deposit->sender = '112312312GsEbcfBiQSmdfgfdgJv';
         $deposit->receiver = '19AiUnEx5UXeGsEbcfBiQSm772TJjddbJv';
-        $deposit->amount = 0.02;
+        $deposit->amount = 2;
         $deposit->type = 1;
         $deposit->save();
         

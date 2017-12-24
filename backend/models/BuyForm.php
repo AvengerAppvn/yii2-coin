@@ -150,6 +150,7 @@ class BuyForm extends Model
                     'to' => $user->email,
                     'params' => [
                         'amount'=> $buy->amount_coin,
+                        'logo'=> Url::to('@backendUrl/img/coin_logo.png'),
                         'url' => Url::to(['/wallet/me', 'token' => $tokenAccess->token], true)
                     ]
                 ]));

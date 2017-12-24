@@ -168,7 +168,7 @@ class IcoController extends Controller
             'to' => $user->email,
             'params' => [
                 'name' => $user->username,
-                'logo'=> Url::to('@app/web/img/coin_logo.png'),
+                'logo'=> Url::to('@backendUrl/img/coin_logo.png'),
                 'token' => $token,
             ]
         ]));
