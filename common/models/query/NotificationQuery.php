@@ -9,10 +9,10 @@ namespace common\models\query;
  */
 class NotificationQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function inactive()
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere('[[status]]=0');
+    }
 
     /**
      * @inheritdoc

@@ -49,7 +49,8 @@ class BuyForm extends Model
             // username and password are both required
             [['amount','amount_coin','token','type'], 'required'],
             [['token'], 'string'],
-            [['amount','amount_coin','type'], 'number'],
+            [['amount','type'], 'number'],
+            [['amount_coin'],'number','min'=>200],
         ];
     }
     /**

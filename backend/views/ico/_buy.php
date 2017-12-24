@@ -46,8 +46,8 @@ endif;
     
     <?php echo Html::hiddenInput('rate-coin-btc', $rateCoinBtc,['id'=>'rate-coin-btc']); ?>
     <?php echo Html::hiddenInput('rate-coin-eth', $rateCoinEth,['id'=>'rate-coin-eth']); ?>
-    <?php echo $form->field($model, 'amount_coin')->textInput() ?>
-    
+    <?php echo $form->field($model, 'amount_coin')->textInput()->hint('Minimum is 200 TKC') ?>
+
     <?php echo $form->field($model, 'amount')->textInput() ?>
 
     <?php echo $form->field($model, 'token',[
@@ -78,7 +78,7 @@ endif;
                         });
                     ',
       ]).'</span></div>',
-  ])->textInput(['class'=>'form-control']) ?>
+  ])->textInput(['class'=>'form-control'])->hint('Token is using in 10 minutes.') ?>
 
     <div class="form-group">
         <?php echo Html::submitButton('Buy',['class' => 'btn btn-success']) ?>

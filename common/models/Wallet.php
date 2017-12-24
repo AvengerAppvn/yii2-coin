@@ -42,7 +42,7 @@ class Wallet extends \yii\db\ActiveRecord
             [['user_id', 'wallet_btc', 'wallet_eth', 'wallet_coin'], 'required'],
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['amount_btc', 'amount_eth', 'amount_coin', 'amount_bonus', 'amount_ico'], 'number'],
-            [['wallet_btc', 'wallet_eth', 'wallet_coin'], 'string', 'max' => 40],
+            [['wallet_btc', 'wallet_eth', 'wallet_coin'], 'string', 'max' => 100],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

@@ -84,6 +84,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
 <div class="container-fluid">
         <div class="row m-t-xl">
             <div class="col-md-12">
+                
                 <div class="panel panel-filled">
                     <div class="panel-body">
                         <h3 class="m-t-md">
@@ -91,22 +92,12 @@ $this->registerJs("new Clipboard('.btn-copy');");
                         </h3>
 
                         <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Address</th>
-                                        <th>Amount</th>
-                                        <th>Confirmation</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                </tbody>
-                            </table>
+                            <?php echo $this->render('_deposit.php',['searchModel' => $searchDeposit,'dataProvider' => $dataDeposit,]) ?>
                         </div>
                     </div>
                 </div>
+                
+                
             </div>
         </div>
 

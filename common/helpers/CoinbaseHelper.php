@@ -133,31 +133,33 @@ class CoinbaseHelper
     public function getNotifications(){
 
         $notifications = $this->client->getNotifications();
-        $notification = new \Coinbase\Wallet\Resource\Notification();
-        foreach($notifications->all() as $notification1){
-            $model = new Notification();
-            $model->notification_id = $notification->getId();
-            $model->data = $notification->getData();
-            $model->type = $notification->getType();
-            if($notification->getAdditionalData()){
-                $additionalData = $notification->getAdditionalData();
-                if(isset($additionalData['currency'])){
-                    $model->currency = $additionalData['currency'];    
+        Yii::error('==========================================Notification: '.count($notifications));
+        foreach($notifications->all() as $notification){
+            if(Notification::find()->where(['notification_id'=>$notification->getId()])->exists()){    
+                $model = new Notification();
+                $model->notification_id = $notification->getId();
+                $model->data = $notification->getData();
+                $model->type = $notification->getType();
+                if($notification->getAdditionalData()){
+                    $additionalData = $notification->getAdditionalData();
+                    if(isset($additionalData['currency'])){
+                        $model->currency = $additionalData['currency'];    
+                    }
+                    if(isset($additionalData['amount'])){
+                        $model->amount = $additionalData['amount'];    
+                    }
                 }
-                if(isset($additionalData['amount'])){
-                    $model->amount = $additionalData['amount'];    
-                }
+                
+                $model->rawdata = $notification->getRawData();
+                
+                $model->created_at = $notification->getCreatedAt();
+                $model->updated_at = $notification->getUpdatedAt();
+                $model->delivery_attempts = $notification->getDeliveryAttempts();
+                $model->resource_path = $notification->getResourcePath();
+                $model->account = $notification->getAccount();
+                
+                $model->save();
             }
-            
-            $model->rawdata = $notification->getRawData();
-            
-            $model->created_at = $notification->getCreatedAt();
-            $model->updated_at = $notification->getUpdatedAt();
-            $model->delivery_attempts = $notification->getDeliveryAttempts();
-            $model->resource_path = $notification->getResourcePath();
-            $model->account = $notification->getAccount();
-            
-            $model->save();
             
         }
 

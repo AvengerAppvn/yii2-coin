@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Wallet;
 use common\models\search\WalletSearch;
+use common\models\search\DepositSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -50,6 +51,7 @@ class WalletController extends Controller
                 }
             }
             $wallet->save();
+            ///var_dump($wallet->getErrors());die;
         }
         
         if(!$wallet->wallet_btc){
@@ -83,12 +85,22 @@ class WalletController extends Controller
         $searchModel = new WalletSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
+        // Deposit
+        $searchDeposit = new DepositSearch();
+        $searchDeposit->user_id = $user->id;
+        $dataDeposit = $searchDeposit->search(Yii::$app->request->queryParams);
+        $dataDeposit->sort = [
+            'defaultOrder'=>['created_at'=>SORT_DESC]
+        ];
+
         $sendBtc = new SendBtc();
         $sendEth = new SendEth();
         $sendCoin = new SendForm();
         return $this->render('me', [
             'searchModel' => $searchModel,
+            'searchDeposit' => $searchDeposit,
             'dataProvider' => $dataProvider,
+            'dataDeposit' => $dataDeposit,
             'wallet_btc' => $wallet_btc,
             'wallet_eth' => $wallet_eth,
             'wallet_coin' => $wallet_coin,
@@ -108,7 +120,7 @@ class WalletController extends Controller
      */
     protected function findModel($user_id)
     {
-        if (($model = Wallet::findOne($user_id)) !== null) {
+        if (($model = Wallet::find()->where(['user_id'=>$user_id])->limit(1)->one()) !== null) {
             return $model;
         } else {
             return null;
