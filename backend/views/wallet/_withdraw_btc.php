@@ -15,7 +15,7 @@ use yii\bootstrap\ActiveForm;
     <?php echo $form->errorSummary($model); ?>
 
     <?php echo $form->field($model, 'address')->textInput(['placeholder' => "Address of wallet BTC"])->label('')  ?>
-    <?php echo $form->field($model, 'amount')->textInput(['placeholder' => "Amount"])->label('') ?>
+    <?php echo $form->field($model, 'amount')->textInput(['placeholder' => "Amount"])->label('')->hint('You can only withdraw in the bonus of wallet BTC') ?>
     <?php echo $form->field($model, 'password')->textInput(['placeholder' => "Password"])->label('') ?>
 
     <div class="form-group">
