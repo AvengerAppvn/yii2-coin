@@ -25,7 +25,7 @@ class AuthenController extends Controller
             }else{
                  Yii::$app->session->setFlash('alert', [
                     'options'=>['class'=>'alert-error'],
-                    'body'=>Yii::t('backend', 'Wrong two code')
+                    'body'=>Yii::t('backend', 'Wrong two code verification')
                 ]);
             }
         }
