@@ -24,6 +24,12 @@ $(function() {
         var data = rate * amount_coin;
         $( "#buyform-amount" ).val( data.toFixed(8) );
         
+        if(data > 0){
+            $( "#get_token" ).prop("disabled",false);
+        }else{
+            $( "#get_token" ).prop("disabled",true);
+        }
+        
         // $.get( "/backend/web/ico/amount", {
         //             amount_coin: $(this).val(),
         //             type: $("#buyform-type").val()

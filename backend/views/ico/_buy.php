@@ -55,9 +55,11 @@ endif;
       [
           'class' => 'btn btn-primary',
           'id' => 'get_token',
+          'disabled' => 'disabled',
           'title' => 'Send Token to your email',
-          'data-confirm' => 'Are you sure to send Token to your email?',
+          //'data-confirm' => 'Are you sure to send Token to your email?',
           'onclick' => '
+                        if(confirm("Are you sure to send Token to your email?")){
                         $.ajax({
                             type: "POST",
                             url: "ico/token",
@@ -76,6 +78,7 @@ endif;
                                 console.log("server error");
                             }
                         });
+                        }
                     ',
       ]).'</span></div>',
   ])->textInput(['class'=>'form-control'])->hint('Token is using in 10 minutes.') ?>
