@@ -18,7 +18,7 @@ class TestController extends Controller
         Yii::error('Test.....');
         
         $deposit = new Deposit();
-        $deposit->user_id = 3;
+        $deposit->user_id = 2;
         $deposit->sender = '112312312GsEbcfBiQSmdfgfdgJv';
         $deposit->receiver = '19AiUnEx5UXeGsEbcfBiQSm772TJjddbJv';
         $deposit->amount = 2;
@@ -26,7 +26,7 @@ class TestController extends Controller
         $deposit->save();
         
         // Find wallet
-        $wallet = Wallet::find()->where(['user_id'=>3])->limit(1)->one();
+        $wallet = Wallet::find()->where(['user_id'=>2])->limit(1)->one();
         if($deposit->type == 1){
             $wallet->amount_btc += $deposit->amount;
             $wallet->save();

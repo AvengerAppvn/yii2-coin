@@ -35,19 +35,20 @@ $this->params['body-class'] = 'login-page';
         </div>
         <div class="footer">
             <?php echo Html::submitButton(Yii::t('backend', 'Login'), [
-                'class' => 'btn btn-lg btn-primary btn-flat',
+                'class' => 'btn btn-lg btn-primary btn-flat btn-block',
                 'name' => 'login-button',
                 'style' => 'margin-right:15px'
             ]) ?>
             
-            <?php echo Html::a(Yii::t('backend', 'Register'), ['/register'],[
-                'class' => 'btn btn-lg btn-success btn-flat',
+            
+        </div>
+        <p style="padding:10px 0;" class="text-center">
+            <?php echo Html::a(Yii::t('backend', 'Create Account'), ['/register'],[
+                //'class' => 'btn btn-lg btn-success btn-flat',
+                'style' => 'color:#ddd',
                 'name' => 'register-button'
-            ]) ?>
-        </div>
-        <div style="padding:10px 0">
-            <?= Html::a('Forget password?',['account/forgot-password']); ?>
-        </div>
+            ]) ?> <span style="color:#ddd">|</span> <?= Html::a('Forget password?',['account/forgot-password'],['style' => 'color:#ddd',]); ?>
+        </p>
         <?php ActiveForm::end(); ?>
     </div>
     <div class="text-info" style="padding:10px 0">

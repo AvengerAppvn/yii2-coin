@@ -16,7 +16,7 @@ use yii\bootstrap\ActiveForm;
 
     <?php echo $form->field($model, 'firstname')->textInput(['maxlength' => 255]) ?>
 
-    <?php echo $form->field($model, 'middlename')->textInput(['maxlength' => 255]) ?>
+    <?php //echo $form->field($model, 'middlename')->textInput(['maxlength' => 255]) ?>
 
     <?php echo $form->field($model, 'lastname')->textInput(['maxlength' => 255]) ?>
 

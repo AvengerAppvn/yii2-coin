@@ -92,13 +92,13 @@ $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.5');
                     </li>
 
                     <!-- User Account: style can be found in dropdown.less -->
-                    <li class="user user-menu">
+                    <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png')) ?>"
                                  class="user-image">
-                            <span><?php echo Yii::$app->user->identity->username ?></span>
+                            <span><?php echo Yii::$app->user->identity->username ?> <i class="caret"></i></span>
                         </a>
-                        <ul class="dropdown-menu" style="display:none">
+                        <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header light-blue">
                                 <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png')) ?>"

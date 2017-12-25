@@ -202,6 +202,11 @@ class m150725_192740_seed_data extends Migration
             'value' => 'manager',
             'comment' => 'Default Refferer'
         ]);        
+        $this->insert('{{%key_storage_item}}', [
+            'key' => 'web.total_user',
+            'value' => '3',
+            'comment' => 'Total user'
+        ]);        
     }
 
     public function safeDown()

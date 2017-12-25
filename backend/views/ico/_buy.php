@@ -55,8 +55,8 @@ endif;
       [
           'class' => 'btn btn-primary',
           'id' => 'get_token',
-          'title' => 'Send token to your email',
-          'data-confirm' => 'Send toke to email',
+          'title' => 'Send Token to your email',
+          'data-confirm' => 'Are you sure to send Token to your email?',
           'onclick' => '
                         $.ajax({
                             type: "POST",
