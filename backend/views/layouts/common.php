@@ -96,7 +96,7 @@ $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.5');
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png')) ?>"
                                  class="user-image">
-                            <span><?php echo Yii::$app->user->identity->username ?> <i class="caret"></i></span>
+                            <span><?php echo Yii::$app->user->identity->username ?></span>
                         </a>
                         <ul class="dropdown-menu" style="display:none">
                             <!-- User image -->
