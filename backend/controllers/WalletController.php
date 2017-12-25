@@ -87,8 +87,7 @@ class WalletController extends Controller
         
         // Deposit
         $searchDeposit = new DepositSearch();
-        $searchDeposit->user_id = $user->id;
-        $dataDeposit = $searchDeposit->search();
+        $dataDeposit = $searchDeposit->search($user->id);
         $dataDeposit->sort = [
             'defaultOrder'=>['created_at'=>SORT_DESC]
         ];
