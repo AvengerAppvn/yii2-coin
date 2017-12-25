@@ -40,7 +40,7 @@ class DepositSearch extends Deposit
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($user_id)
     {
         $query = Deposit::find();
 
@@ -48,22 +48,9 @@ class DepositSearch extends Deposit
             'query' => $query,
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
-            return $dataProvider;
-        }
-
         $query->andFilterWhere([
-            'id' => $this->id,
-            'user_id' => $this->user_id,
-            'amount' => $this->amount,
-            'type' => $this->type,
-            'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'user_id' => $user_id,
         ]);
-
-        $query->andFilterWhere(['like', 'sender', $this->sender])
-            ->andFilterWhere(['like', 'receiver', $this->receiver]);
 
         return $dataProvider;
     }

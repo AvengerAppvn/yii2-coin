@@ -51,6 +51,7 @@ class BuyForm extends Model
             [['token'], 'string'],
             [['amount','type'], 'number'],
             [['amount_coin'],'number','min'=>200],
+            ['token', 'validateToken'],
         ];
     }
     /**
@@ -64,7 +65,22 @@ class BuyForm extends Model
             'token'=>Yii::t('backend', 'Token'),
         ];
     }
-
+    
+    public function validateToken()
+    {
+        if (!$this->hasErrors()) {
+            $user = Yii::$app->user->identity;
+            $token = UserToken::find()
+            ->byUser($user->id)
+            ->byType(UserToken::TYPE_BUY)
+            ->byToken($this->token)
+            ->notExpired()
+            ->one();
+            if (!$token) {
+                $this->addError('token', Yii::t('backend', 'Token is incorrect.'));
+            }
+        }
+    }
     /**
      *
      *

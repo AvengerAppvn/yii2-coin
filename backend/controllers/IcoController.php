@@ -158,7 +158,7 @@ class IcoController extends Controller
          $token = UserToken::createBuy(
              $user->id,
              UserToken::TYPE_BUY,
-             Time::SECONDS_IN_A_DAY
+             Time::SECONDS_IN_A_MINUTE * 10
          );
         
         // Save Token to User

@@ -88,7 +88,7 @@ class WalletController extends Controller
         // Deposit
         $searchDeposit = new DepositSearch();
         $searchDeposit->user_id = $user->id;
-        $dataDeposit = $searchDeposit->search(Yii::$app->request->queryParams);
+        $dataDeposit = $searchDeposit->search();
         $dataDeposit->sort = [
             'defaultOrder'=>['created_at'=>SORT_DESC]
         ];

@@ -67,7 +67,7 @@ endif;
                                 if(result == 1) {
                                     // Change send again
                                     $("#get_token span").text("Send again");
-                                    $("#buyform-token").prop( "placeholder", "Enter token 6 character which send to email" ).focus();
+                                    $("#buyform-token").prop( "placeholder", "Enter token 6 characters which we send it to your email" ).focus();
                                 } else {
                                     // Not send
                                     $("#get_token span").text("Error");
@@ -81,8 +81,9 @@ endif;
   ])->textInput(['class'=>'form-control'])->hint('Token is using in 10 minutes.') ?>
 
     <div class="form-group">
-        <?php echo Html::submitButton('Buy',['class' => 'btn btn-success']) ?>
-        <?php echo Html::button('Cancel',['class' => 'btn btn-warning']) ?>
+        <?php echo Html::submitButton('Buy',['class' => 'btn btn-success btn-lg',
+        'style'=>'margin-right:15px;padding-right:30px;padding-left:30px']) ?>
+        <?php echo Html::button('Cancel',['class' => 'btn btn-lg btn-warning']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
