@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2><?php echo Html::encode($this->title) ?></h2>
     
         <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
-            <?php echo $form->field($model, 'email')->textInput(['placeholder' => 'Enter your email',style=>'margin:20px 0 5px 0'])->label(false) ?>
+            <?php echo $form->field($model, 'email')->textInput(['placeholder' => 'Enter your email','style'=>'margin:20px 0 5px 0'])->label(false) ?>
             <div class="form-group text-center">
                 <?php echo Html::submitButton('Send', ['class' => 'btn btn-primary','style'=>'padding:10px 25px 10px 25px']) ?>
                 <p style="padding:20px 20px 10px 20px">
