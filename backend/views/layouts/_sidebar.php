@@ -38,16 +38,16 @@ use yii\widgets\Breadcrumbs;
                     [
                         'label' => Yii::t('backend', 'Event Logs'),
                         'icon' => '<i class="fa fa-calendar"></i>',
-                        'url' => ['/transaction'],
-                        'badge' => TimelineEvent::find()->today()->count(),
-                        'badgeBgClass' => 'label-success',
+                        'url' => ['/event'],
+                        //'badge' => TimelineEvent::find()->today()->count(),
+                        //'badgeBgClass' => 'label-success',
                     ],          
                     [
                         'label' => Yii::t('backend', 'Team'),
                         'icon' => '<i class="fa fa-users"></i>',
                         'url' => ['/team'],
-                        'badge' => TimelineEvent::find()->today()->count(),
-                        'badgeBgClass' => 'label-success',
+                        //'badge' => TimelineEvent::find()->today()->count(),
+                        //'badgeBgClass' => 'label-success',
                     ],                        
                     [
                         'label' => Yii::t('backend', 'Settings'),
