@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="form-group text-center">
                 <?php echo Html::submitButton('Send', ['class' => 'btn btn-primary','style'=>'padding:10px 25px 10px 25px']) ?>
                 <p style="padding:20px 20px 10px 20px">
-                    <?= Html::a('Back to Login page',['/login'],[style=>'cursor:pointer']); ?>
+                    <?= Html::a('Back to Login page',['/login'],['style'=>'cursor:pointer']); ?>
                 </p>
             </div>
         <?php ActiveForm::end(); ?>
