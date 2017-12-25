@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $user = Yii::$app->user->identity;
         if (!Yii::$app->user->isGuest) {
-            if($user && $user->has2fa && !$user->authen_2fa){
+            if($user && $user->has2fa && !Yii::$app->session->get('authen_2fa')){
                 return $this->redirect(['/authen']);
             }
         }

@@ -59,8 +59,10 @@ class SecurityForm extends Model
             
         if($valid){
             $user->authen_2fa = true;
+            Yii::$app->session->set('authen_2fa',true);
         }else{
             $user->authen_2fa = false;
+            Yii::$app->session->set('authen_2fa',true);
         }
         return $valid;
     }
