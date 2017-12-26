@@ -67,16 +67,22 @@ $config = [
         'i18n' => [
             'class' => backend\modules\i18n\Module::class,
             'defaultRoute' => 'i18n-message/index'
-        ]
+        ],
+        'api' => [
+            'class' => 'backend\modules\api\Module',
+            'modules' => [
+                'v1' => 'backend\modules\api\v1\Module'
+            ]
+        ],        
     ],
     'as globalAccess' => [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
             [
-                'controllers' => ['notification'],
+                'controllers' => ['api/v1/notification'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['index']
+                'actions' => ['alert']
             ],
             [
                 'controllers' => ['login'],

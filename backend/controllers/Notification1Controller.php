@@ -4,7 +4,7 @@ namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use common\helpers\CoinbaseHelper;
-class NotificationController extends Controller
+class Notification1Controller extends Controller
 {
 
     public function actionIndex()
