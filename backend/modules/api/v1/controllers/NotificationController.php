@@ -38,7 +38,7 @@ class NotificationController extends ActiveController
         //echo json_encode(array('status'=>1,'data'=>array_filter($model->attributes)),JSON_PRETTY_PRINT);
         Yii::error('================================NOTI==================================================');
         Yii::error($raw_body);
-        echo 1;
+        $this->setHeader(200);
         //echo json_encode(array($raw_body),JSON_PRETTY_PRINT);
     }
 
