@@ -14,7 +14,10 @@ $config = [
             'modules' => [
                 'v1' => 'frontend\modules\api\v1\Module'
             ]
-        ]
+        ],
+        'ticket' => [
+            'class' => 'app\modules\ticket\Module',
+        ],
     ],
     'components' => [
         'authClientCollection' => [

@@ -5,7 +5,7 @@ use Yii;
 use Coinbase\Wallet\Client;
 use Coinbase\Wallet\Configuration;
 use Coinbase\Wallet\Resource\Address;
-
+use common\models\Notification;
 /**
  * CoinbaseHelper
  *

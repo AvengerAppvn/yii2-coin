@@ -73,7 +73,10 @@ $config = [
             'modules' => [
                 'v1' => 'backend\modules\api\v1\Module'
             ]
-        ],        
+        ],       
+        'support' => [
+            'class' => 'app\modules\api\Module',
+        ],          
     ],
     'as globalAccess' => [
         'class' => common\behaviors\GlobalAccessBehavior::class,
