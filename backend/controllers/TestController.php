@@ -37,7 +37,30 @@ class TestController extends Controller
         $coinbase = new CoinbaseHelper();
         //$coinbase->getOrders();
        // $coinbase->getTransactions();
-        $coinbase->getNotifications();
+        $notifications = $coinbase->getNotifications();
+        Notification::find()->where([''])->all();
+        // TODO
+		foreach($notifications as $notification){
+// 			$deposit = new Deposit();
+// 				$deposit->sender = ;
+// 				$deposit->receiver = ;
+// 				$deposit->user_id = ;
+// 				$deposit->amount = ;
+// 				$deposit->type = ;
+// 				$deposit->status = 0;
+// 			$deposit->save();
+		}
+		        return [
+            'id' => 'ID',
+            'user_id' => 'User ID',
+            'sender' => 'Address',
+            'receiver' => 'Receiver',
+            'amount' => 'Amount',
+            'type' => 'Type',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
          return $this->render('index', [
             // 'searchModel' => $searchModel,
             // 'dataProvider' => $dataProvider
