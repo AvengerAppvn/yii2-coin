@@ -137,6 +137,7 @@ class WalletController extends Controller
         
         return $this->render('me', [
             'searchModel' => $searchModel,
+            'searchWithdraw' => $searchWithdraw,
             'searchDeposit' => $searchDeposit,
             'dataProvider' => $dataProvider,
             'dataDeposit' => $dataDeposit,

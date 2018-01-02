@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <ul id="email_options" style="">
         <li>Check your spam folder and mark the message as 'Not Spam'.</li>
-        <?= Html::a('Resend email',['/account/resend-email'],['data-remote'=>'true','rel'=>'nofollow','data-method'=>'post']) ?>
+        <?= Html::a('Resend email',['/account/resend'],['data-remote'=>'true','rel'=>'nofollow','data-method'=>'post']) ?>
          to 
         <strong><?= $model->email ?></strong><span id="email_notice"></span></li>
         <li>
