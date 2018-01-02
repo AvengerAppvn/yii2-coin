@@ -1,11 +1,11 @@
 <?php
 
-namespace app\modules\ticket\models;
+namespace app\modules\support\models;
 
-use app\modules\ticket\Mailer;
-use app\modules\ticket\Module;
+use app\modules\support\Mailer;
+use app\modules\support\Module;
 use Yii;
-
+use trntv\filekit\behaviors\UploadBehavior;
 /**
  * This is the model class for table "ticket_body".
  *
@@ -17,13 +17,14 @@ use Yii;
  * @property string       $date
  *
  * @property TicketFile   $file
+ * @property TicketFile[]   $ticketFiles
  * @property TicketHead[] $ticketHeads
  */
 class TicketBody extends \yii\db\ActiveRecord
 {
     /** @var  Module */
     private $module;
-
+    public $attachments;
     const ADMIN = 1;
     
     /**
@@ -51,9 +52,26 @@ class TicketBody extends \yii\db\ActiveRecord
             [['date', 'name_user', 'id_head'], 'safe'],
             [['name_user'], 'string', 'max' => 255],
             [['name_user', 'text'], 'filter', 'filter' => 'strip_tags'],
+            [['attachments'], 'safe'],
         ];
     }
-
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => UploadBehavior::className(),
+                'attribute' => 'attachments',
+                'multiple' => true,
+                'uploadRelation' => 'ticketFiles',
+                'pathAttribute' => 'path',
+                'baseUrlAttribute' => 'base_url',
+                'orderAttribute' => 'order',
+                'typeAttribute' => 'type',
+                'sizeAttribute' => 'size',
+                'nameAttribute' => 'name',
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -61,16 +79,13 @@ class TicketBody extends \yii\db\ActiveRecord
     {
         return [
             'id'        => 'ID',
-            'name_user' => 'Name User',
-            'text'      => 'Text',
+            'name_user' => 'Username',
+            'text'      => 'Content',
             'date'      => 'Date',
         ];
     }
 
     /**
-     * Перед сохранением указываем имя пользователя который делает Answer
-     * Если Answer пишет администратор, делаем соAnswerствующий статус
-     *
      * @param bool $insert
      * @return bool
      */
@@ -85,7 +100,6 @@ class TicketBody extends \yii\db\ActiveRecord
         $ticketHead = TicketHead::find()->where("id = " . $this->id_head)->one();
 
         /**
-         * Отправка уведомлений
          */
         if ($this->module->mailSend !== false) {
             $userModel = User::$user;
@@ -104,6 +118,11 @@ class TicketBody extends \yii\db\ActiveRecord
     }
 
     public function getFile()
+    {
+        return $this->hasMany(TicketFile::class, ['id_body' => 'id']);
+    }
+
+    public function getTicketFiles()
     {
         return $this->hasMany(TicketFile::class, ['id_body' => 'id']);
     }

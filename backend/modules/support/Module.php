@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\ticket;
+namespace app\modules\support;
 
-use app\modules\ticket\models\User;
+use app\modules\support\models\User;
 use Yii;
 
 /**
@@ -13,7 +13,7 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'app\modules\ticket\controllers';
+    public $controllerNamespace = 'app\modules\support\controllers';
 
     public $mailSend = false;
 
@@ -23,10 +23,7 @@ class Module extends \yii\base\Module
     public $userModel = false;
 
     public $qq = [
-        'Exchange Question' => 'Exchange Question',
-        'Replenishment of the LC' => 'Replenishment of the LC',
-        'Deposit of funds' => 'Deposit of funds',
-        'Withdrawing funds' => 'Withdrawing funds',
+        'Support' => 'Support',
         'Other' => 'Other',
     ];
 

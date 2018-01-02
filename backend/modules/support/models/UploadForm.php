@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\ticket\models;
+namespace app\modules\support\models;
 
 use Yii;
 use yii\base\Model;
@@ -14,8 +14,8 @@ class UploadForm extends Model
     public $imageFiles;
     public $nameFile;
 
-    const DIR = 'fileTicket/';
-    const DIR_REDUCED = 'fileTicket/reduced/';
+    const DIR = 'support/';
+    const DIR_REDUCED = 'support/reduced/';
 
     public function rules()
     {
@@ -27,16 +27,16 @@ class UploadForm extends Model
     public function upload()
     {
         if ($this->validate()) {
-            if (!file_exists(Yii::getAlias('@webroot') . "/fileTicket")) {
-                mkdir(Yii::getAlias('@webroot') . "/fileTicket");
-                mkdir(Yii::getAlias('@webroot') . "/fileTicket/reduced");
+            if (!file_exists(Yii::getAlias('@storageUrl') . "/support")) {
+                mkdir(Yii::getAlias('@storageUrl') . "/support");
+                mkdir(Yii::getAlias('@storageUrl') . "/support/reduced");
             }
-            
+
             foreach ($this->imageFiles as $file) {
                 $this->nameFile[] = md5($file->baseName . time()) . '.' . $file->extension;
                 $file->saveAs(self::DIR . md5($file->baseName . time()) . '.' . $file->extension);
                 $this->resice(self::DIR . md5($file->baseName . time()) . '.' . $file->extension, 1024);
-                copy(self::DIR . md5($file->baseName . time()) . '.' . $file->extension, 'fileTicket/reduced/' . md5($file->baseName . time()) . '.' . $file->extension);
+                copy(self::DIR . md5($file->baseName . time()) . '.' . $file->extension, 'support/reduced/' . md5($file->baseName . time()) . '.' . $file->extension);
                 $this->resice(self::DIR_REDUCED . md5($file->baseName . time()) . '.' . $file->extension, 100);
             }
             return true;
@@ -44,7 +44,7 @@ class UploadForm extends Model
             return false;
         }
     }
-    
+
     public function getName()
     {
         return $this->nameFile;
@@ -54,23 +54,21 @@ class UploadForm extends Model
     {
         $size = getimagesize($src);
 
-        $format = strtolower(substr($size['mime'], strpos($size['mime'], '/')+1));
+        $format = strtolower(substr($size['mime'], strpos($size['mime'], '/') + 1));
         $icfunc = "imagecreatefrom" . $format;
 
         $width = $size[0];
         $height = $size[1];
 
-        if( $height > $width ) {
-
+        if ($height > $width) {
             $k = $widthNew / $height;
-            $new_w = round( $width * $k );
+            $new_w = round($width * $k);
             $new_h = $widthNew;
 
-        } elseif( $width >= $height ) {
-
+        } elseif ($width >= $height) {
             $k = $widthNew / $width;
             $new_w = $widthNew;
-            $new_h = round( $height * $k );
+            $new_h = round($height * $k);
         }
 
         $isrc = $icfunc($src);
@@ -81,5 +79,5 @@ class UploadForm extends Model
 
         imagejpeg($idest, $src, 100);
     }
-    
+
 }

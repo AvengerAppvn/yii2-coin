@@ -132,7 +132,18 @@ $config = [
                 */
             ],
         ],
-
+        'supportStorage' => [
+            'class' => '\trntv\filekit\Storage',
+            'baseUrl' => '@storageUrl/support',
+            'filesystem' => [
+                'class' => 'common\components\filesystem\LocalFlysystemBuilder',
+                'path' => '@storage/web/support'
+            ],
+            'as log' => [
+                'class' => 'common\behaviors\FileStorageLogBehavior',
+                'component' => 'supportStorage'
+            ]
+        ],
         'fileStorage' => [
             'class' => '\trntv\filekit\Storage',
             'baseUrl' => '@storageUrl/source',

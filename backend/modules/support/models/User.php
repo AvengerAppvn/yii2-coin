@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\ticket\models;
+namespace app\modules\support\models;
 
 use yii\db\ActiveRecord;
 

@@ -17,8 +17,7 @@ use common\models\Wallet;
 use common\commands\AddToTreeTeamCommand;
 class RegisterController extends Controller
 {
-
-    public $defaultAction = 'index';
+    //public $defaultAction = 'index';
 
     public function behaviors()
     {

@@ -63,23 +63,13 @@ use yii\widgets\Breadcrumbs;
                         'label' => Yii::t('backend', 'Affilicate Tools'),
                         'icon' => '<i class="fa fa-handshake-o"></i>',
                         'url' => ['/tool/index'],
-                    ],
-                    [
-                        'label' => Yii::t('backend', 'Support'),
-                        'icon' => '<i class="fa fa-life-ring" aria-hidden="true"></i>',
-                        'url' => ['/support/ticket'],
-                    ],
+                    ],     
                     [
                         'label' => Yii::t('backend', 'Logout'),
                         'icon' => '<i class="fa fa-sign-out"></i>',
                         'url' => ['/logout'],
                         'template' => "<a href=\"{url}\" data-method=\"post\">\n{icon}\n{label}\n{right-icon}\n{badge}</a>",
-                    ],
-                    [
-                        'label' => Yii::t('backend', 'Admin'),
-                        'options' => ['class' => 'header'],
-                        'visible' => Yii::$app->user->can('manager')
-                    ],
+                    ],                    
                     [
                         'label' => Yii::t('backend', 'Content'),
                         'url' => '#',
@@ -94,14 +84,9 @@ use yii\widgets\Breadcrumbs;
                             ['label' => Yii::t('backend', 'Menu Widgets'), 'url' => ['/widget-menu/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                             ['label' => Yii::t('backend', 'Carousel Widgets'), 'url' => ['/widget-carousel/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                         ],
-                        'visible' => Yii::$app->user->can('administrator') || Yii::$app->user->can('manager')
-                    ],
-                    [
-                        'label' => Yii::t('backend', 'Notification'),
-                        'icon' => '<i class="fa fa-comment"></i>',
-                        'url' => ['/notifi/index'],
                         'visible' => Yii::$app->user->can('administrator')
                     ],
+
                     [
                         'label' => Yii::t('backend', 'Users'),
                         'icon' => '<i class="fa fa-users"></i>',

@@ -1,8 +1,8 @@
 <?php
-/** @var \app\modules\ticket\models\TicketHead $newTicket */
+/** @var \app\modules\support\models\TicketHead $newTicket */
 use yii\helpers\Html;
 
-/** @var \app\modules\ticket\models\TicketBody $thisTicket */
+/** @var \app\modules\support\models\TicketBody $thisTicket */
 ?>
 <div class="panel page-block">
     <div class="container-fluid row">
@@ -17,7 +17,7 @@ use yii\helpers\Html;
                 <div class="well">
                     <?php $form = \yii\widgets\ActiveForm::begin() ?>
                     <?= $form->field($newTicket,
-                        'text')->textarea(['style' => 'height: 150px; resize: none;'])->label('Message')->error() ?>
+                        'text')->textarea(['style' => 'height: 150px; resize: none;'])->error() ?>
                     <div class="text-center">
                         <button class='btn btn-primary'>Send</button>
                     </div>
@@ -30,7 +30,7 @@ use yii\helpers\Html;
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <span><?= $ticket['name_user'] ?>&nbsp;<span
-                                style="font-size: 12px">(<?= ($ticket['client'] == 1) ? 'Сотрудник' : 'Client' ?>
+                                style="font-size: 12px">(<?= ($ticket['client'] == 1) ? 'Admin' : 'Client' ?>
                                 )</span></span>
                         <span class="pull-right"><?= $ticket['date'] ?></span>
                     </div>

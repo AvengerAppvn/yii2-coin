@@ -50,17 +50,17 @@ class TestController extends Controller
 // 				$deposit->status = 0;
 // 			$deposit->save();
 		}
-		        return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'sender' => 'Address',
-            'receiver' => 'Receiver',
-            'amount' => 'Amount',
-            'type' => 'Type',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-        ];
+//		        return [
+//            'id' => 'ID',
+//            'user_id' => 'User ID',
+//            'sender' => 'Address',
+//            'receiver' => 'Receiver',
+//            'amount' => 'Amount',
+//            'type' => 'Type',
+//            'status' => 'Status',
+//            'created_at' => 'Created At',
+//            'updated_at' => 'Updated At',
+//        ];
          return $this->render('index', [
             // 'searchModel' => $searchModel,
             // 'dataProvider' => $dataProvider

@@ -1,12 +1,12 @@
 <?php
 
-namespace app\modules\ticket\controllers;
+namespace app\modules\support\controllers;
 
-use app\modules\ticket\Mailer;
-use app\modules\ticket\models\TicketBody;
-use app\modules\ticket\models\TicketHead;
-use app\modules\ticket\models\User;
-use app\modules\ticket\Module;
+use app\modules\support\Mailer;
+use app\modules\support\models\TicketBody;
+use app\modules\support\models\TicketHead;
+use app\modules\support\models\User;
+use app\modules\support\Module;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -17,9 +17,6 @@ use yii\web\Controller;
 class AdminController extends Controller
 {
     /**
-     * Выдорка всех тикетов
-     * Сортировка по полю дата в обратном порядке
-     * Постраничная навигация по 20 тикетов на страницу
      *
      * @return string
      */
@@ -32,10 +29,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Функция вытаскивает данные тикета по id и отображает данные
-     * После получения пост данных id тикущего тикета присваевается к Answerу и сохраняется
-     * Потом идет выборка данных по шапке тикета, меняем ему статус и сохраняем
-     * Проверяем если $mailSendAnswer === true значит делаем отправку уведомления од Answerе пользователю создавшему тикет
      *
      * @param $id int
      * @return string|\yii\web\Response
@@ -63,8 +56,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Делаем выборку шапки тикета, меняем ему статус на закрытый и сохоаняем
-     * Если $mailSendClosed === true, делаем отправку уведомления на email о закрытии тикета
      *
      * @param $id int id
      * @return \yii\web\Response

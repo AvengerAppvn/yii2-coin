@@ -1,5 +1,5 @@
 <?php
-use app\modules\ticket\models\TicketHead;
+use app\modules\support\models\TicketHead;
 ?>
 <p style="text-align: center;"><img src="http://wallbtc.com/img/logo.png" alt=""/></p>
 <p style="text-align: left; font-size: 14px;"><?= \yii\bootstrap\Html::encode($textTicket)?></p>
@@ -29,5 +29,5 @@ use app\modules\ticket\models\TicketHead;
 </p>
 <hr/>
 <em>
-    <span style="color: #808080;">Это письмо сформировано автоматически службой уведомлений WallBtc.com. Отвечать на него не нужно</span>
+    <span style="color: #808080;"></span>
 </em

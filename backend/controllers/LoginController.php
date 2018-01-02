@@ -3,13 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\LoginForm;
-use backend\models\AccountForm;
-use Intervention\Image\ImageManagerStatic;
-use trntv\filekit\actions\DeleteAction;
-use trntv\filekit\actions\UploadAction;
 use Yii;
-use yii\filters\VerbFilter;
-use yii\imagine\Image;
 use yii\web\Controller;
 
 class LoginController extends Controller

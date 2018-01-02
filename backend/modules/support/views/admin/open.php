@@ -1,9 +1,9 @@
 <?php
-/** @var \app\modules\ticket\models\TicketHead $ticketHead */
+/** @var \app\modules\support\models\TicketHead $ticketHead */
 use yii\helpers\Html;
 use yii\web\JsExpression;
 
-/** @var \app\modules\ticket\models\TicketBody $ticketBody */
+/** @var \app\modules\support\models\TicketBody $ticketBody */
 ?>
 <div class="panel page-block">
     <div class="container-fluid row">

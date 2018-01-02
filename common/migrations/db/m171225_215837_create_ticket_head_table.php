@@ -13,8 +13,12 @@ class m171225_215837_create_ticket_head_table extends Migration
     /**
      * @inheritdoc
      */
-    public function up()
+    public function safeUp()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
         $this->createTable($this->table, [
             'id'          => $this->primaryKey(),
             'user_id'     => $this->integer()->notNull(),
@@ -22,7 +26,7 @@ class m171225_215837_create_ticket_head_table extends Migration
             'topic'       => $this->string(255),
             'status'      => $this->integer(1)->defaultValue('0')->unsigned(),
             'date_update' => $this->timestamp()->defaultValue(null),
-        ]);
+        ], $tableOptions);
 
         $this->createIndex('i_ticket_head', $this->table, 'user_id');
 
@@ -32,7 +36,7 @@ class m171225_215837_create_ticket_head_table extends Migration
     /**
      * @inheritdoc
      */
-    public function down()
+    public function safeDown()
     {
         $this->dropForeignKey('fk_ticket_head', $this->table);
         $this->dropTable($this->table);

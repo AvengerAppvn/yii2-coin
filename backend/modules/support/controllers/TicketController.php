@@ -1,22 +1,38 @@
 <?php
 
-namespace app\modules\ticket\controllers;
+namespace app\modules\support\controllers;
 
-use app\modules\ticket\models\TicketBody;
-use app\modules\ticket\models\TicketFile;
-use app\modules\ticket\models\TicketHead;
-use app\modules\ticket\models\UploadForm;
+use app\modules\support\models\TicketBody;
+use app\modules\support\models\TicketHead;
+use trntv\filekit\actions\DeleteAction;
+use trntv\filekit\actions\UploadAction;
 use yii\filters\AccessControl;
 use yii\filters\AccessRule;
 use yii\helpers\Url;
 use yii\web\Controller;
-use yii\web\UploadedFile;
 
 /**
- * Default controller for the `ticket` module
+ * Default controller for the `support` module
  */
 class TicketController extends Controller
 {
+    /**
+     * @return array
+     */
+    public function actions()
+    {
+        return [
+            'support-upload' => [
+                'class' => UploadAction::className(),
+                'deleteRoute' => 'support-delete',
+                'fileStorage' => 'supportStorage',
+            ],
+            'support-delete' => [
+                'class' => DeleteAction::className()
+            ]
+        ];
+    }
+
     public function behaviors()
     {
         return [
@@ -27,7 +43,6 @@ class TicketController extends Controller
                 ],
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'open'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -66,57 +81,57 @@ class TicketController extends Controller
         }
 
         $newTicket = new TicketBody();
-        $ticketFile = new TicketFile();
-        
+        //$ticketFile = new TicketFile();
+
         if (\Yii::$app->request->post() && $newTicket->load(\Yii::$app->request->post()) && $newTicket->validate()) {
 
             $ticket = TicketHead::findOne($id);
-            $ticket->status = 1;
+            $ticket->status = TicketHead::WAITTING;
 
-            $uploadForm = new UploadForm();
-            $uploadForm->imageFiles = UploadedFile::getInstances($ticketFile, 'fileName');
+            //$uploadForm = new UploadForm();
+            //$uploadForm->imageFiles = UploadedFile::getInstances($ticketFile, 'fileName');
 
-            if ($ticket->save() && $uploadForm->upload()) {
+            if ($ticket->save()) {
                 $newTicket->id_head = $id;
                 $newTicket->save();
 
-                TicketFile::saveImage($newTicket, $uploadForm);
+                //TicketFile::saveImage($newTicket, $uploadForm);
             } else {
-                \Yii::$app->session->setFlash('error', $uploadForm->firstErrors['imageFiles']);
+                \Yii::$app->session->setFlash('error','Không tạo được ticket');
                 return $this->render('view', [
                     'thisTicket' => $thisTicket,
                     'newTicket' => $newTicket,
-                    'fileTicket' => $ticketFile
+                  //  'fileTicket' => $ticketFile
                 ]);
             }
 
             $this->redirect(Url::to());
         }
-        
+
         return $this->render('view', [
             'thisTicket' => $thisTicket,
             'newTicket' => $newTicket,
-            'fileTicket' => $ticketFile
+           // 'fileTicket' => $ticketFile
         ]);
     }
 
     /**
-    * Create two instances
-    * 1. Ticket cap
-    * 2. Ticket Body
-    * Make the page rendering
-    * If post, we load the data into the model, we do the validation
-    * We save the header first, find out its id, this id assigns the body of the message so that it is not lost and we save it
-    *
+     * Create two instances
+     * 1. Ticket cap
+     * 2. Ticket Body
+     * Make the page rendering
+     * If post, we load the data into the model, we do the validation
+     * We save the header first, find out its id, this id assigns the body of the message so that it is not lost and we save it
+     *
      * @return string|\yii\web\Response
      */
     public function actionOpen()
     {
         $ticketHead = new TicketHead();
         $ticketBody = new TicketBody();
-        $ticketFile = new TicketFile();
+        //$ticketFile = new TicketFile();
 
-        if(\Yii::$app->request->post()) {
+        if (\Yii::$app->request->post()) {
             $ticketHead->load(\Yii::$app->request->post());
             $ticketBody->load(\Yii::$app->request->post());
 
@@ -125,11 +140,16 @@ class TicketController extends Controller
                 $ticketBody->id_head = $ticketHead->getPrimaryKey();
                 $ticketBody->save();
 
-                $uploadForm = new UploadForm();
-                $uploadForm->imageFiles = UploadedFile::getInstances($ticketFile, 'fileName');
-                if ($uploadForm->upload()) {
-                    TicketFile::saveImage($ticketBody, $uploadForm);
-                }
+                //$uploadForm = new UploadForm();
+                //$uploadForm->imageFiles = UploadedFile::getInstances($ticketFile, 'fileName');
+
+                //if ($ticketFile->load(\Yii::$app->request->post())) {
+                 //   $ticketFile->id_body = $ticketBody->id;
+                //    if ($ticketFile->save()) {
+                 //       return $this->redirect(Url::previous());
+                //    }
+                   // TicketFile::saveImage($ticketBody, $uploadForm);
+               // }
 
                 return $this->redirect(Url::previous());
             }
@@ -139,7 +159,7 @@ class TicketController extends Controller
             'ticketHead' => $ticketHead,
             'ticketBody' => $ticketBody,
             'qq' => $this->module->qq,
-            'fileTicket' => $ticketFile,
+           //'fileTicket' => $ticketFile,
         ]);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\ticket;
+namespace app\modules\support;
 
 use yii\helpers\Url;
 

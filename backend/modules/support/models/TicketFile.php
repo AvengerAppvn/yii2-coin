@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\ticket\models;
+namespace app\modules\support\models;
 
 use Yii;
 
@@ -9,12 +9,19 @@ use Yii;
  *
  * @property integer    $id
  * @property integer    $id_body
- * @property string     $fileName
+ * @property string $base_url
+ * @property string $path
+ * @property string $url
+ * @property string $name
+ * @property string $type
+ * @property string $size
+ * @property integer $order
  *
  * @property TicketBody $idBody
  */
 class TicketFile extends \yii\db\ActiveRecord
 {
+    public $attachments;
     /**
      * @inheritdoc
      */
@@ -29,8 +36,8 @@ class TicketFile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_body'], 'integer'],
-            [['fileName'], 'string', 'max' => 255],
+            [['id_body', 'size', 'order'], 'integer'],
+            [['base_url', 'path', 'type', 'name'], 'string', 'max' => 255],
             [
                 ['id_body'],
                 'exist',
@@ -38,8 +45,10 @@ class TicketFile extends \yii\db\ActiveRecord
                 'targetClass'     => TicketBody::className(),
                 'targetAttribute' => ['id_body' => 'id'],
             ],
+
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -49,7 +58,7 @@ class TicketFile extends \yii\db\ActiveRecord
         return [
             'id'       => Yii::t('app', 'ID'),
             'id_body'  => Yii::t('app', 'Id Body'),
-            'fileName' => Yii::t('app', 'File Name'),
+            'fileName' => Yii::t('app', 'File name'),
         ];
     }
 
@@ -78,5 +87,10 @@ class TicketFile extends \yii\db\ActiveRecord
             $ticketFile->fileName = $file;
             $ticketFile->save();
         }
+    }
+
+    public function getUrl()
+    {
+        return $this->base_url . '/' . $this->path;
     }
 }

@@ -1,10 +1,10 @@
 <?php
-/** @var \app\modules\ticket\models\TicketHead $dataProvider */
+/** @var \app\modules\support\models\TicketHead $dataProvider */
 ?>
 
 <div class="panel page-block">
     <div class="container-fluid row">
-    <a href="<?= \yii\helpers\Url::toRoute(['admin/open']) ?>" class="btn btn-primary" style="margin-left: 15px">Написать</a>
+    <a href="<?= \yii\helpers\Url::toRoute(['admin/open']) ?>" class="btn btn-primary" style="margin-left: 15px">Gửi ticket</a>
     <br><br>
     <div class="container-fluid">
         <div class="col-md-12">
@@ -28,13 +28,13 @@
                         'value'     => function ($model) {
                             switch ($model->body['client']) {
                                 case 0 :
-                                    if ($model->status == \app\modules\ticket\models\TicketHead::CLOSED) {
+                                    if ($model->status == \app\modules\support\models\TicketHead::CLOSED) {
                                         return '<div class="label label-success">Client</div>&nbsp;<div class="label label-default">Закрыт</div>';
                                     }
 
                                     return '<div class="label label-success">Client</div>';
                                 case 1 :
-                                    if ($model->status == \app\modules\ticket\models\TicketHead::CLOSED) {
+                                    if ($model->status == \app\modules\support\models\TicketHead::CLOSED) {
                                         return '<div class="label label-primary">Администратор</div>&nbsp;<div class="label label-default">Закрыт</div>';
                                     }
 

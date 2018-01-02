@@ -75,12 +75,21 @@ $config = [
             ]
         ],       
         'support' => [
-            'class' => 'app\modules\api\Module',
-        ],          
+            'class' => 'app\modules\support\Module',
+        ],
+        'landing' => [
+            'class' => 'app\modules\landing\Module',
+        ],
     ],
     'as globalAccess' => [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
+            [
+                'controllers' => ['landing/default'],
+                'allow' => true,
+                'roles' => ['?'],
+                'actions' => ['index']
+            ],
             [
                 'controllers' => ['api/v1/notification'],
                 'allow' => true,
@@ -129,7 +138,7 @@ $config = [
                 'roles' => ['?'],
             ],
             [
-                'controllers' => ['user'],
+                'controllers' => ['user','notifi'],
                 'allow' => true,
                 'roles' => ['administrator'],
             ],

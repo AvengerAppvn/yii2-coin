@@ -62,7 +62,19 @@ class SiteController extends \yii\web\Controller
                 'backend.layout-collapsed-sidebar' => [
                     'label' => Yii::t('backend', 'Backend sidebar collapsed'),
                     'type' => FormModel::TYPE_CHECKBOX
-                ]
+                ],
+                'coin.total' => [
+                    'label' => Yii::t('backend', 'Total of coin ICO'),
+                    'type' => FormModel::TYPE_TEXTINPUT
+                ],
+                'coin.sold' => [
+                    'label' => Yii::t('backend', 'Sold coin'),
+                    'type' => FormModel::TYPE_TEXTINPUT
+                ],
+                'web.total_user' => [
+                    'label' => Yii::t('backend', 'Total user'),
+                    'type' => FormModel::TYPE_TEXTINPUT
+                ],
             ]
         ]);
 

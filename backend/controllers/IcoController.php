@@ -2,19 +2,20 @@
 
 namespace backend\controllers;
 
-use Yii;
+use backend\models\BuyForm;
+use cheatsheet\Time;
+use common\commands\SendEmailCommand;
+use common\helpers\CoinbaseHelper;
 use common\models\User;
+use common\models\UserToken;
 use common\models\Wallet;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use backend\models\BuyForm;
-use common\commands\SendEmailCommand;
-use cheatsheet\Time;
-use common\models\UserToken;
-use yii\web\BadRequestHttpException;
-use common\helpers\CoinbaseHelper;
-use yii\helpers\Url;
+
 /**
  * IcoController
  */
@@ -36,7 +37,7 @@ class IcoController extends Controller
     public function actionIndex()
     {
         $user = Yii::$app->user->identity;
-        
+
         if (!Yii::$app->user->isGuest) {
             //if($user && $user->has2fa && !$user->authen_2fa){
             if($user && $user->has2fa && !Yii::$app->session->get('authen_2fa')){
