@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $user common\models\User */
 /* @var $token string */
 
-$resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/user/sign-in/reset-password', 'token' => $token]);
+$resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/reset-password', 'token' => $token]);
 ?>
 
 Hello <?php echo Html::encode($user->username) ?>,

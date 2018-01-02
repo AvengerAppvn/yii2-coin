@@ -175,7 +175,7 @@ class AccountController extends Controller
             }
         }
 
-        return $this->render('requestPasswordResetToken', [
+        return $this->render('resetPassword', [
             'model' => $model,
         ]);
     }
