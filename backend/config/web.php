@@ -97,7 +97,7 @@ $config = [
                 'controllers' => ['account'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['forgot-password','activation']
+                'actions' => ['forgot-password','activation','resend']
             ],
             [
                 'controllers' => ['register'],

@@ -4,6 +4,7 @@ namespace backend\models;
 use cheatsheet\Time;
 use common\commands\SendEmailCommand;
 use common\models\User;
+use common\models\Wallet;
 use common\models\UserToken;
 use backend\modules\user\Module;
 use yii\base\Exception;
@@ -40,6 +41,8 @@ class SendForm extends Model
             // username and password are both required
             [['address', 'amount','password'], 'required'],
             ['address', 'string'],
+            ['password', 'validatePassword'],
+            ['amount', 'validateAmount'],
         ];
     }
     /**
@@ -53,59 +56,72 @@ class SendForm extends Model
             'password'=>Yii::t('backend', 'Password'),
         ];
     }
-
+    
+    
     /**
-     * Signs user up.
-     *
-     * @return User|null the saved model or null if saving fails
+     * Validates the password.
+     * This method serves as the inline validation for password.
      */
-    public function signup()
+    public function validatePassword()
     {
-        if ($this->validate()) {
-            $shouldBeActivated = $this->shouldBeActivated();
-            $user = new User();
-            $user->username = $this->username;
-            $user->email = $this->email;
-            $user->status = $shouldBeActivated ? User::STATUS_NOT_ACTIVE : User::STATUS_ACTIVE;
-            $user->setPassword($this->password);
-            if(!$user->save()) {
-                throw new Exception("User couldn't be  saved");
-            };
-            $user->afterSignup();
-            if ($shouldBeActivated) {
-                $token = UserToken::create(
-                    $user->id,
-                    UserToken::TYPE_ACTIVATION,
-                    Time::SECONDS_IN_A_DAY
-                );
-                Yii::$app->commandBus->handle(new SendEmailCommand([
-                    'subject' => Yii::t('backend', 'Activation email'),
-                    'view' => 'activation',
-                    'to' => $this->email,
-                    'params' => [
-                        'url' => Url::to(['/account/activation', 'token' => $token->token], true)
-                    ]
-                ]));
+        if (!$this->hasErrors()) {
+            $user = Yii::$app->user->identity;
+            if (!$user || !$user->validatePassword($this->password)) {
+                $this->addError('password', Yii::t('backend', 'Incorrect password.'));
             }
-            return $user;
         }
-
-        return null;
     }
-
+    
     /**
-     * @return bool
+     * Validates the amount.
+     * This method serves as the inline validation for amount, it must bigger than bonus amount.
      */
-    public function shouldBeActivated()
+    public function validateAmount()
     {
-        /** @var Module $userModule */
-        $userModule = Yii::$app->getModule('user');
-        if (!$userModule) {
-            return false;
-        } elseif ($userModule->shouldBeActivated) {
-            return true;
-        } else {
+        if (!$this->hasErrors()) {
+            $user = Yii::$app->user->identity;
+            // Find amount bonus in wallet
+            $wallet = Wallet::find()->where(['user_id'=>$user->id])->limit(1)->one();
+            if (!$user || !$wallet || $this->amount > $wallet->amount_bonus) {
+                $this->addError('amount', Yii::t('backend', 'Please enter the amount valid.'));
+            }
+        }
+    }
+    
+    /**
+     * Send coin to the address.
+     * @return bool whether the user is sent in successfully
+     * @throws ForbiddenHttpException
+     */
+    public function send()
+    {
+        if (!$this->validate()) {
             return false;
         }
+        
+        if(true){
+            // TODO save to transaction of User
+            $user = Yii::$app->user->identity;
+            $withdraw = new Withdraw();
+            $withdraw->user_id = $user->id;
+            
+            $wallet = Wallet::find()->where(['user_id'=>$user->id])->one();
+            if($wallet){
+                $withdraw->receiver = $this->address;
+                $withdraw->amount = $this->amount;
+                $withdraw->type = 3; // Tickcoin
+                $withdraw->sender = $wallet->wallet_tkc;
+                
+                if($wallet->amount_bonus >= $this->amount){
+                    $withdraw->save();    
+                    
+                    $wallet->amount_bonus -= $this->amount;
+                    $wallet->save();
+                    return true;
+                }
+            }
+
+        }
+        return false;
     }
 }

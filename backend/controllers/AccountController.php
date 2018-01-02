@@ -155,7 +155,7 @@ class AccountController extends Controller
     /**
      * @return string|Response
      */
-    public function actionResendMail()
+    public function actionResend()
     {
         $this->layout = 'base';
         $model = new PasswordResetRequestForm();

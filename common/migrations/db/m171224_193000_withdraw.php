@@ -21,7 +21,7 @@ class m171224_193000_withdraw extends Migration
             'amount' => $this->float(),
             'txid' => $this->string(),
             'type' => $this->smallInteger()->defaultValue(1), // 1 bit, 2 tkc
-            'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
+            'status' => $this->integer(1)->defaultValue('0')->unsigned(),
             'manager_id' => $this->integer(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),

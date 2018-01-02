@@ -20,7 +20,7 @@ class m171224_183000_deposit extends Migration
             'receiver' => $this->string(),
             'amount' => $this->float(),
             'type' => $this->smallInteger()->defaultValue(1), // 1 bit, 2 tkc
-            'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
+            'status' => $this->integer(1)->defaultValue('0')->unsigned(),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer()
         ], $tableOptions);

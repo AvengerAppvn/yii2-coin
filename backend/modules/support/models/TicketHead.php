@@ -145,7 +145,7 @@ class TicketHead extends \yii\db\ActiveRecord
     }
 
     /**
-     * Возвращает количество тикетов в по статусам
+     * 
      * 
      * @param int $status int 
      * @return int|string

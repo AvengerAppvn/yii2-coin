@@ -20,7 +20,7 @@ class m171211_183000_buy extends Migration
             'amount' => $this->float()->notNull(),
             'token' => $this->string(10)->notNull(),
             'type' => $this->smallInteger()->defaultValue(1), // 1 bit, 2 eth
-            'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
+            'status' => $this->smallInteger()->notNull()->defaultValue(1),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer()
         ], $tableOptions);

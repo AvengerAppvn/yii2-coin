@@ -24,7 +24,7 @@ class m171216_183000_team extends Migration
             'amount_total_bonus' => $this->float()->notNull(),
             'level' => $this->integer(),
             'type' => $this->smallInteger()->defaultValue(1),
-            'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
+            'status' => $this->smallInteger()->defaultValue(1),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer()
         ], $tableOptions);

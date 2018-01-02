@@ -1,3 +1,7 @@
+<?php 
+
+//var_dump($wallet);die;
+?>
 <div class="row">
 <div class="col-md-3">
    <h1 style="margin-bottom: 30px;padding-left:10%;">
@@ -16,7 +20,7 @@
 <div class="col-md-6">
      <h2 class="text-success" style="line-height: 48px;">
         <?= number_format($wallet->amount_btc,8) ?>
-        / BONUS <span class="app-btc-bonus"><?= number_format($wallet->amount_bonus,8) ?></span>
+        / BONUS <span class="app-btc-bonus"><?= number_format($wallet->bonus_btc,8) ?></span>
      </h2>
 </div>
 

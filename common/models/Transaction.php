@@ -15,6 +15,7 @@ use Yii;
  * @property integer $type
  * @property integer $status
  * @property integer $created_at
+ * @property integer $updated_at
  */
 class Transaction extends \yii\db\ActiveRecord
 {

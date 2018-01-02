@@ -1,6 +1,5 @@
 <?php
 
-use common\models\User;
 use yii\db\Schema;
 use yii\db\Migration;
 
@@ -20,11 +19,14 @@ class m171202_163000_wallet extends Migration
             'wallet_eth' => $this->string(100)->notNull(),
             'wallet_coin' => $this->string(100)->notNull(),
             'amount_btc' => $this->float()->defaultValue(0),
+            'bonus_btc' => $this->float()->defaultValue(0),
             'amount_eth' => $this->float()->defaultValue(0),
+            'bonus_eth' => $this->float()->defaultValue(0),
             'amount_coin' => $this->float()->defaultValue(0),
+            'bonus_coin' => $this->float()->defaultValue(0),
             'amount_bonus' => $this->float()->defaultValue(0),
             'amount_ico' => $this->float()->defaultValue(0),
-            'status' => $this->smallInteger()->notNull()->defaultValue(User::STATUS_ACTIVE),
+            'status' => $this->smallInteger()->notNull()->defaultValue(1),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer()
         ], $tableOptions);

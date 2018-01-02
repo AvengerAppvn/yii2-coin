@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-
+use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "wallet".
  *
@@ -13,8 +13,11 @@ use Yii;
  * @property string $wallet_eth
  * @property string $wallet_coin
  * @property double $amount_btc
+ * @property double $bonus_btc
  * @property double $amount_eth
+ * @property double $bonus_eth
  * @property double $amount_coin
+ * @property double $bonus_coin
  * @property double $amount_bonus
  * @property double $amount_ico
  * @property integer $status
@@ -41,7 +44,7 @@ class Wallet extends \yii\db\ActiveRecord
         return [
             [['user_id', 'wallet_btc', 'wallet_eth', 'wallet_coin'], 'required'],
             [['user_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['amount_btc', 'amount_eth', 'amount_coin', 'amount_bonus', 'amount_ico'], 'number'],
+            [['amount_btc', 'amount_eth', 'amount_coin', 'amount_bonus', 'amount_ico','bonus_btc','bonus_eth'], 'number'],
             [['wallet_btc', 'wallet_eth', 'wallet_coin'], 'string', 'max' => 100],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -59,7 +62,9 @@ class Wallet extends \yii\db\ActiveRecord
             'wallet_eth' => 'Wallet Eth',
             'wallet_coin' => 'Wallet Coin',
             'amount_btc' => 'Amount Btc',
+            'bonus_btc' => 'Amount Btc',
             'amount_eth' => 'Amount Eth',
+            'bonus_eth' => 'Amount Eth',
             'amount_coin' => 'Amount Coin',
             'amount_bonus' => 'Amount Bonus',
             'amount_ico' => 'Amount Ico',
@@ -69,6 +74,15 @@ class Wallet extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

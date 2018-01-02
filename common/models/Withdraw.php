@@ -3,7 +3,8 @@
 namespace common\models;
 
 use Yii;
-
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 /**
  * This is the model class for table "withdraw".
  *
@@ -64,7 +65,20 @@ class Withdraw extends \yii\db\ActiveRecord
             'completed_at' => 'Completed At',
         ];
     }
-
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'requested_at',
+                'updatedAtAttribute' => 'completed_at',
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      * @return \common\models\query\WithdrawQuery the active query used by this AR class.

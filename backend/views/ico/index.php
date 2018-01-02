@@ -99,7 +99,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
                 
                 <h3>
                     <p class="text-center">
-                        <strong id="app-total-available-coin"><?= number_format($total,0,",",".") ?></strong> <?php echo $code ?><br>
+                        <strong id="app-total-available-coin"><?= number_format(($total-$sold),0,",",".") ?></strong> <?php echo $code ?><br>
                         <small>Total Sold <span class="app-total-sold"><?= number_format($sold,0,",",".") ?></span> <?php echo $code ?></small>
                     </p>
                 </h3>

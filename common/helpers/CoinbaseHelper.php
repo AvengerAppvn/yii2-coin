@@ -133,32 +133,58 @@ class CoinbaseHelper
     public function getNotifications(){
 
         $notifications = $this->client->getNotifications();
-        Yii::error('==========================================Notification: '.count($notifications));
+        Yii::info('==========Total notification:'.count($notifications));
         foreach($notifications->all() as $notification){
-            if(Notification::find()->where(['notification_id'=>$notification->getId()])->exists()){    
+			//var_dump($notification);die;
+            if(!Notification::find()->where(['notification_id'=>$notification->getId()])->exists()){    
+                
                 $model = new Notification();
+                
                 $model->notification_id = $notification->getId();
-                $model->data = $notification->getData();
+				//var_dump($notification);die;
+				
+				$data = $notification->getData();
+                $model->data = json_encode(array($notification->getData()));
                 $model->type = $notification->getType();
+				$model->address = $data->getAddress();    	
+                
                 if($notification->getAdditionalData()){
                     $additionalData = $notification->getAdditionalData();
-                    if(isset($additionalData['currency'])){
-                        $model->currency = $additionalData['currency'];    
+
+                    if(isset($additionalData['hash'])){
+                        $model->amount_hash = $additionalData['hash'];    	
+                    }
+					
+					if(isset($additionalData['transaction'])){
+                        $transactions = $additionalData['transaction'];
+						if(isset($transactions['id'])){
+							$model->transaction_id = $transactions['id'];    	
+						}
+						
+						if(isset($transactions['resource_path'])){
+							$model->resource_path = $transactions['resource_path'];    	
+						}
                     }
                     if(isset($additionalData['amount'])){
-                        $model->amount = $additionalData['amount'];    
+						$amounts = $additionalData['amount'];
+						
+						if(isset($amounts['amount'])){
+							$model->amount = $amounts['amount'];    	
+						}
+						if(isset($amounts['currency'])){
+							$model->currency = $amounts['currency'];    	
+						}
                     }
                 }
                 
-                $model->rawdata = $notification->getRawData();
-                
+                $model->rawdata = json_encode($notification->getRawData());
                 $model->created_at = $notification->getCreatedAt();
                 $model->updated_at = $notification->getUpdatedAt();
                 $model->delivery_attempts = $notification->getDeliveryAttempts();
-                $model->resource_path = $notification->getResourcePath();
-                $model->account = $notification->getAccount();
-                
+				$model->delivery_response = json_encode($notification->getDeliveryResponse());
+
                 $model->save();
+				//var_dump($model->getErrors());die;
             }
             
         }

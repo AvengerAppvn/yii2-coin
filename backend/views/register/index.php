@@ -30,9 +30,9 @@ $bundle = BackendAsset::register($this);
                     <?php echo $form->field($model, 'email') ?>
                     <?php //echo $form->field($model, 'phone') ?>
                     <?php echo $form->field($model, 'phone')->widget(PhoneInput::className(), [
-                            'jsOptions' => [
-                                'preferredCountries' => ['us', 'vn', 'jp'],
-                            ]
+                            //'jsOptions' => [
+                            //    'preferredCountries' => ['us', 'vn', 'jp'],
+                            //]
                         ]);
                     ?>
                     <div class="row">

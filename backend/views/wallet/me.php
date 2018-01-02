@@ -100,9 +100,10 @@ $this->registerJs("new Clipboard('.btn-copy');");
                 
             </div>
         </div>
-
-        <div class="row">
+        
+        <div class="row m-t-xl">
             <div class="col-md-12">
+                
                 <div class="panel panel-filled">
                     <div class="panel-body">
                         <h3 class="m-t-md">
@@ -110,24 +111,10 @@ $this->registerJs("new Clipboard('.btn-copy');");
                         </h3>
 
                         <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Requested At</th>
-                                        <th>Address</th>
-                                        <th>BTC</th>
-                                        <th>Completed At</th>
-                                        <th>TXID</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                                                </tbody>
-                            </table>
+                            <?php echo $this->render('_withdraw.php',['searchModel' => $searchWithdraw,'dataProvider' => $dataWithdraw,]) ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 </div>

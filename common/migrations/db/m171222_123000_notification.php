@@ -22,11 +22,13 @@ class m171222_123000_notification extends Migration
             'address'=> $this->string(50),
             'currency'=> $this->string(50),
             'amount'=> $this->float(50),
+            'amount_hash'=> $this->string(100),
             'transaction_id'=> $this->string(50),
+            'resource_path'=> $this->string(200),
             'delivery_attempts' => $this->integer()->defaultValue(0),
-            'delivery_response' => $this->string(50),
+            'delivery_response' => $this->text(),
             'rawdata' => $this->text(),
-            'status' => $this->smallInteger()->defaultValue(0),
+            'status' => $this->integer(1)->defaultValue('0')->unsigned(), // 0 not process
             'created_at' => $this->timestamp(),
             'updated_at' => $this->timestamp(),
         ], $tableOptions);

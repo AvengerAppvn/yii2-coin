@@ -1,7 +1,7 @@
 <?php
 
 namespace common\models;
-
+use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
@@ -16,7 +16,9 @@ use Yii;
  * @property string $address
  * @property string $currency
  * @property double $amount
+ * @property string $amount_hash
  * @property string $transaction_id
+ * @property string $resource_path
  * @property integer $delivery_attempts
  * @property string $delivery_response
  * @property string $rawdata
@@ -44,7 +46,7 @@ class Notification extends \yii\db\ActiveRecord
             [['amount'], 'number'],
             [['delivery_attempts', 'status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['notification_id', 'type', 'user_id', 'account_id', 'address', 'currency', 'transaction_id', 'delivery_response'], 'string', 'max' => 50],
+            [['notification_id', 'type', 'user_id', 'account_id', 'address', 'currency', 'transaction_id'], 'string', 'max' => 50],
         ];
     }
 
@@ -72,7 +74,15 @@ class Notification extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
-
+ /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
     /**
      * @inheritdoc
      * @return \common\models\query\NotificationQuery the active query used by this AR class.

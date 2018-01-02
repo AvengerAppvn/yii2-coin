@@ -6,6 +6,7 @@ use Yii;
 use common\models\Wallet;
 use common\models\search\WalletSearch;
 use common\models\search\DepositSearch;
+use common\models\search\WithdrawSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +26,41 @@ class WalletController extends Controller
 
     public function actionMe()
     {
+        
+        $sendBtc = new SendBtc();
+        $sendEth = new SendEth();
+        $sendCoin = new SendForm();
+        
+        if($sendBtc->load(Yii::$app->request->post()) && $sendBtc->send()){
+            Yii::$app->getSession()->setFlash('alert-wallet', [
+                        'body' => Yii::t(
+                            'backend',
+                            'You has been successfully deposited. Check your email for further instructions.'
+                        ),
+                        'options' => ['class' => 'alert-success']
+                    ]);
+        }
+                
+        if($sendEth->load(Yii::$app->request->post()) && $sendEth->send()){
+            Yii::$app->getSession()->setFlash('alert-wallet', [
+                        'body' => Yii::t(
+                            'backend',
+                            'You has been successfully deposited. Check your email for further instructions.'
+                        ),
+                        'options' => ['class' => 'alert-success']
+                    ]);
+        }
+    
+        if($sendCoin->load(Yii::$app->request->post()) && $sendCoin->send()){
+            Yii::$app->getSession()->setFlash('alert-wallet', [
+                        'body' => Yii::t(
+                            'backend',
+                            'You has been successfully deposited. Check your email for further instructions.'
+                        ),
+                        'options' => ['class' => 'alert-success']
+                    ]);
+        }
+        
         $user = Yii::$app->user->identity;
         if (!Yii::$app->user->isGuest) {
             if($user && $user->has2fa && !Yii::$app->session->get('authen_2fa')){
@@ -92,14 +128,19 @@ class WalletController extends Controller
             'defaultOrder'=>['created_at'=>SORT_DESC]
         ];
 
-        $sendBtc = new SendBtc();
-        $sendEth = new SendEth();
-        $sendCoin = new SendForm();
+        // Withdraw
+        $searchWithdraw = new WithdrawSearch();
+        $dataWithdraw = $searchWithdraw->search($user->id);
+        $dataWithdraw->sort = [
+            'defaultOrder'=>['created_at'=>SORT_DESC]
+        ];
+        
         return $this->render('me', [
             'searchModel' => $searchModel,
             'searchDeposit' => $searchDeposit,
             'dataProvider' => $dataProvider,
             'dataDeposit' => $dataDeposit,
+            'dataWithdraw' => $dataWithdraw,
             'wallet_btc' => $wallet_btc,
             'wallet_eth' => $wallet_eth,
             'wallet_coin' => $wallet_coin,

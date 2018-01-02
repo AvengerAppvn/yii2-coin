@@ -7,7 +7,7 @@ use common\models\UserToken;
 use Yii;
 use common\models\User;
 use yii\base\Model;
-
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 /**
  * Password reset request form
  */
@@ -17,7 +17,7 @@ class PasswordResetRequestForm extends Model
      * @var user email
      */
     public $email;
-
+    public $reCaptcha;
     /**
      * @inheritdoc
      */
@@ -32,6 +32,8 @@ class PasswordResetRequestForm extends Model
                 'filter' => ['status' => User::STATUS_ACTIVE],
                 'message' => 'There is no user with such email.'
             ],
+            
+            ['reCaptcha', ReCaptchaValidator::className(), 'secret' => env('CAPTCHA_SERVERVERIFY')],
         ];
     }
 

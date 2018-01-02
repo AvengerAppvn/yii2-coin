@@ -93,12 +93,13 @@ $config = [
                         $url = !Yii::$app->request->isConsoleRequest ? Yii::$app->request->getUrl() : null;
                         return sprintf('[%s][%s]', Yii::$app->id, $url);
                     },
-                    'logVars'=>[],
+                    'logVars'=>['$_SERVER'],
                     'logTable'=>'{{%system_log}}'
                 ],
-                                [
+                [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error'],
+                    'levels' => ['error','info'],
+                    'logVars'=>[''],
                 ],
             ],
         ],

@@ -14,12 +14,12 @@ use common\grid\EnumColumn;
             'class' => 'grid-view table-responsive'
         ],
         'columns' => [
-
-            'sender',
+            'requested_at:datetime',
+            'receiver',
             'amount',
-            [
+             [
                 'class' => EnumColumn::className(),
-                'label' => 'Coin',
+                'label' => 'Wallet',
                 'attribute' => 'type',
                 'enum' => [
                     Yii::t('backend', 'TKC'),
@@ -27,9 +27,9 @@ use common\grid\EnumColumn;
                     Yii::t('backend', 'ETH'),
                 ]
             ],
-            [
+            'completed_at:datetime',
+             [
                 'class' => EnumColumn::className(),
-                'label' => 'Confirmed',
                 'attribute' => 'status',
                 'enum' => [
                     Yii::t('backend', 'Open'),
@@ -37,7 +37,7 @@ use common\grid\EnumColumn;
                     Yii::t('backend', 'Completed'),
                 ]
             ],
-            //'created_at:datetime',
+            //'txid',
         ]
     ]); ?>
 </div>

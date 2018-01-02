@@ -61,13 +61,13 @@ class UploadForm extends Model
         $height = $size[1];
 
         if( $height > $width ) {
-            // коэффициент
+
             $k = $widthNew / $height;
             $new_w = round( $width * $k );
             $new_h = $widthNew;
 
         } elseif( $width >= $height ) {
-            // коэффициент
+
             $k = $widthNew / $width;
             $new_w = $widthNew;
             $new_h = round( $height * $k );
