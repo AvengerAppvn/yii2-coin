@@ -2,15 +2,12 @@
 
 namespace console\controllers;
 
+use common\models\Deposit;
+use common\models\Wallet;
 use Yii;
 use yii\console\Controller;
-use yii\helpers\Console;
-use common\models\Wallet;
-use common\models\Deposit;
 
-/**
- * @author Eugene Terentev <eugene@terentev.net>
- */
+
 class TestController extends Controller
 {
     public function actionIndex()
