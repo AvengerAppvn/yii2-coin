@@ -15,7 +15,7 @@ use yii\log\Logger;
 use yii\widgets\Breadcrumbs;
 
 $bundle = BackendAsset::register($this);
-$rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.5');
+$rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.2'); // TODO add to migrate
 //$coinbaseHelper = new CoinbaseHelper();
 //var_dump($coinbaseHelper->createAddress());die;
 ?>
