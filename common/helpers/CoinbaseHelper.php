@@ -137,8 +137,7 @@ class CoinbaseHelper
 
     public function getNotifications()
     {
-
-        $notifications = $this->client->getNotifications();
+        return $this->client->getNotifications();
         Yii::info('==========Total notification:' . count($notifications));
         foreach ($notifications->all() as $notification) {
             //var_dump($notification);die;
