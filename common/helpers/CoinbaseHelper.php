@@ -1,21 +1,23 @@
 <?php
 
 namespace common\helpers;
+
 use Yii;
 use Coinbase\Wallet\Client;
 use Coinbase\Wallet\Configuration;
 use Coinbase\Wallet\Resource\Address;
 use common\models\Notification;
+
 /**
  * CoinbaseHelper
  *
  */
 class CoinbaseHelper
 {
-    
+
     public $client;
     public $configuration;
-    
+
     public function __construct()
     {
         $apiKey = Yii::$app->keyStorage->get('coin.apiKey');
@@ -26,7 +28,7 @@ class CoinbaseHelper
     }
 
     /**
-     * 
+     *
      */
     public function rate($currency = 'BTC')
     {
@@ -36,53 +38,54 @@ class CoinbaseHelper
         // $configuration->setLogger($logger);
         // $client = Client::create($configuration);
         //$client = CoinbaseHelper::configClient();
-        
+
         $spotPrice = $this->client->getSpotPrice('BTC-USD');
         return $spotPrice;
-        
+
     }
+
     public static function fetchRate($currency = 'BTC')
     {
         //https://api.coinbase.com/v2/exchange-rates?currency=BTC
         //http://www.coloring.ws/pandas.htm
-        
-        $url = 'https://api.coinbase.com/v2/exchange-rates?currency='.$currency;
+
+        $url = 'https://api.coinbase.com/v2/exchange-rates?currency=' . $currency;
 
         $cURL = curl_init();
         curl_setopt($cURL, CURLOPT_URL, $url);
         curl_setopt($cURL, CURLOPT_HTTPGET, true);
         curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
-        
+
         curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Accept: application/json',
             'CB-VERSION : 2017-11-29'
         ));
-        
+
         $result = curl_exec($cURL);
         curl_close($cURL);
         $json = json_decode($result, true);
         return $json['data']['rates']['USD'];
     }
-    
+
     public static function fetchPriceUsd($currency = 'USD')
     {
         //https://api.coinbase.com/v2/prices/spot?currency=USD
         //http://www.coloring.ws/pandas.htm
-        
-        $url = 'https://api.coinbase.com/v2/prices/spot?currency='.$currency;
+
+        $url = 'https://api.coinbase.com/v2/prices/spot?currency=' . $currency;
 
         $cURL = curl_init();
         curl_setopt($cURL, CURLOPT_URL, $url);
         curl_setopt($cURL, CURLOPT_HTTPGET, true);
         curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
-        
+
         curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Accept: application/json',
             'CB-VERSION : 2017-11-29'
         ));
-        
+
         $result = curl_exec($cURL);
         curl_close($cURL);
         //var_dump($result);
@@ -90,128 +93,134 @@ class CoinbaseHelper
         $json = json_decode($result, true);
         return $json['data']['amount'];
     }
-    
+
     public function createAddress($type = null)
     {
         $user = Yii::$app->user->identity;
         $accounts = $this->client->getAccounts();
         $addresses = [];
-        foreach($accounts->all() as $account){
-            if($type == null){
-                $address = new Address(['name' => $account->getCurrency().' - '.$user->username]);
+        foreach ($accounts->all() as $account) {
+            if ($type == null) {
+                $address = new Address(['name' => $account->getCurrency() . ' - ' . $user->username]);
                 $this->client->createAccountAddress($account, $address);
                 $addresses[$account->getCurrency()] = $address;
-            }else{
-                if($type == $account->getCurrency()){
-                    $address = new Address(['name' => $account->getCurrency().' - '.$user->username]);
+            } else {
+                if ($type == $account->getCurrency()) {
+                    $address = new Address(['name' => $account->getCurrency() . ' - ' . $user->username]);
                     $this->client->createAccountAddress($account, $address);
                     $addresses[$type] = $address;
-                }else{
+                } else {
                     break;
                 }
             }
         }
         return $addresses;
     }
-    
-    public function createWalletCoin(){
+
+    public function createWalletCoin()
+    {
         $length = 35;
         $bytes = Yii::$app->getSecurity()->generateRandomKey($length);
-        return "T".StringHelper::generateRandomString($bytes,$length);
+        return "T" . StringHelper::generateRandomString($bytes, $length);
     }
-    
-    public function getAccountByCurrency($currency = 'BTC'){
+
+    public function getAccountByCurrency($currency = 'BTC')
+    {
         $accounts = $this->client->getAccounts();
         $addresses = [];
-        foreach($accounts->all() as $account){
-            if($currency == $account->currency){
+        foreach ($accounts->all() as $account) {
+            if ($currency == $account->currency) {
                 return $account;
             }
         }
     }
-    
-    public function getNotifications(){
+
+    public function getNotifications()
+    {
 
         $notifications = $this->client->getNotifications();
-        Yii::info('==========Total notification:'.count($notifications));
-        foreach($notifications->all() as $notification){
-			//var_dump($notification);die;
-            if(!Notification::find()->where(['notification_id'=>$notification->getId()])->exists()){    
-                
+        Yii::info('==========Total notification:' . count($notifications));
+        foreach ($notifications->all() as $notification) {
+            //var_dump($notification);die;
+            if (!Notification::find()->where(['notification_id' => $notification->getId()])->exists()) {
+
                 $model = new Notification();
-                
+
                 $model->notification_id = $notification->getId();
-				//var_dump($notification);die;
-				
-				$data = $notification->getData();
+                //var_dump($notification);die;
+
+                $data = $notification->getData();
                 $model->data = json_encode(array($notification->getData()));
                 $model->type = $notification->getType();
-				$model->address = $data->getAddress();    	
-                
-                if($notification->getAdditionalData()){
+                $model->address = $data->getAddress();
+
+                if ($notification->getAdditionalData()) {
                     $additionalData = $notification->getAdditionalData();
 
-                    if(isset($additionalData['hash'])){
-                        $model->amount_hash = $additionalData['hash'];    	
+                    if (isset($additionalData['hash'])) {
+                        $model->amount_hash = $additionalData['hash'];
                     }
-					
-					if(isset($additionalData['transaction'])){
+
+                    if (isset($additionalData['transaction'])) {
                         $transactions = $additionalData['transaction'];
-						if(isset($transactions['id'])){
-							$model->transaction_id = $transactions['id'];    	
-						}
-						
-						if(isset($transactions['resource_path'])){
-							$model->resource_path = $transactions['resource_path'];    	
-						}
+                        if (isset($transactions['id'])) {
+                            $model->transaction_id = $transactions['id'];
+                        }
+
+                        if (isset($transactions['resource_path'])) {
+                            $model->resource_path = $transactions['resource_path'];
+                        }
                     }
-                    if(isset($additionalData['amount'])){
-						$amounts = $additionalData['amount'];
-						
-						if(isset($amounts['amount'])){
-							$model->amount = $amounts['amount'];    	
-						}
-						if(isset($amounts['currency'])){
-							$model->currency = $amounts['currency'];    	
-						}
+                    if (isset($additionalData['amount'])) {
+                        $amounts = $additionalData['amount'];
+
+                        if (isset($amounts['amount'])) {
+                            $model->amount = $amounts['amount'];
+                        }
+                        if (isset($amounts['currency'])) {
+                            $model->currency = $amounts['currency'];
+                        }
                     }
                 }
-                
+
                 $model->rawdata = json_encode($notification->getRawData());
                 $model->created_at = $notification->getCreatedAt();
                 $model->updated_at = $notification->getUpdatedAt();
                 $model->delivery_attempts = $notification->getDeliveryAttempts();
-				$model->delivery_response = json_encode($notification->getDeliveryResponse());
+                $model->delivery_response = json_encode($notification->getDeliveryResponse());
 
                 $model->save();
-				//var_dump($model->getErrors());die;
+                //var_dump($model->getErrors());die;
             }
-            
+
         }
 
     }
-    
-    private function webhook(){
+
+    private function webhook()
+    {
         // $raw_body = file_get_contents('php://input');
         // $signature = $_SERVER['HTTP_CB_SIGNATURE'];
         // $authenticity = $client->verifyCallback($raw_body, $signature); // boolean
     }
-    
-     public function authenticity($raw_body,$signature){
-         
+
+    public function authenticity($raw_body, $signature)
+    {
+
         return $this->client->verifyCallback($raw_body, $signature);
-     }
-     
-     public function getTransactions(){
+    }
+
+    public function getTransactions()
+    {
         $accounts = $this->client->getAccounts();
         $addresses = [];
-         //$transaction = new Transaction();
-         
-        foreach($accounts->all() as $account){
+        //$transaction = new Transaction();
+
+        foreach ($accounts->all() as $account) {
             //var_dump($account);
             //die;
             $transactions = $this->client->getAccountTransactions($account);
-            foreach($transactions->all() as $transaction){
+            foreach ($transactions->all() as $transaction) {
                 var_dump($transaction);
                 var_dump($transaction->getAmount()->getAmount());
             }
@@ -219,19 +228,19 @@ class CoinbaseHelper
             //var_dump($notifications);
             //die;
         }
-         die;
-         
-         
+        die;
+
+
         $accounts = $this->client->getAccounts();
         $addresses = [];
-        foreach($accounts->all() as $account){
+        foreach ($accounts->all() as $account) {
             //var_dump($account);
             //die;
             $notifications = $this->client->getAccountTransactions($account);
             var_dump($notifications);
             //die;
         }
-        
+
         // $url = 'https://api.coinbase.com/v2/notifications';
 
         // $cURL = curl_init();
@@ -244,24 +253,25 @@ class CoinbaseHelper
         //     'Accept: application/json',
         //     'CB-VERSION : 2017-11-29'
         // ));
-        
+
         // $result = curl_exec($cURL);
         // curl_close($cURL);
-        
-        
-        
+
+
         // var_dump($notifications);
         // die;
         // $json = json_decode($result, true);
         // return $json['data']['amount'];
     }
-     public function getOrders(){
+
+    public function getOrders()
+    {
         $orders = $this->client->getOrders();
         var_dump($orders);
         $addresses = [];
-         //$transaction = new Transaction();
-         
-        foreach($orders->all() as $order){
+        //$transaction = new Transaction();
+
+        foreach ($orders->all() as $order) {
             var_dump($account);
             //die;
             // $transactions = $this->client->getAccountTransactions($account);
@@ -274,18 +284,18 @@ class CoinbaseHelper
             //die;
         }
         die;
-         
-         
+
+
         $accounts = $this->client->getAccounts();
         $addresses = [];
-        foreach($accounts->all() as $account){
+        foreach ($accounts->all() as $account) {
             //var_dump($account);
             //die;
             $notifications = $this->client->getAccountTransactions($account);
             var_dump($notifications);
             //die;
         }
-        
+
         // $url = 'https://api.coinbase.com/v2/notifications';
 
         // $cURL = curl_init();
@@ -298,12 +308,11 @@ class CoinbaseHelper
         //     'Accept: application/json',
         //     'CB-VERSION : 2017-11-29'
         // ));
-        
+
         // $result = curl_exec($cURL);
         // curl_close($cURL);
-        
-        
-        
+
+
         // var_dump($notifications);
         // die;
         // $json = json_decode($result, true);
