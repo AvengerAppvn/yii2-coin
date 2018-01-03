@@ -272,7 +272,7 @@ class CoinbaseHelper
         //$transaction = new Transaction();
 
         foreach ($orders->all() as $order) {
-            var_dump($account);
+            //var_dump($account);
             //die;
             // $transactions = $this->client->getAccountTransactions($account);
             // foreach($transactions->all() as $transaction){
@@ -317,5 +317,10 @@ class CoinbaseHelper
         // die;
         // $json = json_decode($result, true);
         // return $json['data']['amount'];
+    }
+
+    public function verify($raw_body, $signature)
+    {
+        return $this->client->verifyCallback($raw_body, $signature);
     }
 }
