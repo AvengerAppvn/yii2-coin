@@ -27,12 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="box-body">
           <div class="form-group">
             <label for="username" class="text-white">Username</label>
-            <input class="form-control" readonly="" name="username" type="text" value="<?= $referrer ?>" id="username">
+            <input class="form-control" readonly="" disabled="" name="username" type="text" value="<?= $referrer ?>" id="username">
         </div>
         
         <div class="form-group">
             <label for="country" class="text-white">Country</label>
-            <input class="form-control" readonly="" name="country" type="text" value="Vietnam" id="country">
+            <input class="form-control" readonly="" disabled="" name="country" type="text" value="Vietnam" id="country">
         </div>
         
     </div>

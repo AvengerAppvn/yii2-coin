@@ -98,8 +98,8 @@ class SignInController extends Controller
         $model->username = $user->username;
         $model->email = $user->email;
         if ($model->load($_POST) && $model->validate()) {
-            $user->username = $model->username;
-            $user->email = $model->email;
+            //$user->username = $model->username;
+            //$user->email = $model->email;
             if ($model->password) {
                 $user->setPassword($model->password);
             }
