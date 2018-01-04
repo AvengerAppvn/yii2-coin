@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <!-- /.box-header -->
     <div class="box-body">
-        <?php echo $this->render('_profile.php',['model'=>$profile]) ?>
+        <?php echo $this->render('_profile.php',['model'=>$profile,'countries'=>$countries]) ?>
     </div>
     <!-- /.box-body -->
 </div>

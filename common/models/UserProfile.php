@@ -22,6 +22,7 @@ use yii\db\ActiveRecord;
  * @property integer $country_id
  *
  * @property User $user
+ * @property Country $country
  */
 class UserProfile extends ActiveRecord
 {
@@ -90,6 +91,14 @@ class UserProfile extends ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCountry()
+    {
+        return $this->hasOne(Country::className(), ['id' => 'country_id']);
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */

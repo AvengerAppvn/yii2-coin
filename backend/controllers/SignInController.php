@@ -17,7 +17,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;
-
+use common\models\Country;
 class SignInController extends Controller
 {
 
@@ -88,7 +88,7 @@ class SignInController extends Controller
             ]);
             return $this->refresh();
         }
-        return $this->render('profile', ['model'=>$model]);
+        return $this->render('profile', ['model'=>$model,'countries'=>Country::find()->active()->all()]);
     }
 
     public function actionAccount()
