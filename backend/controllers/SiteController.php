@@ -44,13 +44,13 @@ class SiteController extends \yii\web\Controller
             foreach ($data->data as $dt) {
                 if ($dt) {
                     if ($dt->base == 'BTC') {
-                        $rateEthUsd = $dt->amount;
+                        $rateBtcUsd = $dt->amount;
                         $rateCoinBtc = $rateBtcUsd !== 0 && $rateUsd !== 0 ? (1 / $rateBtcUsd) / $rateUsd : 0;
                         Yii::$app->keyStorage->set('coin.rate-btc-usd', $rateBtcUsd);
                         Yii::$app->keyStorage->set('coin.rate-btc', $rateCoinBtc);
                     }
                     if ($dt->base == 'ETH') {
-                        $rateBtcUsd = $dt->amount;
+                        $rateEthUsd = $dt->amount;
                         $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? (1 / $rateEthUsd) / $rateUsd : 0;
                         Yii::$app->keyStorage->set('coin.rate-eth-usd', $rateEthUsd);
                         Yii::$app->keyStorage->set('coin.rate-eth', $rateCoinEth);
