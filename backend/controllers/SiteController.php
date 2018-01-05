@@ -28,13 +28,42 @@ class SiteController extends \yii\web\Controller
         return parent::beforeAction($action);
     }
 
-    public function actionRate(){
+    public function actionRate()
+    {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $cb = new CoinbaseHelper();
-        return $cb->rate('USD');
+
+        $rateBtcUsd = Yii::$app->keyStorage->get('coin.rate-btc-usd');
+        if (!$rateBtcUsd) {
+            $rateBtcUsd = CoinbaseHelper::fetchRate('BTC');
+            Yii::$app->keyStorage->set('coin.rate-btc-usd', $rateBtcUsd);
+        }
+        $data = $cb->rate();
+        $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.2');
+        if ($data && $data->data) {
+            foreach ($data->data as $dt) {
+                if ($dt) {
+                    if ($dt->base == 'BTC') {
+                        $rateEthUsd = $dt->amount;
+                        $rateCoinBtc = $rateBtcUsd !== 0 && $rateUsd !== 0 ? (1 / $rateBtcUsd) / $rateUsd : 0;
+                        Yii::$app->keyStorage->set('coin.rate-btc-usd', $rateBtcUsd);
+                        Yii::$app->keyStorage->set('coin.rate-btc', $rateCoinBtc);
+                    }
+                    if ($dt->base == 'ETH') {
+                        $rateBtcUsd = $dt->amount;
+                        $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? (1 / $rateEthUsd) / $rateUsd : 0;
+                        Yii::$app->keyStorage->set('coin.rate-eth-usd', $rateEthUsd);
+                        Yii::$app->keyStorage->set('coin.rate-eth', $rateCoinEth);
+                    }
+                }
+
+            }
+        }
+        return $data;
     }
 
-    public function actionLanding()
+    public
+    function actionLanding()
     {
         $model = new FormModel([
             'keys' => [
@@ -59,7 +88,9 @@ class SiteController extends \yii\web\Controller
 
         return $this->render('landing', ['model' => $model]);
     }
-    public function actionSettings()
+
+    public
+    function actionSettings()
     {
         $model = new FormModel([
             'keys' => [

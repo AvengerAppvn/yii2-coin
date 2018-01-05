@@ -30,9 +30,21 @@ class CoinbaseHelper
     /**
      *
      */
-    public function rate($currency = 'BTC-USD')
+    public function rate($currency = 'USD')
     {
-        return $this->client->getSpotPrice($currency);
+        $cURL = curl_init();
+        curl_setopt($cURL, CURLOPT_URL, 'https://api.coinbase.com/v2/prices/USD/spot?');
+        curl_setopt($cURL, CURLOPT_HTTPGET, true);
+        curl_setopt($cURL, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'CB-VERSION : 2017-11-29'
+        ));
+        $result = curl_exec($cURL);
+        curl_close($cURL);
+        return json_decode($result);
     }
 
     public static function fetchRate($currency = 'BTC')
@@ -50,7 +62,7 @@ class CoinbaseHelper
         curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
             'Accept: application/json',
-            'CB-VERSION : 2017-11-29'
+            'CB-VERSION : 2017-12-07'
         ));
 
         $result = curl_exec($cURL);

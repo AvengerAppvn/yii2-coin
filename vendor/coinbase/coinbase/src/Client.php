@@ -133,15 +133,15 @@ class Client
 
     public function getSpotPrice($currency = null, array $params = [])
     {
-//        if (strpos($currency, '-') !== false) {
-//            $pair = $currency;
-//        } else if ($currency) {
-//            $pair = 'BTC-' . $currency;
-//        } else {
-//            $pair = 'BTC-USD';
-//        }
+        if (strpos($currency, '-') !== false) {
+            $pair = $currency;
+        } else if ($currency) {
+            $pair = 'BTC-' . $currency;
+        } else {
+            $pair = 'BTC-USD';
+        }
 
-        return $this->getAndMapMoney('/v2/prices/' . $currency . '/spot', $params);
+        return $this->getAndMapMoney('/v2/prices/' . $pair . '/spot', $params);
     }
 
     public function getHistoricPrices($currency = null, array $params = [])

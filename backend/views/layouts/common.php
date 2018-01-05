@@ -26,10 +26,10 @@ $script = <<< JS
              url: '/site/rate',
              contentType: 'application/json',
              data: {},
-             success: function(data) {
-                console.log(data);
-                if (data && data['data']){
-                    console.log();
+             success: function(result) {
+                //console.log(result);
+                if (result && result.data){
+                    var data = result.data
                     var length = data.length;
                      for(var i = 0;i<length;i++){
                         if(data[i].base == 'BTC'){
@@ -39,13 +39,12 @@ $script = <<< JS
                             $("#base-eth-usd").html(data[i].amount);
                         }
                      }
-
                 }
                 return true;
              }
           });
     }
-    setInterval (showPrice, 5000 );
+    setInterval (showPrice, 10000 );
 
 JS;
 
@@ -75,34 +74,12 @@ $this->registerJs($script, $position);
                         <a href="#">
                         <i class="fa fa-bitcoin"></i>
                         <?php
-                        $rateBtcUsd = Yii::$app->keyStorage->get('coin.rate-btc-usd');
-                        if(!$rateBtcUsd){
-                            $rateBtcUsd = CoinbaseHelper::fetchRate('BTC');
-                            Yii::$app->keyStorage->set('coin.rate-btc-usd', $rateBtcUsd);
-                        }
-                        
-                        $rateCoinBtc = Yii::$app->keyStorage->get('coin.rate-btc');
-                        if(!$rateCoinBtc){
-                            $rateCoinBtc = $rateBtcUsd !== 0 && $rateUsd !== 0 ? (1/$rateBtcUsd)/$rateUsd : 0;
-                            Yii::$app->keyStorage->set('coin.rate-btc', $rateCoinBtc);
-                        }
-                        
-                        $rateEthUsd = Yii::$app->keyStorage->get('coin.rate-eth-usd');
-                        if(!$rateEthUsd){
-                            $rateEthUsd = CoinbaseHelper::fetchRate('ETH');
-                            Yii::$app->keyStorage->set('coin.rate-eth-usd', $rateEthUsd);
-                        }
-                        
-                        $rateCoinEth = Yii::$app->keyStorage->get('coin.rate-eth');
-                        if(!$rateCoinEth){
-                            $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? (1/$rateEthUsd)/$rateUsd : 0;
-                            Yii::$app->keyStorage->set('coin.rate-eth', $rateCoinEth);
-                        }
+
                                                 
                         //var_dump($amount);die;
                         ?>
                         <span>
-                            1 BTC = <span id="base-btc-usd"><?php echo $rateBtcUsd ?></span> USD
+                            1 BTC = <span id="base-btc-usd"><?php echo Yii::$app->keyStorage->get('coin.rate-btc-usd') ?></span> USD
                         </span>
                          </a>
                     </li>
@@ -111,7 +88,7 @@ $this->registerJs($script, $position);
                         <a href="#">
                         <i class="fa"></i>
                         <span>
-                            1 ETH = <span id="base-eth-usd"><?php echo $rateEthUsd ?></span> USD
+                            1 ETH = <span id="base-eth-usd"><?php echo Yii::$app->keyStorage->get('coin.rate-eth-usd') ?></span> USD
                         </span>
                         </a>
                     </li>  
@@ -119,7 +96,7 @@ $this->registerJs($script, $position);
                         <a href="#">
                         <i class="fa"></i>
                         <span>
-                            1 <?php echo Yii::$app->keyStorage->get('coin.code', 'TKC') ?> = <?php echo $rateUsd ?> USD
+                            1 <?php echo Yii::$app->keyStorage->get('coin.code', 'TKC') ?> = <?php echo Yii::$app->keyStorage->get('coin.rate-usd', '0.2'); ?> USD
                         </span>
                         </a>
                     </li>
