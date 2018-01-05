@@ -18,6 +18,39 @@ $bundle = BackendAsset::register($this);
 $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.2'); // TODO add to migrate
 //$coinbaseHelper = new CoinbaseHelper();
 //var_dump($coinbaseHelper->createAddress());die;
+$script = <<< JS
+    function showPrice() {
+        //console.log('show');
+        $.ajax({
+             async: true,
+             url: '/site/rate',
+             contentType: 'application/json',
+             data: {},
+             success: function(data) {
+                console.log(data);
+                if (data && data['data']){
+                    console.log();
+                    var length = data.length;
+                     for(var i = 0;i<length;i++){
+                        if(data[i].base == 'BTC'){
+                            $("#base-btc-usd").html(data[i].amount);
+                        }
+                        if(data[i].base == 'ETH'){
+                            $("#base-eth-usd").html(data[i].amount);
+                        }
+                     }
+
+                }
+                return true;
+             }
+          });
+    }
+    setInterval (showPrice, 5000 );
+
+JS;
+
+$position = \yii\web\View::POS_READY;
+$this->registerJs($script, $position);
 ?>
 <?php $this->beginContent('@backend/views/layouts/base.php'); ?>
 <div class="wrapper">
@@ -69,7 +102,7 @@ $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.2'); // TODO add to mi
                         //var_dump($amount);die;
                         ?>
                         <span>
-                            1 BTC = <?php echo $rateBtcUsd ?> USD 
+                            1 BTC = <span id="base-btc-usd"><?php echo $rateBtcUsd ?></span> USD
                         </span>
                          </a>
                     </li>
@@ -78,7 +111,7 @@ $rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.2'); // TODO add to mi
                         <a href="#">
                         <i class="fa"></i>
                         <span>
-                            1 ETH = <?php echo $rateEthUsd ?> USD
+                            1 ETH = <span id="base-eth-usd"><?php echo $rateEthUsd ?></span> USD
                         </span>
                         </a>
                     </li>  

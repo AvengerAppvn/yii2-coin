@@ -144,6 +144,12 @@ $config = [
                 'actions' => ['me']
             ],
             [
+                'controllers' => ['site'],
+                'allow' => true,
+                'roles' => ['@'],
+                'actions' => ['rate']
+            ],
+            [
                 'controllers' => ['wallet'],
                 'allow' => true,
                 'roles' => ['manager'],

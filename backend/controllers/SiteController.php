@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use common\components\keyStorage\FormModel;
+use common\helpers\CoinbaseHelper;
 use Yii;
 
 /**
@@ -26,6 +27,13 @@ class SiteController extends \yii\web\Controller
         $this->layout = Yii::$app->user->isGuest || !Yii::$app->user->can('loginToBackend') ? 'base' : 'common';
         return parent::beforeAction($action);
     }
+
+    public function actionRate(){
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $cb = new CoinbaseHelper();
+        return $cb->rate('USD');
+    }
+
     public function actionLanding()
     {
         $model = new FormModel([

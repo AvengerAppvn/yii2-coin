@@ -30,18 +30,9 @@ class CoinbaseHelper
     /**
      *
      */
-    public function rate($currency = 'BTC')
+    public function rate($currency = 'BTC-USD')
     {
-        // $apiKey = Yii::$app->keyStorage->get('coin.apiKey');
-        // $apiSecret = Yii::$app->keyStorage->get('coin.apiSecret');
-        // $configuration = Configuration::apiKey($apiKey, $apiSecret);
-        // $configuration->setLogger($logger);
-        // $client = Client::create($configuration);
-        //$client = CoinbaseHelper::configClient();
-
-        $spotPrice = $this->client->getSpotPrice('BTC-USD');
-        return $spotPrice;
-
+        return $this->client->getSpotPrice($currency);
     }
 
     public static function fetchRate($currency = 'BTC')
