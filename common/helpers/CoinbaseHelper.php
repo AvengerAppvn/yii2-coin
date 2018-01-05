@@ -205,7 +205,6 @@ class CoinbaseHelper
 
     public function authenticity($raw_body, $signature)
     {
-
         return $this->client->verifyCallback($raw_body, $signature);
     }
 
@@ -266,7 +265,7 @@ class CoinbaseHelper
     public function getOrders()
     {
         $orders = $this->client->getOrders();
-        var_dump($orders);
+        //var_dump($orders);
         $addresses = [];
         //$transaction = new Transaction();
 
@@ -291,7 +290,7 @@ class CoinbaseHelper
             //var_dump($account);
             //die;
             $notifications = $this->client->getAccountTransactions($account);
-            var_dump($notifications);
+            //var_dump($notifications);
             //die;
         }
 

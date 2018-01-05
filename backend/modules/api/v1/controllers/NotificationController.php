@@ -39,7 +39,8 @@ class NotificationController extends ActiveController
         // echo $raw_body;
         // return;
         $signature = $_SERVER['HTTP_CB_SIGNATURE'];
-        $authenticity = CoinbaseHelper::verify($raw_body, $signature);
+        $coinbaseHelper = new CoinbaseHelper();
+        $authenticity = $coinbaseHelper->authenticity($raw_body, $signature);
         //$authenticity = true;
         if ($authenticity) {
             $params = $_POST;
@@ -157,7 +158,7 @@ class NotificationController extends ActiveController
         }
 
         Yii::error('ERROR AUTHEN FROM COINBASE');
-        $this->setHeader(200);
+        //$this->setHeader(200);
     }
 
 }
