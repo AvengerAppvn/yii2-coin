@@ -40,7 +40,35 @@ class DepositSearch extends Deposit
      *
      * @return ActiveDataProvider
      */
-    public function search($user_id)
+    public function search($params)
+    {
+        $query = Deposit::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'amount' => $this->amount,
+            'type' => $this->type,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ]);
+
+        $query->andFilterWhere(['like', 'sender', $this->sender])
+            ->andFilterWhere(['like', 'receiver', $this->receiver]);
+
+        return $dataProvider;
+    }
+
+    public function searchUser($user_id)
     {
         $query = Deposit::find();
 

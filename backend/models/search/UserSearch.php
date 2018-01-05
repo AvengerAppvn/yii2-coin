@@ -63,4 +63,38 @@ class UserSearch extends User
 
         return $dataProvider;
     }
+
+    public function searchMember($params)
+    {
+        $userIds = Yii::$app->authManager->getUserIdsByRole(User::ROLE_ADMINISTRATOR);
+        $query = User::find()->where(['not in','id',$userIds]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if($params && isset($params['id'])){
+            if(in_array($params['id'],$userIds)){
+                $params['id'] = -1;
+            }
+        }
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'status' => $this->status,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'logged_at' => $this->logged_at
+        ]);
+
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
+            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
+            ->andFilterWhere(['like', 'email', $this->email]);
+
+        return $dataProvider;
+    }
 }

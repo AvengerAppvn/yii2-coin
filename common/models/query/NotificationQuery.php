@@ -14,6 +14,11 @@ class NotificationQuery extends \yii\db\ActiveQuery
         return $this->andWhere('[[status]]=0');
     }
 
+    public function active()
+    {
+        return $this->andWhere('[[status]]=1');
+    }
+
     /**
      * @inheritdoc
      * @return \common\models\Notification[]|array

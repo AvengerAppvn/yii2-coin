@@ -123,14 +123,14 @@ class WalletController extends Controller
         
         // Deposit
         $searchDeposit = new DepositSearch();
-        $dataDeposit = $searchDeposit->search($user->id);
+        $dataDeposit = $searchDeposit->searchUser($user->id);
         $dataDeposit->sort = [
             'defaultOrder'=>['created_at'=>SORT_DESC]
         ];
 
         // Withdraw
         $searchWithdraw = new WithdrawSearch();
-        $dataWithdraw = $searchWithdraw->search($user->id);
+        $dataWithdraw = $searchWithdraw->searchUser($user->id);
         $dataWithdraw->sort = [
             'defaultOrder'=>['created_at'=>SORT_DESC]
         ];

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Notification;
 use Yii;
 use common\models\Article;
 use backend\models\search\ArticleSearch;
@@ -37,8 +38,8 @@ class TestController extends Controller
         $coinbase = new CoinbaseHelper();
         //$coinbase->getOrders();
        // $coinbase->getTransactions();
-        $notifications = $coinbase->getNotifications();
-        Notification::find()->where([''])->all();
+        $coinbase->getNotifications();
+        $notifications = Notification::find()->inactive()->all();
         // TODO
 		foreach($notifications as $notification){
 // 			$deposit = new Deposit();

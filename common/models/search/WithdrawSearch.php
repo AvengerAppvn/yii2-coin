@@ -18,11 +18,12 @@ class WithdrawSearch extends Withdraw
     public function rules()
     {
         return [
-            [['user_id', 'type', 'status', 'manager_id', 'created_at', 'updated_at', 'requested_at', 'completed_at'], 'integer'],
-            [['amount'], 'number'],
+            [['id', 'user_id', 'type', 'status', 'manager_id', 'created_at', 'updated_at', 'requested_at', 'completed_at'], 'integer'],
             [['sender', 'receiver', 'txid'], 'safe'],
+            [['amount'], 'number'],
         ];
     }
+
     /**
      * @inheritdoc
      */
@@ -39,7 +40,46 @@ class WithdrawSearch extends Withdraw
      *
      * @return ActiveDataProvider
      */
-    public function search($user_id)
+    public function search($params)
+    {
+        $query = Withdraw::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (!($this->load($params) && $this->validate())) {
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'amount' => $this->amount,
+            'type' => $this->type,
+            'status' => $this->status,
+            'manager_id' => $this->manager_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'requested_at' => $this->requested_at,
+            'completed_at' => $this->completed_at,
+        ]);
+
+        $query->andFilterWhere(['like', 'sender', $this->sender])
+            ->andFilterWhere(['like', 'receiver', $this->receiver])
+            ->andFilterWhere(['like', 'txid', $this->txid]);
+
+        return $dataProvider;
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchUser($user_id)
     {
         $query = Withdraw::find();
 
