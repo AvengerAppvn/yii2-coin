@@ -75,10 +75,72 @@ use yii\widgets\Breadcrumbs;
                         'url' => ['/logout'],
                         'template' => "<a href=\"{url}\" data-method=\"post\">\n{icon}\n{label}\n{right-icon}\n{badge}</a>",
                     ],
+
                     [
                         'label' => Yii::t('backend', 'Admin'),
                         'options' => ['class' => 'header'],
                         'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'List wallet'),
+                        'icon' => '<i class="fa fa-list"></i>',
+                        'url' => ['/wallet/list'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Transaction'),
+                        'icon' => '<i class="fa fa-line-chart"></i>',
+                        'url' => ['/deposit'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Withdraw'),
+                        'icon' => '<i class="fa fa-arrow-circle-o-down"></i>',
+                        'url' => ['/withdraw'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Support'),
+                        'icon' => '<i class="fa fa-life-ring"></i>',
+                        'url' => ['/support/admin'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Member'),
+                        'icon' => '<i class="fa fa-users"></i>',
+                        'url' => ['/member/index'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Landing'),
+                        'icon' => '<i class="fa fa-globe"></i>',
+                        'url' => ['/site/landing'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Roadmap'),
+                        'icon' => '<i class="fa fa-list"></i>',
+                        'url' => ['/roadmap'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Config'),
+                        'icon' => '<i class="fa fa-cog"></i>',
+                        'url' => ['/site/settings'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Notification'),
+                        'icon' => '<i class="fa fa-comment"></i>',
+                        'url' => ['/notifi/index'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+
+                    [
+                        'label' => Yii::t('backend', 'Users'),
+                        'icon' => '<i class="fa fa-users"></i>',
+                        'url' => ['/user/index'],
+                        'visible' => Yii::$app->user->can('administrator')
                     ],
                     [
                         'label' => Yii::t('backend', 'Content'),
@@ -94,18 +156,6 @@ use yii\widgets\Breadcrumbs;
                             ['label' => Yii::t('backend', 'Menu Widgets'), 'url' => ['/widget-menu/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                             ['label' => Yii::t('backend', 'Carousel Widgets'), 'url' => ['/widget-carousel/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
                         ],
-                        'visible' => Yii::$app->user->can('administrator') || Yii::$app->user->can('manager')
-                    ],
-                    [
-                        'label' => Yii::t('backend', 'Notification'),
-                        'icon' => '<i class="fa fa-comment"></i>',
-                        'url' => ['/notifi/index'],
-                        'visible' => Yii::$app->user->can('administrator')
-                    ],
-                    [
-                        'label' => Yii::t('backend', 'Users'),
-                        'icon' => '<i class="fa fa-users"></i>',
-                        'url' => ['/user/index'],
                         'visible' => Yii::$app->user->can('administrator')
                     ],
                     [

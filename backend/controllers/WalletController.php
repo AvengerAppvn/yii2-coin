@@ -161,10 +161,42 @@ class WalletController extends Controller
      */
     protected function findModel($user_id)
     {
+        $userIds = Yii::$app->authManager->getUserIdsByRole(User::ROLE_ADMINISTRATOR);
+        if(in_array($user_id,$userIds)){
+            return null;
+        }
         if (($model = Wallet::find()->where(['user_id'=>$user_id])->limit(1)->one()) !== null) {
             return $model;
         } else {
             return null;
         }
+    }
+
+    /**
+     * Lists all Wallet models.
+     * @return mixed
+     */
+    public function actionList()
+    {
+        $searchModel = new WalletSearch();
+        $dataProvider = $searchModel->searchManager(Yii::$app->request->queryParams);
+
+        return $this->render('list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    /**
+     * Displays a single Withdraw model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 }

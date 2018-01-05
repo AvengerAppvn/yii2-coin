@@ -80,6 +80,13 @@ class Withdraw extends \yii\db\ActiveRecord
         ];
     }
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    /**
      * @inheritdoc
      * @return \common\models\query\WithdrawQuery the active query used by this AR class.
      */

@@ -66,6 +66,13 @@ class Deposit extends \yii\db\ActiveRecord
             TimestampBehavior::className(),
         ];
     }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 
     /**
      * @inheritdoc

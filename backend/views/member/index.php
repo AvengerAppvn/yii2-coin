@@ -9,18 +9,10 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\search\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Users');
+$this->title = Yii::t('backend', 'Member');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?php echo Html::a(Yii::t('backend', 'Create {modelClass}', [
-    'modelClass' => 'User',
-]), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'class' => 'grid-view table-responsive'
         ],
         'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
             'username',
             'email:email',
             [

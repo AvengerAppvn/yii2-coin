@@ -12,33 +12,35 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="withdraw-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?php echo Html::a('Create Withdraw', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'user_id',
+            [
+                'attribute' => 'user_id',
+                'label' => 'Member',
+                'value' => function ($model) {
+                    return $model->user_id && $model->user ? $model->user->username : null;
+                },
+            ],
             'sender',
             'receiver',
             'amount',
             // 'txid',
-            // 'type',
-            // 'status',
-            // 'manager_id',
-            // 'created_at',
+             'type',
+             'status',
+             'manager_id',
+             //'created_at:datetime',
             // 'updated_at',
-            // 'requested_at',
-            // 'completed_at',
+             'requested_at:datetime',
+             'completed_at:datetime',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                //'template' => '{update} {view}'
+                'template' => '{update}{view}'
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ],
         ],
     ]); ?>
 
