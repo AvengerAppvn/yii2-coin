@@ -11,7 +11,7 @@ class DefaultController extends Controller
 
     public function beforeAction($action)
     {
-        $this->layout = "@app/modules/landing/views/layouts/common";
+        $this->layout = "@app/modules/landing/views/layouts/landing";
         return parent::beforeAction($action);
     }
 
