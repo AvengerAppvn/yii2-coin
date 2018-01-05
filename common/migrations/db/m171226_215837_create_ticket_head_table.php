@@ -5,6 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation for table `ticket_head_table`.
  */
+ 
 class m171226_215837_create_ticket_head_table extends Migration
 {
     private $table = '{{%ticket_head}}';
