@@ -67,15 +67,11 @@ class SettingController extends Controller
             ]);
             return $this->refresh();
         }
-        $countries = 
-        $ref_name = '';
+        $referrer = null;
         if($user->referrer){
-            $ref = User::findOne($user->referrer);
-            if($ref){
-                $ref_name = $ref->username;
-            }
+            $referrer = User::findOne($user->referrer);
         }
-        return $this->render('index', ['model'=>$model,'profile'=>$profile,'referrer'=> $ref_name,'countries'=>Country::find()->active()->all()]);
+        return $this->render('index', ['model'=>$model,'profile'=>$profile,'referrer'=> $referrer,'countries'=>Country::find()->active()->all()]);
     }
 
 

@@ -53,11 +53,11 @@ $this->title = Yii::t('backend', 'Support');
                     <tr>
                         <td>
                             <p><b><?= $ticket['name_user'] ?></b></p>
-                            <p><span>(<?= ($ticket['client'] == 1) ? 'Admin' : 'Client' ?>)</span></p>
                             <p class="text-danger"><?= $ticket['date'] ?></p>
 
                         </td>
                         <td>
+                            
                             <?= nl2br(Html::encode($ticket['text'])) ?>
                             <?php if (!empty($ticket->file)) : ?>
                                 <hr>

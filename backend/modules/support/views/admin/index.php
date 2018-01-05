@@ -4,7 +4,7 @@
 
 <div class="panel page-block">
     <div class="container-fluid row">
-    <a href="<?= \yii\helpers\Url::toRoute(['admin/open']) ?>" class="btn btn-primary" style="margin-left: 15px">Gửi ticket</a>
+    <a href="<?= \yii\helpers\Url::toRoute(['admin/open']) ?>" class="btn btn-primary" style="margin-left: 15px">Open ticket</a>
     <br><br>
     <div class="container-fluid">
         <div class="col-md-12">
@@ -29,16 +29,16 @@
                             switch ($model->body['client']) {
                                 case 0 :
                                     if ($model->status == \app\modules\support\models\TicketHead::CLOSED) {
-                                        return '<div class="label label-success">Client</div>&nbsp;<div class="label label-default">Закрыт</div>';
+                                        return '<div class="label label-success">Client</div>&nbsp;<div class="label label-default">Closed</div>';
                                     }
 
                                     return '<div class="label label-success">Client</div>';
                                 case 1 :
                                     if ($model->status == \app\modules\support\models\TicketHead::CLOSED) {
-                                        return '<div class="label label-primary">Администратор</div>&nbsp;<div class="label label-default">Закрыт</div>';
+                                        return '<div class="label label-primary">Administrator</div>&nbsp;<div class="label label-default">Closed</div>';
                                     }
 
-                                    return '<div class="label label-primary">Администратор</div>';
+                                    return '<div class="label label-primary">Administrator</div>';
                             }
                         },
                         'format'    => 'html',
@@ -55,25 +55,25 @@
                         ],
                         'buttons'       => [
                             'update' => function ($url, $model) {
-                                return \yii\helpers\Html::a('Answerить',
+                                return \yii\helpers\Html::a('Answer',
                                     \yii\helpers\Url::toRoute(['admin/answer', 'id' => $model['id']]),
                                     ['class' => 'btn-xs btn-info']);
                             },
                             'delete' => function ($url, $model) {
-                                return \yii\helpers\Html::a('Удалить',
+                                return \yii\helpers\Html::a('Delete',
                                     \yii\helpers\Url::to(['admin/delete', 'id' => $model['id']]),
                                     [
                                         'class'   => 'btn-xs btn-danger',
-                                        'onclick' => 'return confirm("Вы действительно хотите удалить?")',
+                                        'onclick' => 'return confirm("Are you sure to delete?")',
                                     ]
                                 );
                             },
                             'closed' => function ($url, $model) {
-                                return \yii\helpers\Html::a('Закрыть',
+                                return \yii\helpers\Html::a('Close',
                                     \yii\helpers\Url::to(['admin/closed', 'id' => $model['id']]),
                                     [
                                         'class'   => 'btn-xs btn-primary',
-                                        'onclick' => 'return confirm("Вы действительно хотите закрыть тикет?")',
+                                        'onclick' => 'return confirm("Are you sure to close?")',
                                     ]
                                 );
                             },
