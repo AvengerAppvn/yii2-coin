@@ -11,7 +11,7 @@ use yii\web\JsExpression;
             <a class="btn btn-primary" href="<?= \yii\helpers\Url::to(['admin/index']) ?>" style="margin-bottom: 10px">Back</a>
             <div class="well">
                 <?php $form = \yii\widgets\ActiveForm::begin([]) ?>
-                <label for="">Имя пользователя</label>
+                <label for="">Username</label>
                 <?= \yii\jui\AutoComplete::widget([
                     'clientOptions' => [
                         'source'   => $users,

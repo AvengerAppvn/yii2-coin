@@ -1,6 +1,6 @@
 <?php
 
-use yii\helpers\Html;
+use common\models\User;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -28,13 +28,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'receiver',
             'amount',
             // 'txid',
-             'type',
-             'status',
-             'manager_id',
-             //'created_at:datetime',
+            'type',
+            [
+                'class' => \common\grid\EnumColumn::className(),
+                'attribute' => 'status',
+                'enum' => User::statuses(),
+                'filter' => User::statuses()
+            ],
+            'manager_id',
+            //'created_at:datetime',
             // 'updated_at',
-             'requested_at:datetime',
-             'completed_at:datetime',
+            'requested_at:datetime',
+            'completed_at:datetime',
             [
                 'class' => 'yii\grid\ActionColumn',
                 //'template' => '{update} {view}'

@@ -138,18 +138,31 @@ $config = [
                 'roles' => ['?'],
             ],
             [
-                'controllers' => ['user','notifi'],
+                'controllers' => ['wallet'],
                 'allow' => true,
-                'roles' => ['administrator'],
+                'roles' => ['@'],
+                'actions' => ['me']
             ],
             [
+                'controllers' => ['wallet'],
+                'allow' => true,
+                'roles' => ['manager'],
+                'actions' => ['list', 'view']
+            ],
+            [
+                'controllers' => ['ico','event','team','setting','security','tool','support/ticket','sign-in'],
                 'allow' => true,
                 'roles' => ['user'],
             ],
             [
+                'controllers' => ['support/admin','deposit','withdraw','site','roadmap'],
                 'allow' => true,
                 'roles' => ['manager'],
-            ]
+            ],
+            [
+            'allow' => true,
+            'roles' => ['administrator'],
+        ],
         ]
     ]
 ];
