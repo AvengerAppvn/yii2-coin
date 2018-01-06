@@ -47,12 +47,12 @@ $this->params['body-class'] = 'login-page';
                 //'class' => 'btn btn-lg btn-success btn-flat',
                 'style' => 'color:#ddd',
                 'name' => 'register-button'
-            ]) ?> <span style="color:#ddd">|</span> <?= Html::a('Forget password?',['account/forgot-password'],['style' => 'color:#ddd',]); ?>
+            ]) ?> <span style="color:#ddd">|</span> <?= Html::a('Forgot password?',['account/forgot-password'],['style' => 'color:#ddd',]); ?>
         </p>
         <?php ActiveForm::end(); ?>
     </div>
     <div class="text-info" style="padding:10px 0">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-        <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
+        <?= Html::a('Back to Information Site',['/landing']); ?>
     </div>
 </div>

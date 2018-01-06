@@ -54,7 +54,23 @@ class RegisterController extends Controller
         if($referrer){
             $model->referrer = $referrer;
         }else{
-            $model->referrer = Yii::$app->keyStorage->get('coin.defaultRefferer', '2');
+
+            if(Yii::$app->keyStorage->get('user.register_accept_no_referrer')){
+                $model->referrer = Yii::$app->keyStorage->get('coin.defaultRefferer', '2');
+            }else{
+                Yii::$app->getSession()->setFlash('alert', [
+                    'body' => Yii::t(
+                        'frontend',
+                        Yii::$app->keyStorage->get('user.register_accept_no_referrer_message','You must register with a referral link')
+                    ),
+                    'options' => ['class' => 'alert-error']
+                ]);
+
+                return $this->render('index', [
+                    'model' => $model
+                ]);
+            }
+
         }
         if ($model->load(Yii::$app->request->post())) {
             $user = $model->signup();

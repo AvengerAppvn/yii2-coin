@@ -66,7 +66,7 @@ class IcoController extends Controller
         }
         
         $ref_url = null;
-        if($wallet->amount_coin){
+        if($wallet->amount_coin || Yii::$app->user->can(User::ROLE_MANAGER)){
             $ref_url = Yii::$app->getHomeUrl().'/register?referrer='.Yii::$app->user->identity->username;
         }
 

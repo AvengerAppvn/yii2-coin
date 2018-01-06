@@ -4,6 +4,9 @@ use yii\widgets\ActiveForm;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use backend\assets\BackendAsset;
 use borales\extensions\phoneInput\PhoneInput;
+use yii\bootstrap\Alert;
+use yii\helpers\ArrayHelper;
+
 $this->title = Yii::t('backend', 'Register');
 $this->params['breadcrumbs'][] = $this->title;
 $bundle = BackendAsset::register($this);
@@ -15,6 +18,12 @@ $bundle = BackendAsset::register($this);
     </div><!-- /.register-logo -->
 
     <div class="register-box-body">
+        <?php if (Yii::$app->session->hasFlash('alert')): ?>
+            <?php echo Alert::widget([
+                'body' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'body'),
+                'options' => ArrayHelper::getValue(Yii::$app->session->getFlash('alert'), 'options'),
+            ]) ?>
+        <?php endif; ?>
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
                 <div class="head">
                     <h1 class="text-center">
@@ -68,6 +77,6 @@ $bundle = BackendAsset::register($this);
     </div>
     <div class="text-info" style="padding:10px 0">
         <i class="fa fa-angle-double-left" aria-hidden="true"></i>
-        <?= Html::a('Back to Information Site',['@frontendUrl']); ?>
+        <?= Html::a('Back to Information Site',['/landing']); ?>
     </div>
 </div>
