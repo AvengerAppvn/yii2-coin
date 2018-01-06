@@ -19,7 +19,7 @@
     </div>
     <div class="col-md-6">
         <h2 class="text-success" style="line-height: 48px;">
-            <?= number_format($wallet->amount_eth, 8) ?>
+            <?= number_format($wallet->amount_eth + $wallet->bonus_eth,8) ?>
             / BONUS <span class="app-btc-bonus"><?= number_format($wallet->bonus_eth, 8) ?></span>
         </h2>
     </div>

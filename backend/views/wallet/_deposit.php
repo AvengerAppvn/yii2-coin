@@ -32,7 +32,7 @@ use common\grid\EnumColumn;
                 'label' => 'Confirmed',
                 'attribute' => 'status',
                 'enum' => [
-                    Yii::t('backend', 'Open'),
+                    Yii::t('backend', 'Request'),
                     Yii::t('backend', 'Processing'),
                     Yii::t('backend', 'Completed'),
                 ]
