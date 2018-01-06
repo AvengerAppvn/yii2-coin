@@ -106,8 +106,9 @@ class SiteController extends \yii\web\Controller
                     'label' => Yii::t('backend', 'Total user'),
                     'type' => FormModel::TYPE_TEXTINPUT
                 ],
+
                 'user.register_accept_no_referrer' => [
-                    'label' => Yii::t('backend', 'Enable user register withou referrer'),
+                    'label' => Yii::t('backend', 'Enable user register without referrer'),
                     'type' => FormModel::TYPE_CHECKBOX
                 ],
                 'user.register_accept_no_referrer_message' => [
