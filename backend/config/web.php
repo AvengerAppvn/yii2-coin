@@ -146,7 +146,7 @@ $config = [
             [
                 'controllers' => ['site'],
                 'allow' => true,
-                'roles' => ['?'],
+                'roles' => ['?','@'],
                 'actions' => ['rate']
             ],
             [
