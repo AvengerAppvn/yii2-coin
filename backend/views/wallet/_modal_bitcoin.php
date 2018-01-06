@@ -10,14 +10,18 @@ use yii\helpers\Url;
                 <h4 class="modal-title base-font-color">Deposit Bitcoin (BTC)</h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-warning">
-                    Please note that withdrawing BTC will be available after you have purchased at least 50 <?= $code ?> from ICO. Otherwise, You have to wait for ...
+                <div class="alert alert-info">
+                    Please note that withdrawing BTC will be available after you have purchased at least 50 <?= $code ?> from ICO.
                 </div>
 
                 <img class="bg-white center-block p-xxs"  alt="barcode"
                 src="<?= Url::to(['qrcode/index', 'v' => $wallet_btc]) ?>" />
 
                 <h4 class="m-t-xl"><p class="text-center">YOUR BITCOIN ADDRESS</p></h4>
+                <div class="alert alert-warning">
+                    I acknowledge the following information: By depositing tokens to this address, you agree to our deposit recovery policy. Depositing tokens to this address other than BTC may result in your funds being lost.
+                </div>
+
                 <div class="input-group">
                     <!-- Target -->
                     <input id="wallet_bitcoin"  type="text" class="form-control" value="<?= $wallet_btc ?>" readonly>
