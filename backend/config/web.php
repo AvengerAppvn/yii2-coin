@@ -156,7 +156,7 @@ $config = [
                 'actions' => ['list', 'view']
             ],
             [
-                'controllers' => ['ico','event','team','setting','security','tool','support/ticket','sign-in'],
+                'controllers' => ['ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode'],
                 'allow' => true,
                 'roles' => ['user'],
             ],
