@@ -45,13 +45,13 @@ class SiteController extends \yii\web\Controller
                 if ($dt) {
                     if ($dt->base == 'BTC') {
                         $rateBtcUsd = $dt->amount;
-                        $rateCoinBtc = $rateBtcUsd !== 0 && $rateUsd !== 0 ? (1 / $rateBtcUsd) / $rateUsd : 0;
+                        $rateCoinBtc = $rateBtcUsd !== 0 && $rateUsd !== 0 ? ($rateUsd / $rateBtcUsd) : 0;
                         Yii::$app->keyStorage->set('coin.rate-btc-usd', $rateBtcUsd);
                         Yii::$app->keyStorage->set('coin.rate-btc', $rateCoinBtc);
                     }
                     if ($dt->base == 'ETH') {
                         $rateEthUsd = $dt->amount;
-                        $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? (1 / $rateEthUsd) / $rateUsd : 0;
+                        $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? ($rateUsd / $rateEthUsd)  : 0;
                         Yii::$app->keyStorage->set('coin.rate-eth-usd', $rateEthUsd);
                         Yii::$app->keyStorage->set('coin.rate-eth', $rateCoinEth);
                     }
@@ -100,6 +100,10 @@ class SiteController extends \yii\web\Controller
                 ],
                 'coin.sold' => [
                     'label' => Yii::t('backend', 'Sold coin'),
+                    'type' => FormModel::TYPE_TEXTINPUT
+                ],
+                'coin.rate-usd' => [
+                    'label' => Yii::t('backend', 'Prie Tickcoin'),
                     'type' => FormModel::TYPE_TEXTINPUT
                 ],
                 'web.total_user' => [
