@@ -24,6 +24,58 @@ $rateCoinEth = Yii::$app->keyStorage->get('coin.rate-eth');
 if (Yii::$app->session->hasFlash('message')):
     $this->registerJs('$("#get_token").focus();');
 endif;
+
+$script = <<< JS
+function updateAmount()
+    {
+        var type = $("#buyform-type").val();
+        var rate;
+        var balance;
+        if(type == 1){
+            rate = $("#rate-coin-btc").val();
+            balance = $("#amount-btc-coin").val();
+        }else{
+            rate = $("#rate-coin-eth").val();
+            balance = $("#amount-eth-coin").val();
+        }
+        var amount_coin = parseFloat($("#buyform-amount_coin").val());
+        var data = rate * amount_coin;
+        //console.log(amount_coin);
+
+
+        if(data > 0 && balance >= data){
+            $( "#buyform-amount" ).val( data.toFixed(8) );
+            $( "#get_token" ).prop("disabled",false);
+        }else{
+            if(data== 0){
+                $( "#buyform-amount" ).val( 0 );
+            }else if( balance < data) {
+                $( "#buyform-amount" ).val('Not enough coin');
+            }else {
+                $( "#buyform-amount" ).val(0);
+            }
+            $( "#get_token" ).prop("disabled",true);
+        }
+
+        // $.get( "/backend/web/ico/amount", {
+        //             amount_coin: $(this).val(),
+        //             type: $("#buyform-type").val()
+        //         } ).done(function( data ) {
+        //         $( "#buyform-amount" ).val( data );
+        //     });
+    }
+    $(document).on("change, keyup", "#buyform-amount_coin", updateAmount);
+    $('#input-has2fa input').on('change', function() {
+        var value = ($('input[name="SecurityForm[has2fa]"]:checked', '#input-has2fa').val());
+        if(value==0){
+            $('#extra-2fa').hide();
+        }else{
+            $('#extra-2fa').show();
+        }
+    });
+JS;
+$position = \yii\web\View::POS_READY;
+$this->registerJs($script, $position);
 ?>
 
 <div class="article-form">
@@ -46,7 +98,9 @@ endif;
     
     <?php echo Html::hiddenInput('rate-coin-btc', $rateCoinBtc,['id'=>'rate-coin-btc']); ?>
     <?php echo Html::hiddenInput('rate-coin-eth', $rateCoinEth,['id'=>'rate-coin-eth']); ?>
-    <?php echo $form->field($model, 'amount_coin')->textInput()->hint('Minimum is 200 TKC') ?>
+    <?php echo Html::hiddenInput('amount-btc-coin', $wallet->amount_btc + $wallet->bonus_btc,['id'=>'amount-btc-coin']); ?>
+    <?php echo Html::hiddenInput('amount-eth-coin', $wallet->amount_eth + $wallet->bonus_eth,['id'=>'amount-eth-coin']); ?>
+    <?php echo $form->field($model, 'amount_coin')->textInput(['type' => 'number'])->hint('Minimum is 200 TKC') ?>
 
     <?php echo $form->field($model, 'amount')->textInput() ?>
 
