@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use common\components\keyStorage\FormModel;
 use common\helpers\CoinbaseHelper;
+use common\models\Page;
 use Yii;
 
 /**
@@ -51,7 +52,7 @@ class SiteController extends \yii\web\Controller
                     }
                     if ($dt->base == 'ETH') {
                         $rateEthUsd = $dt->amount;
-                        $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? ($rateUsd / $rateEthUsd)  : 0;
+                        $rateCoinEth = $rateEthUsd !== 0 && $rateUsd !== 0 ? ($rateUsd / $rateEthUsd) : 0;
                         Yii::$app->keyStorage->set('coin.rate-eth-usd', $rateEthUsd);
                         Yii::$app->keyStorage->set('coin.rate-eth', $rateCoinEth);
                     }
@@ -62,35 +63,51 @@ class SiteController extends \yii\web\Controller
         return $data;
     }
 
-    public
-    function actionLanding()
+    public function actionLanding()
     {
         $model = new FormModel([
             'keys' => [
-                'frontend.maintenance' => [
-                    'label' => Yii::t('backend', 'Landing'),
-                    'type' => FormModel::TYPE_DROPDOWN,
-                    'items' => [
-                        'disabled' => Yii::t('backend', 'Disabled'),
-                        'enabled' => Yii::t('backend', 'Enabled')
-                    ]
+//                'frontend.maintenance' => [
+//                    'label' => Yii::t('backend', 'Landing'),
+//                    'type' => FormModel::TYPE_DROPDOWN,
+//                    'items' => [
+//                        'disabled' => Yii::t('backend', 'Disabled'),
+//                        'enabled' => Yii::t('backend', 'Enabled')
+//                    ]
+//                ],
+                'landing-page.footer.left' => [
+                    'label' => Yii::t('backend', 'Landing page - Footer - Left'),
+                    'type' => FormModel::TYPE_TEXTAREA,
+                ],
+                'landing-page.footer.right' => [
+                    'label' => Yii::t('backend', 'Landing page - Footer - Right'),
+                    'type' => FormModel::TYPE_TEXTAREA,
                 ],
             ]
         ]);
 
+        $change = false;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('alert', [
                 'body' => Yii::t('backend', 'Settings was successfully saved'),
                 'options' => ['class' => 'alert alert-success']
             ]);
+            $change = true;
+        }
+        // id = 1
+        $page = Page::findOne(1);
+        if ($page && $page->load(Yii::$app->request->post()) && $page->save()) {
+            $change = true;
+        }
+
+        if ($change) {
             return $this->refresh();
         }
 
-        return $this->render('landing', ['model' => $model]);
+        return $this->render('landing', ['model' => $model,'page' => $page,]);
     }
 
-    public
-    function actionSettings()
+    public function actionSettings()
     {
         $model = new FormModel([
             'keys' => [

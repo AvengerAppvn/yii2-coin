@@ -2,6 +2,8 @@
 namespace backend\models;
 
 use cheatsheet\Time;
+use common\commands\AddToEventCommand;
+use common\commands\AddToPlusTeamCommand;
 use common\commands\SendEmailCommand;
 use common\models\User;
 use common\models\Wallet;
@@ -195,6 +197,12 @@ class BuyForm extends Model
                     UserToken::TYPE_ACTIVATION,
                     Time::SECONDS_IN_A_DAY
                 );
+
+                Yii::$app->commandBus->handle(new AddToPlusTeamCommand([
+                    'related_id' => $user->id,
+                    'type' => $this->type,
+                    'amount' => $buy->amount,
+                ]));
 
                 Yii::$app->commandBus->handle(new SendEmailCommand([
                     'subject' => Yii::t('backend', 'Buy TickCoin'),
