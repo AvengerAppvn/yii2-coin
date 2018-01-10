@@ -19,6 +19,8 @@ use yii\bootstrap\ActiveForm;
                     'readonly'=> true,
                     'disabled' => true]) ?>
 
+    <?php echo $form->field($model, 'current')->passwordInput() ?>
+
     <?php echo $form->field($model, 'password')->passwordInput() ?>
 
     <?php echo $form->field($model, 'password_confirm')->passwordInput() ?>
