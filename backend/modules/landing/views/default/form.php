@@ -25,7 +25,9 @@ $this->title = Yii::t('frontend', 'User Settings')
         Please complete the security check to proceed.
     </h3>
     <div class="text-center" style="width: 320px;margin:10px auto;">
-        <?php echo $form->field($model, 'reCaptcha')->widget(ReCaptcha::className()) ?>
+        <?php echo $form->field($model, 'reCaptcha')->widget(ReCaptcha::className(),[
+            'jsCallback'=>'console.log("Test")'
+        ]) ?>
     </div>
 
     <div class="landing-footer text-center">
