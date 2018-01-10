@@ -3,6 +3,7 @@
 namespace app\modules\landing\controllers;
 
 use app\modules\landing\models\LandingForm;
+use common\models\Page;
 use Yii;
 use yii\web\Controller;
 
@@ -20,11 +21,15 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $model = new LandingForm();
+        if(Yii::$app->session->get('next-landing-page')){
+            return $this->render('index', ['model' => Page::findOne(1)]);
+        }else {
+            $model = new LandingForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->refresh();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->refresh();
+            }
+            return $this->render('form', ['model' => $model]);
         }
-        return $this->render('index', ['model' => $model]);
     }
 }

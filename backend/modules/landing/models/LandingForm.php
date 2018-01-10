@@ -41,6 +41,7 @@ class LandingForm extends Model
     public function next()
     {
         if ($this->validate()) {
+            Yii::$app->session->set('next-landing-page',true);
             return true;
         }
         return false;

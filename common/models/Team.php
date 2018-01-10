@@ -72,6 +72,14 @@ class Team extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'related_id']);
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWallet()
+    {
+        return $this->hasOne(Wallet::className(), ['user_id' => 'user_id']);
+    }
     /**
      * @inheritdoc
      * @return \common\models\query\TeamQuery the active query used by this AR class.

@@ -1,37 +1,64 @@
 <?php
 
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use himiklab\yii2\recaptcha\ReCaptcha;
-use backend\assets\BackendAsset;
-
 /* @var $this yii\web\View */
-/* @var $model common\base\MultiModel */
-/* @var $form yii\widgets\ActiveForm */
 
-$this->title = Yii::t('frontend', 'User Settings')
+$this->title = Yii::t('frontend', 'Tickcoin | Blockchain | The best ICO 2018')
 ?>
+<div class="wrapper">
+    <header class="main-header">
+        <a href="<?php echo Yii::$app->urlManagerBackend->createAbsoluteUrl('/') ?>" class="logo">
+            <!-- Add the class icon to your logo image or logo icon to add the margining -->
+            <?php echo Yii::$app->name ?>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation" style="background: #367fa9"></nav>
+    </header>
+    <div class="container text-center" style="color:#ddd;font-size:16px">
+        <h1 class="text-center"><?php echo Yii::t('frontend', 'Tickcoin') ?></h1>
+        <?php //echo Yii::$app->keyStorage->get('landing-page.header', 'Header'); ?>
 
-<div class="landing-form" style="color:white">
+        <h2 class="text-center">Blockchain's first intelligent social
+            marketing platform</h2>
 
-    <?php $form = ActiveForm::begin(); ?>
-
-
-    <h1 class="text-center"><?php echo Yii::t('frontend', 'Tickcoin') ?></h1>
-    <h2 class="text-center">
-        One More Step
-    </h2>
-    <h3 class="text-center">
-        Please complete the security check to proceed.
-    </h3>
-    <div class="text-center" style="width: 320px;margin:10px auto;">
-        <?php echo $form->field($model, 'reCaptcha')->widget(ReCaptcha::className()) ?>
+        <h3 class="text-center">Use TICKCOIN to target customers, create loyalty, deploy marketing campaigns,
+            segment your audience and study customer behavior on all social networks.
+        </h3>
+        <br/><br/>
     </div>
+    <br/>
+    <section>
+        <div class="container text-center" style="color:#ddd;font-size:16px;">
+            <div class="featureBanner">
+                <h1 class="headline">Trade securely on the world's<br>most active digital asset exchange.</h1><br/>
+                <button class="btn btn-lg btn-success" onclick="window.location.href='/register'">Create Your Account
+                </button>
+                <br/><br/>
+                <p>Already a member? <a href="/login" class="standard">Sign in</a>.</p>
+            </div>
+        </div>
+    </section>
 
-    <div class="landing-footer text-center">
-        <?=  Yii::$app->keyStorage->get('landing.footer', '© Tickcoin, Inc. 2018 - New York, USA | <a href="https://tickcoin.io/">Contact Support</a>'); ?>
+    <div class="container" style="color:#ddd;font-size:16px">
+
+
+        <div class="landing-page-content">
+            <?php echo $model ? $model->body : 'Update..' ?>
+        </div>
     </div>
+    <footer class="footer" style="padding-top:20px;background: #24262d;color:#AAFFFB">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <?= Yii::$app->keyStorage->get('landing-page.footer.left', 'Left Footer'); ?>
+                </div>
 
-    <?php ActiveForm::end(); ?>
+                <div class="col-md-6">
+                    <?= Yii::$app->keyStorage->get('landing-page.footer.right', 'Right  Footer'); ?>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <p class="pull-left">&copy; <?php echo date('Y') ?> Tickcoin. All rights reserved.</p>
 
+        </div>
+    </footer>
 </div>
