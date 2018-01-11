@@ -10,7 +10,7 @@ use yii\base\Model;
  */
 class LandingForm extends Model
 {
-    public $reCaptcha;
+   // public $reCaptcha;
 
     private $user = false;
 
@@ -21,14 +21,14 @@ class LandingForm extends Model
     {
         return [
             // verifyCode needs to be entered correctly
-            ['reCaptcha', ReCaptchaValidator::className(), 'secret' => env('CAPTCHA_SERVERVERIFY')],
+            //['reCaptcha', ReCaptchaValidator::className(), 'secret' => env('CAPTCHA_SERVERVERIFY')],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'reCaptcha' => '',
+            //'reCaptcha' => '',
         ];
     }
 

@@ -24,12 +24,13 @@ class DefaultController extends Controller
         if(Yii::$app->session->get('next-landing-page')){
             return $this->render('index', ['model' => Page::findOne(1)]);
         }else {
-            $model = new LandingForm();
+            //$model = new LandingForm();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->refresh();
+            if (Yii::$app->request->post()) {
+                Yii::$app->session->set('next-landing-page',true);
+               // return $this->refresh();
             }
-            return $this->render('form', ['model' => $model]);
+            return $this->render('form');
         }
     }
 }
