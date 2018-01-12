@@ -21,7 +21,7 @@ class LoginController extends Controller
             if($model->hasTwofa() && !$model->authen_2fa()){
                 return $this->redirect(['/authen']);    
             }else{
-                return $this->goBack();
+                return $this->redirect(['/ico']);
             }
         } else {
             return $this->render('index', [
