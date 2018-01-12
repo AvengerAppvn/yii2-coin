@@ -161,7 +161,7 @@ $config = [
                 'roles' => ['user'],
             ],
             [
-                'controllers' => ['support/admin','deposit','withdraw','site','roadmap','member'],
+                'controllers' => ['support/admin','deposit','withdraw','site','roadmap','member','ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode'],
                 'allow' => true,
                 'roles' => ['manager'],
             ],
