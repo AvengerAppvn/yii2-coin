@@ -19,7 +19,7 @@ body .user-panel > .info {
 }
 
 body{ 
-  background: url(../img/background.png) !important;
+  background: #00064e url(../img/background.jpg) !important;
 }
 .login-page, .register-page {
     background: transparent;
