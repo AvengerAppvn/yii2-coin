@@ -29,10 +29,16 @@ $this->title = Yii::t('frontend', 'Tickcoin | Blockchain | The best ICO 2018')
         <div class="container text-center" style="color:#ddd;font-size:16px;">
             <div class="featureBanner">
                 <h1 class="headline">Trade securely on the world's<br>most active digital asset exchange.</h1><br/>
-                <button class="btn btn-lg btn-success" onclick="window.location.href='/register'">Create Your Account
-                </button>
-                <br/><br/>
-                <p>Already a member? <a href="/login" class="standard">Sign in</a>.</p>
+                <?php if (Yii::$app->user->isGuest) { ?>
+                    <button class="btn btn-lg btn-success" onclick="window.location.href='/register'">Create Your
+                        Account
+                    </button>
+                    <br/><br/>
+                    <p>Already a member? <a href="/login" class="standard">Sign in</a>.</p>
+                <?php } else { ?>
+                    <button class="btn btn-lg btn-primary" onclick="window.location.href='/ico'">Go to Wallet
+                    </button>
+                <?php } ?>
             </div>
         </div>
     </section>
