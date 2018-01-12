@@ -2,7 +2,7 @@
 $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
     'controllerNamespace' => 'backend\controllers',
-    'defaultRoute' => 'ico/index',
+    'defaultRoute' => 'landing',
     'controllerMap' => [
         'file-manager-elfinder' => [
             'class' => mihaildev\elfinder\Controller::class,
@@ -117,7 +117,7 @@ $config = [
             [
                 'controllers' => ['logout'],
                 'allow' => true,
-                'roles' => ['@'],
+                'roles' => ['?', '@'],
                 'actions' => ['index']
             ],
             [
@@ -161,7 +161,7 @@ $config = [
                 'roles' => ['user'],
             ],
             [
-                'controllers' => ['support/admin','deposit','withdraw','site','roadmap'],
+                'controllers' => ['support/admin','deposit','withdraw','site','roadmap','member'],
                 'allow' => true,
                 'roles' => ['manager'],
             ],
