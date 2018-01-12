@@ -21,7 +21,7 @@ class AuthenController extends Controller
         $model = new SecurityForm();
         if ($model->load(Yii::$app->request->post())) {
             if($model->authen()){
-                return $this->goBack();
+                return $this->redirect(['/ico']);
             }else{
                  Yii::$app->session->setFlash('alert', [
                     'options'=>['class'=>'alert-error'],
