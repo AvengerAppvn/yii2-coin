@@ -156,12 +156,12 @@ $config = [
                 'actions' => ['list', 'view']
             ],
             [
-                'controllers' => ['ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode'],
+                'controllers' => ['ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode','register'],
                 'allow' => true,
                 'roles' => ['user'],
             ],
             [
-                'controllers' => ['support/admin','deposit','withdraw','site','roadmap','member','ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode'],
+                'controllers' => ['support/admin','deposit','withdraw','site','roadmap','member','ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode','register'],
                 'allow' => true,
                 'roles' => ['manager'],
             ],
