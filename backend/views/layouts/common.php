@@ -44,7 +44,7 @@ $script = <<< JS
              }
           });
     }
-    setInterval (showPrice, 10000 );
+    setInterval (showPrice, 60000 );
 
 JS;
 
