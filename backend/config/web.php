@@ -111,7 +111,7 @@ $config = [
             [
                 'controllers' => ['register'],
                 'allow' => true,
-                'roles' => ['?'],
+                'roles' => ['?','@'],
                 'actions' => ['index']
             ],            
             [
