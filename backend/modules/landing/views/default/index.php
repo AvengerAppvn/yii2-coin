@@ -13,16 +13,8 @@ $this->title = Yii::t('frontend', 'Tickcoin | Blockchain | The best ICO 2018')
         <nav class="navbar navbar-static-top" role="navigation" style="background: #367fa9"></nav>
     </header>
     <div class="container text-center" style="color:#ddd;font-size:16px">
+        <img class="img-circle center-block" style="width: 140px; height: 140px;" alt="logo" src="/img/coin_logo.png" data-holder-rendered="true">
         <h1 class="text-center"><?php echo Yii::t('frontend', 'Tickcoin') ?></h1>
-        <?php //echo Yii::$app->keyStorage->get('landing-page.header', 'Header'); ?>
-
-        <h2 class="text-center">Blockchain's first intelligent social
-            marketing platform</h2>
-
-        <h3 class="text-center">Use TICKCOIN to target customers, create loyalty, deploy marketing campaigns,
-            segment your audience and study customer behavior on all social networks.
-        </h3>
-        <br/><br/>
     </div>
     <br/>
     <section>
