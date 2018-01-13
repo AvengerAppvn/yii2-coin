@@ -87,7 +87,7 @@ $config = [
             [
                 'controllers' => ['landing/default'],
                 'allow' => true,
-                'roles' => ['?'],
+                'roles' => ['?','@'],
                 'actions' => ['index']
             ],
             [
