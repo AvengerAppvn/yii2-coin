@@ -73,7 +73,7 @@ class AddToPlusTeamCommand extends Object implements SelfHandlingCommand
         }
 
         if(2 == $level){
-            return 0.4;//4%
+            return 0.04;//4%
         }
 
         if(3 <= $level){
