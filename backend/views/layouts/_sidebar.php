@@ -135,7 +135,18 @@ use yii\widgets\Breadcrumbs;
                         'url' => ['/notifi/index'],
                         'visible' => Yii::$app->user->can('administrator')
                     ],
-
+                    [
+                        'label' => Yii::t('backend', 'Admin Team'),
+                        'icon' => '<i class="fa fa-list"></i>',
+                        'url' => ['/admin-team/index'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Admin Wallet'),
+                        'icon' => '<i class="fa fa-list"></i>',
+                        'url' => ['/admin-wallet/index'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
                     [
                         'label' => Yii::t('backend', 'Users'),
                         'icon' => '<i class="fa fa-users"></i>',
