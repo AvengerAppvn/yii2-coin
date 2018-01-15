@@ -53,9 +53,9 @@ class AddToPlusTeamCommand extends Object implements SelfHandlingCommand
                     Yii::error('Plus bonus to Team');
                     $wallet = $team->wallet;
                     if($command->type == 1) {
-                        $wallet->bonus_btc = $bonus;
+                        $wallet->bonus_btc += $bonus;
                     }else{
-                        $wallet->bonus_eth = $bonus;
+                        $wallet->bonus_eth += $bonus;
                     }
 
                     $wallet->save();
