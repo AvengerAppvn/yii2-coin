@@ -47,7 +47,10 @@ class TeamController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        $team = Team::find()->select('sum(amount_btc_bonus) as total_btc_bonus,sum(amount_eth_bonus) as total_eth_bonus')->one();
+        $team = Team::find()
+            ->select('sum(amount_btc_bonus) as total_btc_bonus,sum(amount_eth_bonus) as total_eth_bonus')
+            ->where(['user_id'=>$user->id])
+            ->one();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
