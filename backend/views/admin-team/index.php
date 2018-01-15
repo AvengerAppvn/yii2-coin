@@ -25,14 +25,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
-            'related_id',
-            'amount_btc',
+            [
+                'attribute' => 'user_id',
+                'label' => 'User',
+                'value' => function ($model) {
+                    return $model->user_id && $model->userRefer ? $model->userRefer->username : null;
+                },
+            ],
+            [
+                'attribute' => 'related_id',
+                'label' => 'Refer',
+                'value' => function ($model) {
+                    return $model->related_id && $model->refer ? $model->refer->username : null;
+                },
+            ],
+            //'amount_btc',
             'amount_btc_bonus',
             // 'amount_eth',
-            // 'amount_eth_bonus',
+            'amount_eth_bonus',
             // 'amount_total_bonus',
-            // 'level',
+            'level',
             // 'type',
             // 'status',
             // 'created_at',

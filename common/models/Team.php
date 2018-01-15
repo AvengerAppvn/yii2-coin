@@ -61,13 +61,13 @@ class Team extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'related_id' => 'Username',
+            'related_id' => 'Referrer',
             'level' => 'Level',
-            'amount_btc' => 'Amount BTC',
-            'amount_btc_bonus' => 'Amount Btc Bonus',
-            'amount_eth' => 'Amount Eth',
-            'amount_eth_bonus' => 'Amount ETH Bonus',
-            'amount_total_bonus' => 'Amount Total Bonus',
+            'amount_btc' => 'BTC',
+            'amount_btc_bonus' => 'BTC Bonus',
+            'amount_eth' => 'ETH',
+            'amount_eth_bonus' => 'ETH Bonus',
+            'amount_total_bonus' => 'Total Bonus',
             'type' => 'Type',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -82,7 +82,20 @@ class Team extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'related_id']);
     }
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRefer()
+    {
+        return $this->hasOne(User::className(), ['id' => 'related_id']);
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserRefer()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
