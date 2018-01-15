@@ -9,7 +9,7 @@ use backend\assets\BackendAsset;
 /* @var $model common\base\MultiModel */
 /* @var $form yii\widgets\ActiveForm */
 
-$this->title = Yii::t('frontend', 'User Settings');
+$this->title = Yii::t('frontend', 'Tickcoin | Blockchain | The best ICO 2018');
 $script = <<< JS
         var onSubmit = function(token) {
           console.log('success!');
