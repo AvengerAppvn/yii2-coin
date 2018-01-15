@@ -37,18 +37,23 @@ class TeamController extends Controller
     {
         $user = Yii::$app->user->identity;
         if (!Yii::$app->user->isGuest) {
-            if($user && $user->has2fa && !Yii::$app->session->get('authen_2fa')){
+            if ($user && $user->has2fa && !Yii::$app->session->get('authen_2fa')) {
                 return $this->redirect(['/authen']);
             }
         }
-        
+
         $searchModel = new TeamSearch();
         $searchModel->user_id = $user->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+
+        $team = Team::find()->select('sum(amount_btc_bonus) as total_btc_bonus,sum(amount_eth_bonus) as total_eth_bonus')->one();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'total_btc_bonus' => $team->total_btc_bonus,
+            'total_eth_bonus' => $team->total_eth_bonus,
         ]);
     }
 
