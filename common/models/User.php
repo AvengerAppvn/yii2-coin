@@ -153,6 +153,13 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRefer()
+    {
+        return $this->hasOne(User::className(), ['id' => 'referrer']);
+    }
+    /**
      * @inheritdoc
      */
     public static function findIdentity($id)
