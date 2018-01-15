@@ -15,6 +15,8 @@ use Yii;
  * @property double $amount_eth
  * @property double $amount_eth_bonus
  * @property double $amount_total_bonus
+ * @property double $total_btc_bonus
+ * @property double $total_eth_bonus
  * @property integer $level
  * @property integer $type
  * @property integer $status
@@ -23,6 +25,14 @@ use Yii;
  */
 class Team extends \yii\db\ActiveRecord
 {
+    /**
+     * @var
+     */
+    public $total_btc_bonus;
+    /**
+     * @var
+     */
+    public $total_eth_bonus;
     /**
      * @inheritdoc
      */
