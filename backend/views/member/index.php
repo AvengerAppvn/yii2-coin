@@ -25,6 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'username',
             'email:email',
             [
+                'attribute' => 'referrer',
+                'value' => function ($model) {
+                    return $model->referrer? $model->refer->username : '';
+                }
+            ],
+            [
                 'class' => EnumColumn::className(),
                 'attribute' => 'status',
                 'enum' => User::statuses(),

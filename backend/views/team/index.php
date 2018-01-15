@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'related_id',
                 'value' => function ($model) {
-                    return $model->user ? $model->user->username : 'Admin';
+                    return $model->user ? $model->user->username : '';
                 },
                 'filter' => ArrayHelper::map(User::find()->all(), 'id', 'username')
             ],
