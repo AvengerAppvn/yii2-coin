@@ -79,7 +79,7 @@ $script = <<< JS
                 balance = $("#amount-eth-coin").val();
             }
             var data = 0;
-            if(rate){
+            if(rate && balance){
                 data = Number((balance / rate).toFixed(0)) - 1;
             }
 
