@@ -26,7 +26,7 @@ if (Yii::$app->session->hasFlash('message')):
 endif;
 
 $script = <<< JS
-function updateAmount()
+    function updateAmount()
     {
         var type = $("#buyform-type").val();
         var rate;
@@ -64,7 +64,34 @@ function updateAmount()
         //         $( "#buyform-amount" ).val( data );
         //     });
     }
+
     $(document).on("change, keyup", "#buyform-amount_coin", updateAmount);
+
+     $("#get_max").on('click', function() {
+          var type = $("#buyform-type").val();
+            var rate;
+            var balance;
+            if(type == 1){
+                rate = $("#rate-coin-btc").val();
+                balance = $("#amount-btc-coin").val();
+            }else{
+                rate = $("#rate-coin-eth").val();
+                balance = $("#amount-eth-coin").val();
+            }
+            var data = 0;
+            if(rate){
+                data = Number((balance / rate).toFixed(0)) - 1;
+            }
+
+            //console.log(amount_coin);
+        $("#buyform-amount_coin").val(data);
+
+        data = rate * data;
+
+        $( "#buyform-amount" ).val( data.toFixed(8) );
+
+    });
+
     $('#input-has2fa input').on('change', function() {
         var value = ($('input[name="SecurityForm[has2fa]"]:checked', '#input-has2fa').val());
         if(value==0){
@@ -100,8 +127,15 @@ $this->registerJs($script, $position);
     <?php echo Html::hiddenInput('rate-coin-eth', $rateCoinEth,['id'=>'rate-coin-eth']); ?>
     <?php echo Html::hiddenInput('amount-btc-coin', $wallet->amount_btc + $wallet->bonus_btc,['id'=>'amount-btc-coin']); ?>
     <?php echo Html::hiddenInput('amount-eth-coin', $wallet->amount_eth + $wallet->bonus_eth,['id'=>'amount-eth-coin']); ?>
-    <?php echo $form->field($model, 'amount_coin')->textInput(['type' => 'number'])->hint('Minimum is 200 TKC') ?>
-
+    <?php //echo $form->field($model, 'amount_coin')->textInput(['type' => 'number'])->hint('Minimum is 200 TKC') ?>
+    <?php echo $form->field($model, 'amount_coin',[
+        'inputTemplate' => '<div class="input-group"><span class="input-group-btn">'.Html::button('<span>Max</span> </i>',
+                [
+                    'class' => 'btn btn-primary',
+                    'id' => 'get_max',
+                    'title' => 'Max',
+                ]).'</span>{input}</div>',
+    ])->textInput(['class'=>'form-control','type' => 'number'])->hint('Minimum is 200 TKC') ?>
     <?php echo $form->field($model, 'amount')->textInput() ?>
 
     <?php echo $form->field($model, 'token',[
