@@ -97,6 +97,8 @@ use yii\widgets\Breadcrumbs;
                         'label' => Yii::t('backend', 'Withdraw'),
                         'icon' => '<i class="fa fa-arrow-circle-o-down"></i>',
                         'url' => ['/withdraw'],
+                        'badge' => \common\models\Withdraw::find()->pending()->count(),
+                        'badgeBgClass' => 'label-danger',
                         'visible' => Yii::$app->user->can('manager')
                     ],
                     [
