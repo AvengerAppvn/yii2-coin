@@ -1,7 +1,7 @@
 <?php
 
 namespace backend\controllers;
-
+use Da\TwoFA\Service\GoogleQrCodeUrlGeneratorService;
 use Yii;
 use common\models\Withdraw;
 use common\models\search\WithdrawSearch;
@@ -48,8 +48,11 @@ class WithdrawController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $googleUri = (new GoogleQrCodeUrlGeneratorService($model->receiver))->run();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'code' => $googleUri
         ]);
     }
 
@@ -103,6 +106,18 @@ class WithdrawController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDone($id)
+    {
+        $model = $this->findModel($id);
+        if ($model) {
+            if($model->status == 1){
+                return $this->actionIndex();
+            }
+            $model->status = 1;
+            $model->save();
+        }
+        return $this->actionIndex();
+    }
     /**
      * Finds the Withdraw model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

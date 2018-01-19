@@ -26,6 +26,7 @@ if (Yii::$app->session->hasFlash('message')):
 endif;
 
 $script = <<< JS
+
     function updateAmount()
     {
         var type = $("#buyform-type").val();
@@ -67,7 +68,65 @@ $script = <<< JS
 
     $(document).on("change, keyup", "#buyform-amount_coin", updateAmount);
 
+    function update()
+    {
+        var type = $("#buyform-type").val();
+        var total = $("#total-coin").val();
+        var rate;
+        var balance;
+        if(type == 1){
+            rate = $("#rate-coin-btc").val();
+            balance = $("#amount-btc-coin").val();
+        }else{
+            rate = $("#rate-coin-eth").val();
+            balance = $("#amount-eth-coin").val();
+        }
+        var amount = parseFloat($("#buyform-amount").val());
+//
+        if(balance >= amount && rate != 0){
+            var data = amount / rate;
+            // console.log(data);
+            if(data > total){
+                data = total;
+            }
+ //console.log(data);
+            $( "#buyform-amount_coin" ).val( Number(data.toFixed(0)) );
+            $( "#get_token" ).prop("disabled",false);
+        }else{
+            $( "#buyform-amount_coin" ).val('Not enough '+(type == 1? 'BTC': 'ETH'));
+            $( "#get_token" ).prop("disabled",true);
+        }
+
+    }
+    $(document).on("change, keyup", "#buyform-amount", update);
+
      $("#get_max").on('click', function() {
+          var type = $("#buyform-type").val();
+            var rate;
+            var balance;
+            if(type == 1){
+                rate = $("#rate-coin-btc").val();
+                balance = $("#amount-btc-coin").val();
+            }else{
+                rate = $("#rate-coin-eth").val();
+                balance = $("#amount-eth-coin").val();
+            }
+            var data = 0;
+
+            if(rate && balance > 0){
+                data = Number((balance / rate).toFixed(0)) - 1;
+            }
+
+            //console.log(amount_coin);
+        $("#buyform-amount_coin").val(data);
+
+        data = rate * data;
+
+        $( "#buyform-amount" ).val( data.toFixed(8) );
+
+    });
+
+    $("#get_max_coin").on('click', function() {
           var type = $("#buyform-type").val();
             var rate;
             var balance;
@@ -124,6 +183,7 @@ $this->registerJs($script, $position);
         ))->label('') ?>
 
     
+    <?php echo Html::hiddenInput('total-coin', $total,['id'=>'total-coin']); ?>
     <?php echo Html::hiddenInput('rate-coin-btc', $rateCoinBtc,['id'=>'rate-coin-btc']); ?>
     <?php echo Html::hiddenInput('rate-coin-eth', $rateCoinEth,['id'=>'rate-coin-eth']); ?>
     <?php echo Html::hiddenInput('amount-btc-coin', $wallet->amount_btc + $wallet->bonus_btc,['id'=>'amount-btc-coin']); ?>
@@ -136,9 +196,17 @@ $this->registerJs($script, $position);
                     'id' => 'get_max',
                     'title' => 'Max',
                 ]).'</span>{input}</div>',
-    ])->textInput(['class'=>'form-control','type' => 'number'])->hint('Minimum is 200 TKC') ?>
-    <?php echo $form->field($model, 'amount')->textInput() ?>
-
+    ])->textInput(['class'=>'form-control'])->hint('Minimum is 200 TKC') ?>
+    <?php //echo $form->field($model, 'amount')->textInput() ?>
+    <?php echo $form->field($model, 'amount',[
+        'inputTemplate' => '<div class="input-group"><span class="input-group-btn">'.Html::button('<span>Max</span> </i>',
+                [
+                    'class' => 'btn btn-primary',
+                    'id' => 'get_max_coin',
+                    'title' => 'Max',
+                ]).'</span>{input}</div>',
+    ])->textInput(['class'=>'form-control','type' => 'number'])
+        //->hint('Amount coin in your wallet') ?>
     <?php echo $form->field($model, 'token',[
       'inputTemplate' => '<div class="input-group">{input}<span class="input-group-btn">'.Html::button('<span>Token</span> <i class="fa fa-envelope-o"></i>',
       [

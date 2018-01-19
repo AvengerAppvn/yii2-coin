@@ -115,7 +115,7 @@ $this->registerJs("new Clipboard('.btn-copy');");
 <div class="box-padding">
 <div class="row m-b-md">
   <div class="col-md-6">
-      <?php echo $this->render('_buy.php',['model'=> $model,'wallet'=>$wallet]) ?>
+      <?php echo $this->render('_buy.php',['model'=> $model,'wallet'=>$wallet,'total'=>$total]) ?>
   </div>
 </div>
 </div>

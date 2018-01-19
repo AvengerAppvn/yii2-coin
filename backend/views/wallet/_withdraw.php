@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use common\grid\EnumColumn;
+use common\models\Withdraw;
 ?>
 <div class="deposit-index">
 
@@ -17,26 +18,20 @@ use common\grid\EnumColumn;
             'requested_at:datetime',
             'receiver',
             'amount',
-             [
-                'class' => EnumColumn::className(),
-                'label' => 'Wallet',
+            [
+                'class' => \common\grid\EnumColumn::className(),
                 'attribute' => 'type',
-                'enum' => [
-                    Yii::t('backend', 'TKC'),
-                    Yii::t('backend', 'BTC'),
-                    Yii::t('backend', 'ETH'),
-                ]
+                'enum' => Withdraw::types(),
+                'filter' => Withdraw::types()
             ],
-            'completed_at:datetime',
-             [
-                'class' => EnumColumn::className(),
+            [
+                'class' => \common\grid\EnumColumn::className(),
                 'attribute' => 'status',
-                'enum' => [
-                    Yii::t('backend', 'Request'),
-                    Yii::t('backend', 'Processing'),
-                    Yii::t('backend', 'Completed'),
-                ]
+                'enum' => Withdraw::statuses(),
+                'filter' => Withdraw::statuses()
             ],
+            // 'completed_at:datetime',
+
             //'txid',
         ]
     ]); ?>

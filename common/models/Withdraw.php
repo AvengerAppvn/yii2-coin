@@ -24,6 +24,14 @@ use yii\db\Expression;
  */
 class Withdraw extends \yii\db\ActiveRecord
 {
+    const STATUS_PENDING = 0;
+    const STATUS_COMPLETED = 1;
+    const STATUS_CANCELED = 2;
+
+    const TYPE_BTC = 1;
+    const TYPE_ETH = 2;
+    const TYPE_TKC = 0;
+
     /**
      * @inheritdoc
      */
@@ -93,5 +101,31 @@ class Withdraw extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \common\models\query\WithdrawQuery(get_called_class());
+    }
+
+    /**
+     * Returns withdraw statuses list
+     * @return array|mixed
+     */
+    public static function statuses()
+    {
+        return [
+            self::STATUS_PENDING => Yii::t('common', 'Pending'),
+            self::STATUS_COMPLETED => Yii::t('common', 'Completed'),
+            self::STATUS_CANCELED => Yii::t('common', 'Canceled')
+        ];
+    }
+
+    /**
+     * Returns withdraw types list
+     * @return array|mixed
+     */
+    public static function types()
+    {
+        return [
+            self::TYPE_TKC => Yii::t('common', 'TKC'),
+            self::TYPE_BTC => Yii::t('common', 'BTC'),
+            self::TYPE_ETH => Yii::t('common', 'ETH')
+        ];
     }
 }
