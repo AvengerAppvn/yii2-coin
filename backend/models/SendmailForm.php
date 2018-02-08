@@ -35,6 +35,7 @@ class SendmailForm extends Model
         return [
             [['subject', 'body'], 'required'],
             [['subject', 'body'], 'string'],
+            [['to'], 'safe'],
         ];
     }
 
@@ -55,6 +56,7 @@ class SendmailForm extends Model
      */
     public function send()
     {
+        var_dump($this->to);die;
         $users = [];
         if($this->to == ''){
             $users = User::find()->notAdmin()->all();
