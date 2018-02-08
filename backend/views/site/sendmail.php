@@ -17,7 +17,7 @@ $this->title = Yii::t('backend', 'Send mail');
 
             <?php echo $form->field($model, 'to')->dropDownList(\yii\helpers\ArrayHelper::map(
                 $users,
-                'id',
+                'username',
                 'username'
             ), ['prompt' => 'All']) ?>
             <?php echo $form->field($model, 'subject')->textInput(['maxlength' => true]) ?>
