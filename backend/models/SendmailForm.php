@@ -57,7 +57,7 @@ class SendmailForm extends Model
     {
         $users = [];
         if($this->to == ''){
-            $users = User::find()->all();
+            $users = User::find()->notAdmin()->all();
         }else{
             $users[] = User::findByUsername($this->to)->one();
         }
