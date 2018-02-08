@@ -29,4 +29,13 @@ class UserQuery extends ActiveQuery
         $this->andWhere(['status' => User::STATUS_ACTIVE]);
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function notAdmin()
+    {
+        $this->andWhere(['!=', 'id', 1]);
+        return $this;
+    }
 }

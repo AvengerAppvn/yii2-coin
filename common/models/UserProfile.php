@@ -115,7 +115,7 @@ class UserProfile extends ActiveRecord
         if ($this->firstname || $this->lastname) {
             return implode(' ', [$this->firstname, $this->lastname]);
         }
-        return null;
+        return $this->user->username;
     }
 
     /**
