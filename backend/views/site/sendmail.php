@@ -22,18 +22,9 @@ $this->title = Yii::t('backend', 'Send mail');
             ), ['prompt' => 'All']) ?>
             <?php echo $form->field($model, 'subject')->textInput(['maxlength' => true]) ?>
 
-            <?php echo $form->field($model, 'body')->widget(
-                \yii\imperavi\Widget::className(),
+            <?php echo $form->field($model, 'body')->textarea(
                 [
-                    //'plugins' => ['fullscreen', 'fontcolor', 'video'],
-                    'options' => [
-                        'minHeight' => 200,
-                        'maxHeight' => 200,
-                        //'buttonSource' => true,
-                        'convertDivs' => false,
-                        'removeEmptyTags' => false,
-                        //'imageUpload' => Yii::$app->urlManager->createUrl(['/file-storage/upload-imperavi'])
-                    ]
+                    'style'=>'width:100%;height:240px'
                 ]
             ) ?>
 

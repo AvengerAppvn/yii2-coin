@@ -156,7 +156,7 @@ class SiteController extends \yii\web\Controller
     {
         $model = new SendmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->send()) {
-            return $this->redirect(['success']);
+            return $this->render('success');
         } else {
             return $this->render('sendmail', [
                 'model' => $model,
