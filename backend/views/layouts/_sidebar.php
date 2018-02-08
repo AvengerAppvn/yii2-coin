@@ -120,6 +120,12 @@ use yii\widgets\Breadcrumbs;
                         'visible' => Yii::$app->user->can('manager')
                     ],
                     [
+                        'label' => Yii::t('backend', 'Send mail'),
+                        'icon' => '<i class="fa fa-envelope"></i>',
+                        'url' => ['/site/sendmail'],
+                        'visible' => Yii::$app->user->can('manager')
+                    ],
+                    [
                         'label' => Yii::t('backend', 'Roadmap'),
                         'icon' => '<i class="fa fa-list"></i>',
                         'url' => ['/roadmap'],

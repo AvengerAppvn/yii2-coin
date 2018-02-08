@@ -4,6 +4,8 @@ namespace backend\controllers;
 use common\components\keyStorage\FormModel;
 use common\helpers\CoinbaseHelper;
 use common\models\Page;
+use backend\models\SendmailForm;
+use common\models\User;
 use Yii;
 
 /**
@@ -148,5 +150,18 @@ class SiteController extends \yii\web\Controller
         }
 
         return $this->render('settings', ['model' => $model]);
+    }
+
+    public function actionSendmail()
+    {
+        $model = new SendmailForm();
+        if ($model->load(Yii::$app->request->post()) && $model->send()) {
+            return $this->redirect(['success']);
+        } else {
+            return $this->render('sendmail', [
+                'model' => $model,
+                'users' => User::find()->active()->notAdmin()->all(),
+            ]);
+        }
     }
 }
