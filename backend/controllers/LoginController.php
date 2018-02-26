@@ -10,6 +10,7 @@ class LoginController extends Controller
 {
     public function actionIndex()
     {
+        return $this->redirect('landing');
         $this->layout = 'base';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
