@@ -36,6 +36,7 @@ class RegisterController extends Controller
      */
     public function actionIndex()
     {
+        return $this->redirect('login');
         $this->layout = 'base';
         $username = Yii::$app->request->get('referrer');
         $referrer = '';

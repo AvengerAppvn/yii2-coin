@@ -22,9 +22,12 @@ $this->title = Yii::t('frontend', 'Tickcoin | Blockchain | The best ICO 2018')
             <div class="featureBanner">
                 <h1 class="headline">Trade securely on the world's<br>most active digital asset exchange.</h1><br/>
                 <?php if (Yii::$app->user->isGuest) { ?>
-                    <button class="btn btn-lg btn-success" onclick="window.location.href='/register'">Create Your
-                        Account
-                    </button>
+                    <p>
+                        I plan to get 50% of the package in our plan. Our waiting for the floor started in early March 2018. respectfully
+                    </p>
+<!--                    <button class="btn btn-lg btn-success" onclick="window.location.href='/register'">Create Your-->
+<!--                        Account-->
+<!--                    </button>-->
                     <br/><br/>
                     <p>Already a member? <a href="/login" class="standard">Sign in</a>.</p>
                 <?php } else { ?>
