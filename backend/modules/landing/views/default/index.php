@@ -29,10 +29,10 @@ $this->title = Yii::t('frontend', 'Tickcoin | Blockchain | The best ICO 2018')
 <!--                        Account-->
 <!--                    </button>-->
                     <br/><br/>
-                    <p>Already a member? <a href="/login" class="standard">Sign in</a>.</p>
+                    <!--<p>Already a member? <a href="/login" class="standard">Sign in</a>.</p>-->
                 <?php } else { ?>
-                    <button class="btn btn-lg btn-primary" onclick="window.location.href='/ico'">Go to Wallet
-                    </button>
+<!--                    <button class="btn btn-lg btn-primary" onclick="window.location.href='/ico'">Go to Wallet
+                    </button>-->
                 <?php } ?>
             </div>
         </div>
