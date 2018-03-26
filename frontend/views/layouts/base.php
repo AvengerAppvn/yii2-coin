@@ -20,37 +20,6 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
     <?php echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-
-            ['label' => Yii::t('frontend', 'ICO'), 'url' => ['/site/index']],
-            ['label' => Yii::t('frontend', 'RoadMap'), 'url' => ['/page/view', 'slug'=>'about']],
-            ['label' => Yii::t('frontend', 'White Paper'), 'url' => ['/article/index']],
-            [
-                'label' => Yii::t('frontend', 'Our program'), 
-                'items'=>[
-                        [
-                            'label' => Yii::t('frontend', 'What is Ucoin cash?'),
-                            'url' => ['/site/what-is-ucoincash']
-                        ],
-                        [
-                            'label' => Yii::t('frontend', 'Mine, Trade &amp; Stake'),
-                            'url' => ['/site/what-is-ucoincash']
-                        ],
-                        [
-                            'label' => Yii::t('frontend', 'Lending Program'),
-                            'url' => ['/site/lending-program']
-
-                        ],
-                        [
-                            'label' => Yii::t('frontend', 'Affiliate &amp; Network'),
-                            'url' => ['/site/affiliate-network']
-
-                        ]
-                    ]
-            ],
-            ['label' => Yii::t('frontend', 'Exchange'), 'url' => ['/site/contact']],
-            ['label' => Yii::t('frontend', 'News'), 'url' => ['/article/index']],
-            ['label' => Yii::t('frontend', 'FAQ'), 'url' => ['/article/index']],
-            
             ['label' => Yii::t('frontend', 'Signup'), 'url' => ['/user/sign-in/signup'], 'visible'=>Yii::$app->user->isGuest],
             [
                 'label' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->getPublicIdentity(),
@@ -112,7 +81,7 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
         </div>
     </div>    
     <div class="container">
-        <p class="pull-left">&copy; <?php echo date('Y') ?> My Coin. All rights reserved. Privacy Policy </p>
+        <p class="pull-left">&copy; <?php echo date('Y') ?> Shareme. All rights reserved. Privacy Policy </p>
         
     </div>
 </footer>
