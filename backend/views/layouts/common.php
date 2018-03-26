@@ -6,7 +6,6 @@ use backend\assets\BackendAsset;
 use backend\models\SystemLog;
 use backend\widgets\Menu;
 use common\models\TimelineEvent;
-use common\helpers\CoinbaseHelper;
 use yii\bootstrap\Alert;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -15,41 +14,6 @@ use yii\log\Logger;
 use yii\widgets\Breadcrumbs;
 
 $bundle = BackendAsset::register($this);
-$rateUsd = Yii::$app->keyStorage->get('coin.rate-usd', '0.2'); // TODO add to migrate
-//$coinbaseHelper = new CoinbaseHelper();
-//var_dump($coinbaseHelper->createAddress());die;
-$script = <<< JS
-    function showPrice() {
-        //console.log('show');
-        $.ajax({
-             async: true,
-             url: '/site/rate',
-             contentType: 'application/json',
-             data: {},
-             success: function(result) {
-                //console.log(result);
-                if (result && result.data){
-                    var data = result.data
-                    var length = data.length;
-                     for(var i = 0;i<length;i++){
-                        if(data[i].base == 'BTC'){
-                            $("#base-btc-usd").html(data[i].amount);
-                        }
-                        if(data[i].base == 'ETH'){
-                            $("#base-eth-usd").html(data[i].amount);
-                        }
-                     }
-                }
-                return true;
-             }
-          });
-    }
-    setInterval (showPrice, 60000 );
-
-JS;
-
-$position = \yii\web\View::POS_READY;
-$this->registerJs($script, $position);
 ?>
 <?php $this->beginContent('@backend/views/layouts/base.php'); ?>
 <div class="wrapper">
@@ -70,48 +34,53 @@ $this->registerJs($script, $position);
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <li id="coin-btc" class="coin-menu">
-                        <a href="#">
-                        <i class="fa fa-bitcoin"></i>
-                        <?php
-
-                                                
-                        //var_dump($amount);die;
-                        ?>
-                        <span>
-                            1 BTC = <span id="base-btc-usd"><?php echo Yii::$app->keyStorage->get('coin.rate-btc-usd') ?></span> USD
-                        </span>
-                         </a>
-                    </li>
-                    
-                     <li id="coin-eth" class="coin-menu">
-                        <a href="#">
-                        <i class="fa"></i>
-                        <span>
-                            1 ETH = <span id="base-eth-usd"><?php echo Yii::$app->keyStorage->get('coin.rate-eth-usd') ?></span> USD
-                        </span>
-                        </a>
-                    </li>  
-                    <li id="coin-btc" class="coin-menu">
-                        <a href="#">
-                        <i class="fa"></i>
-                        <span>
-                            1 <?php echo Yii::$app->keyStorage->get('coin.code', 'TKC') ?> = <?php echo Yii::$app->keyStorage->get('coin.rate-usd', '0.2'); ?> USD
-                        </span>
+                    <li id="timeline-notifications" class="notifications-menu">
+                        <a href="<?php echo Url::to(['/timeline-event/index']) ?>">
+                            <i class="fa fa-bell"></i>
+                            <span class="label label-success">
+                                    <?php echo TimelineEvent::find()->today()->count() ?>
+                                </span>
                         </a>
                     </li>
-
+                    <!-- Notifications: style can be found in dropdown.less -->
+                    <li id="log-dropdown" class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-warning"></i>
+                            <span class="label label-danger">
+                                <?php echo SystemLog::find()->count() ?>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header"><?php echo Yii::t('backend', 'You have {num} log items', ['num' => SystemLog::find()->count()]) ?></li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    <?php foreach (SystemLog::find()->orderBy(['log_time' => SORT_DESC])->limit(5)->all() as $logEntry): ?>
+                                        <li>
+                                            <a href="<?php echo Yii::$app->urlManager->createUrl(['/log/view', 'id' => $logEntry->id]) ?>">
+                                                <i class="fa fa-warning <?php echo $logEntry->level === Logger::LEVEL_ERROR ? 'text-red' : 'text-yellow' ?>"></i>
+                                                <?php echo $logEntry->category ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <?php echo Html::a(Yii::t('backend', 'View all'), ['/log/index']) ?>
+                            </li>
+                        </ul>
+                    </li>
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png')) ?>"
+                            <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/anonymous.jpg')) ?>"
                                  class="user-image">
                             <span><?php echo Yii::$app->user->identity->username ?> <i class="caret"></i></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header light-blue">
-                                <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/coin_logo.png')) ?>"
+                                <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/anonymous.jpg')) ?>"
                                      class="img-circle" alt="User Image"/>
                                 <p>
                                     <?php echo Yii::$app->user->identity->username ?>
@@ -128,18 +97,117 @@ $this->registerJs($script, $position);
                                     <?php echo Html::a(Yii::t('backend', 'Account'), ['/sign-in/account'], ['class' => 'btn btn-default btn-flat']) ?>
                                 </div>
                                 <div class="pull-right">
-                                    <?php echo Html::a(Yii::t('backend', 'Logout'), ['/logout'], ['class' => 'btn btn-default btn-flat', 'data-method' => 'post']) ?>
+                                    <?php echo Html::a(Yii::t('backend', 'Logout'), ['/sign-in/logout'], ['class' => 'btn btn-default btn-flat', 'data-method' => 'post']) ?>
                                 </div>
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        <?php echo Html::a('<i class="fa fa-cogs"></i>', ['/site/settings']) ?>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <?php echo $this->render('_sidebar.php') ?>
-    
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="<?php echo Yii::$app->user->identity->userProfile->getAvatar($this->assetManager->getAssetUrl($bundle, 'img/anonymous.jpg')) ?>"
+                         class="img-circle"/>
+                </div>
+                <div class="pull-left info">
+                    <p><?php echo Yii::t('backend', 'Hello, {username}', ['username' => Yii::$app->user->identity->getPublicIdentity()]) ?></p>
+                    <a href="<?php echo Url::to(['/sign-in/profile']) ?>">
+                        <i class="fa fa-circle text-success"></i>
+                        <?php echo Yii::$app->formatter->asDatetime(time()) ?>
+                    </a>
+                </div>
+            </div>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <?php echo Menu::widget([
+                'options' => ['class' => 'sidebar-menu'],
+                'linkTemplate' => '<a href="{url}">{icon}<span>{label}</span>{right-icon}{badge}</a>',
+                'submenuTemplate' => "\n<ul class=\"treeview-menu\">\n{items}\n</ul>\n",
+                'activateParents' => true,
+                'items' => [
+                    [
+                        'label' => Yii::t('backend', 'Main'),
+                        'options' => ['class' => 'header']
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Timeline'),
+                        'icon' => '<i class="fa fa-bar-chart-o"></i>',
+                        'url' => ['/timeline-event/index'],
+                        'badge' => TimelineEvent::find()->today()->count(),
+                        'badgeBgClass' => 'label-success',
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Content'),
+                        'url' => '#',
+                        'icon' => '<i class="fa fa-edit"></i>',
+                        'options' => ['class' => 'treeview'],
+                        'items' => [
+                            ['label' => Yii::t('backend', 'Static pages'), 'url' => ['/page/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'Articles'), 'url' => ['/article/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'Article Categories'), 'url' => ['/article-category/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'Text Widgets'), 'url' => ['/widget-text/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'Menu Widgets'), 'url' => ['/widget-menu/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'Carousel Widgets'), 'url' => ['/widget-carousel/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                        ]
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'System'),
+                        'options' => ['class' => 'header']
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Users'),
+                        'icon' => '<i class="fa fa-users"></i>',
+                        'url' => ['/user/index'],
+                        'visible' => Yii::$app->user->can('administrator')
+                    ],
+                    [
+                        'label' => Yii::t('backend', 'Other'),
+                        'url' => '#',
+                        'icon' => '<i class="fa fa-cogs"></i>',
+                        'options' => ['class' => 'treeview'],
+                        'items' => [
+                            [
+                                'label' => Yii::t('backend', 'i18n'),
+                                'url' => '#',
+                                'icon' => '<i class="fa fa-flag"></i>',
+                                'options' => ['class' => 'treeview'],
+                                'items' => [
+                                    ['label' => Yii::t('backend', 'i18n Source Message'), 'url' => ['/i18n/i18n-source-message/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                                    ['label' => Yii::t('backend', 'i18n Message'), 'url' => ['/i18n/i18n-message/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                                ]
+                            ],
+                            ['label' => Yii::t('backend', 'Key-Value Storage'), 'url' => ['/key-storage/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'File Storage'), 'url' => ['/file-storage/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'Cache'), 'url' => ['/cache/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            ['label' => Yii::t('backend', 'File Manager'), 'url' => ['/file-manager/index'], 'icon' => '<i class="fa fa-angle-double-right"></i>'],
+                            [
+                                'label' => Yii::t('backend', 'System Information'),
+                                'url' => ['/system-information/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>'
+                            ],
+                            [
+                                'label' => Yii::t('backend', 'Logs'),
+                                'url' => ['/log/index'],
+                                'icon' => '<i class="fa fa-angle-double-right"></i>',
+                                'badge' => SystemLog::find()->count(),
+                                'badgeBgClass' => 'label-danger',
+                            ],
+                        ]
+                    ]
+                ]
+            ]) ?>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
 
     <!-- Right side column. Contains the navbar and content of the page -->
     <aside class="content-wrapper">

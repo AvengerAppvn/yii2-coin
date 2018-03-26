@@ -7,7 +7,6 @@ use Yii;
 use yii\base\Exception;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;
-use himiklab\yii2\recaptcha\ReCaptchaValidator;
 
 /**
  * Login form
@@ -16,8 +15,6 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $authCode;
-    public $reCaptcha;
     public $rememberMe = true;
 
     private $user = false;
@@ -32,9 +29,6 @@ class LoginForm extends Model
             [['username', 'password'], 'required'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            ['authCode', 'string'],
-            // verifyCode needs to be entered correctly
-            ['reCaptcha', ReCaptchaValidator::className(), 'secret' => env('CAPTCHA_SERVERVERIFY')],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
@@ -48,8 +42,6 @@ class LoginForm extends Model
         return [
             'username' => Yii::t('backend', 'Username'),
             'password' => Yii::t('backend', 'Password'),
-            'authCode' => Yii::t('backend', '2FA Code (Only if you enabled 2FA)'),
-            'reCaptcha' => '',
             'rememberMe' => Yii::t('backend', 'Remember Me')
         ];
     }
@@ -89,18 +81,7 @@ class LoginForm extends Model
 
         return false;
     }
-    
-    public function hasTwofa()
-    {
-        $user = Yii::$app->user->identity;
-        return $user->has2fa == 1;
-    }
-    
-    public function authen_2fa()
-    {
-        $user = Yii::$app->user->identity;
-        return $user->authen_2fa;
-    }
+
     /**
      * Finds user by [[username]]
      *
@@ -110,7 +91,6 @@ class LoginForm extends Model
     {
         if ($this->user === false) {
             $this->user = User::find()
-                ->active()
                 ->andWhere(['or', ['username'=>$this->username], ['email'=>$this->username]])
                 ->one();
         }

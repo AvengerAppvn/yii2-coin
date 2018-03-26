@@ -9,7 +9,7 @@ use \common\models\ArticleCategory;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\commands\AddToTreeTeamCommand;
+
 /**
  * ArticleController implements the CRUD actions for Article model.
  */
@@ -33,11 +33,6 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
-        // Yii::$app->commandBus->handle(new AddToTreeTeamCommand([
-        //             'user_id' => 11,
-        //             'related_id' => 21,
-        // ]));
-
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort = [

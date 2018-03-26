@@ -2,14 +2,14 @@
 
 namespace backend\controllers;
 
-use backend\models\search\UserSearch;
-use backend\models\UserForm;
-use common\models\User;
 use Yii;
-use yii\filters\VerbFilter;
+use common\models\User;
+use backend\models\UserForm;
+use backend\models\search\UserSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -34,12 +34,6 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $user = Yii::$app->user->identity;
-        if (!Yii::$app->user->isGuest) {
-            if($user && $user->has2fa && !Yii::$app->session->get('authen_2fa')){
-                return $this->redirect(['/authen']);
-            }
-        }
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

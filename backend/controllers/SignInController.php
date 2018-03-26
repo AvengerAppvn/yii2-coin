@@ -17,7 +17,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\imagine\Image;
 use yii\web\Controller;
-use common\models\Country;
+
 class SignInController extends Controller
 {
 
@@ -29,7 +29,7 @@ class SignInController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    //'logout' => ['post']
+                    'logout' => ['post']
                 ]
             ]
         ];
@@ -88,7 +88,7 @@ class SignInController extends Controller
             ]);
             return $this->refresh();
         }
-        return $this->render('profile', ['model'=>$model,'countries'=>Country::find()->active()->all()]);
+        return $this->render('profile', ['model'=>$model]);
     }
 
     public function actionAccount()
@@ -98,8 +98,8 @@ class SignInController extends Controller
         $model->username = $user->username;
         $model->email = $user->email;
         if ($model->load($_POST) && $model->validate()) {
-            //$user->username = $model->username;
-            //$user->email = $model->email;
+            $user->username = $model->username;
+            $user->email = $model->email;
             if ($model->password) {
                 $user->setPassword($model->password);
             }
@@ -111,118 +111,5 @@ class SignInController extends Controller
             return $this->refresh();
         }
         return $this->render('account', ['model'=>$model]);
-    }
-    
-    /**
-     * @return string|Response
-     */
-    public function actionSignup()
-    {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            $user = $model->signup();
-            if ($user) {
-                if ($model->shouldBeActivated()) {
-                    Yii::$app->getSession()->setFlash('alert', [
-                        'body' => Yii::t(
-                            'frontend',
-                            'Your account has been successfully created. Check your email for further instructions.'
-                        ),
-                        'options' => ['class' => 'alert-success']
-                    ]);
-                } else {
-                    Yii::$app->getUser()->login($user);
-                }
-                return $this->goHome();
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $model
-        ]);
-    }
-
-    /**
-     * @param $token
-     * @return Response
-     * @throws BadRequestHttpException
-     */
-    public function actionActivation($token)
-    {
-        $token = UserToken::find()
-            ->byType(UserToken::TYPE_ACTIVATION)
-            ->byToken($token)
-            ->notExpired()
-            ->one();
-
-        if (!$token) {
-            throw new BadRequestHttpException;
-        }
-
-        $user = $token->user;
-        $user->updateAttributes([
-            'status' => User::STATUS_ACTIVE
-        ]);
-        $token->delete();
-        Yii::$app->getUser()->login($user);
-        Yii::$app->getSession()->setFlash('alert', [
-            'body' => Yii::t('frontend', 'Your account has been successfully activated.'),
-            'options' => ['class' => 'alert-success']
-        ]);
-
-        return $this->goHome();
-    }
-
-    /**
-     * @return string|Response
-     */
-    public function actionRequestPasswordReset()
-    {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('alert', [
-                    'body' => Yii::t('frontend', 'Check your email for further instructions.'),
-                    'options' => ['class' => 'alert-success']
-                ]);
-
-                return $this->goHome();
-            } else {
-                Yii::$app->getSession()->setFlash('alert', [
-                    'body' => Yii::t('frontend', 'Sorry, we are unable to reset password for email provided.'),
-                    'options' => ['class' => 'alert-danger']
-                ]);
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * @param $token
-     * @return string|Response
-     * @throws BadRequestHttpException
-     */
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->getSession()->setFlash('alert', [
-                'body' => Yii::t('frontend', 'New password was saved.'),
-                'options' => ['class' => 'alert-success']
-            ]);
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
     }
 }

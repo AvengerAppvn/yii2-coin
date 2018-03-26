@@ -9,7 +9,7 @@ use yii\web\Controller;
 /**
  * Application timeline controller
  */
-class EventController extends Controller
+class TimelineEventController extends Controller
 {
     public $layout = 'common';
     /**
@@ -18,13 +18,6 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
-        $user = Yii::$app->user->identity;
-        if (!Yii::$app->user->isGuest) {
-            if($user && $user->has2fa && !Yii::$app->session->get('authen_2fa')){
-                return $this->redirect(['/authen']);
-            }
-        }
-        
         $searchModel = new TimelineEventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->sort = [

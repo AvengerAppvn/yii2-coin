@@ -2,7 +2,7 @@
 $config = [
     'homeUrl' => Yii::getAlias('@backendUrl'),
     'controllerNamespace' => 'backend\controllers',
-    'defaultRoute' => 'landing',
+    'defaultRoute' => 'timeline-event/index',
     'controllerMap' => [
         'file-manager-elfinder' => [
             'class' => mihaildev\elfinder\Controller::class,
@@ -68,63 +68,21 @@ $config = [
             'class' => backend\modules\i18n\Module::class,
             'defaultRoute' => 'i18n-message/index'
         ],
-        'api' => [
-            'class' => 'backend\modules\api\Module',
-            'modules' => [
-                'v1' => 'backend\modules\api\v1\Module'
-            ]
-        ],       
-        'support' => [
-            'class' => 'app\modules\support\Module',
-        ],
-        'landing' => [
-            'class' => 'app\modules\landing\Module',
-        ],
     ],
     'as globalAccess' => [
         'class' => common\behaviors\GlobalAccessBehavior::class,
         'rules' => [
             [
-                'controllers' => ['landing/default'],
-                'allow' => true,
-                'roles' => ['?','@'],
-                'actions' => ['index']
-            ],
-            [
-                'controllers' => ['api/v1/notification'],
+                'controllers' => ['sign-in'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['alert']
+                'actions' => ['login']
             ],
             [
-                'controllers' => ['login'],
-                'allow' => true,
-                'roles' => ['?'],
-                'actions' => ['index']
-            ],
-            [
-                'controllers' => ['account'],
-                'allow' => true,
-                'roles' => ['?'],
-                'actions' => ['forgot-password','activation','resend','reset-password']
-            ],
-            [
-                'controllers' => ['register'],
-                'allow' => true,
-                'roles' => ['?','@'],
-                'actions' => ['index']
-            ],            
-            [
-                'controllers' => ['logout'],
-                'allow' => true,
-                'roles' => ['?', '@'],
-                'actions' => ['index']
-            ],
-            [
-                'controllers' => ['authen'],
+                'controllers' => ['sign-in'],
                 'allow' => true,
                 'roles' => ['@'],
-                'actions' => ['index']
+                'actions' => ['logout']
             ],
             [
                 'controllers' => ['site'],
@@ -138,37 +96,18 @@ $config = [
                 'roles' => ['?'],
             ],
             [
-                'controllers' => ['wallet'],
+                'controllers' => ['user'],
                 'allow' => true,
-                'roles' => ['@'],
-                'actions' => ['me']
+                'roles' => ['administrator'],
             ],
             [
-                'controllers' => ['site'],
-                'allow' => true,
-                'roles' => ['?','@'],
-                'actions' => ['rate']
+                'controllers' => ['user'],
+                'allow' => false,
             ],
             [
-                'controllers' => ['wallet'],
                 'allow' => true,
                 'roles' => ['manager'],
-                'actions' => ['list', 'view']
-            ],
-            [
-                'controllers' => ['ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode','register'],
-                'allow' => true,
-                'roles' => ['user'],
-            ],
-            [
-                'controllers' => ['support/admin','deposit','withdraw','site','roadmap','member','ico','event','team','setting','security','tool','support/ticket','sign-in','qrcode','register'],
-                'allow' => true,
-                'roles' => ['manager'],
-            ],
-            [
-            'allow' => true,
-            'roles' => ['administrator'],
-        ],
+            ]
         ]
     ]
 ];
