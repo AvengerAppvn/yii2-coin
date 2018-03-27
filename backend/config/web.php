@@ -29,7 +29,7 @@ $config = [
         'user' => [
             'class' => yii\web\User::class,
             'identityClass' => common\models\User::class,
-            'loginUrl' => ['login'],
+            'loginUrl' => ['sign-in/login'],
             'enableAutoLogin' => true,
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class
         ],
