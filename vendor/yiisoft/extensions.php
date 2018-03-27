@@ -192,4 +192,13 @@ return array (
       '@borales/extensions/phoneInput' => $vendorDir . '/borales/yii2-phone-input/src',
     ),
   ),
+  'nostop8/rest-api-doc' => 
+  array (
+    'name' => 'nostop8/rest-api-doc',
+    'version' => '1.022.0.0',
+    'alias' => 
+    array (
+      '@nostop8/yii2/rest_api_doc' => $vendorDir . '/nostop8/rest-api-doc',
+    ),
+  ),
 );

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c36aac7e02d6027ed852d9a6d80a94eb",
+    "content-hash": "62e92ab7b0a087ba083325ce05be1ad7",
     "packages": [
         {
             "name": "2amigos/2fa-library",
@@ -2113,6 +2113,50 @@
                 "yii"
             ],
             "time": "2017-01-06T23:35:14+00:00"
+        },
+        {
+            "name": "nostop8/rest-api-doc",
+            "version": "1.022",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nostop8/yii2-rest-api-doc.git",
+                "reference": "4662f5acf57d2c1a84d12de20b9ad85f3910e100"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nostop8/yii2-rest-api-doc/zipball/4662f5acf57d2c1a84d12de20b9ad85f3910e100",
+                "reference": "4662f5acf57d2c1a84d12de20b9ad85f3910e100",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.11.1",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "nostop8\\yii2\\rest_api_doc\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Volodymyr Dovbenko",
+                    "email": "nostop8@gmail.com"
+                }
+            ],
+            "description": "Simple documentation generator for Yii2 REST applications based on defined API endpoints and actions annotations.",
+            "keywords": [
+                "api",
+                "documentation",
+                "generator",
+                "rest",
+                "yii2"
+            ],
+            "time": "2017-06-23T10:09:45+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
