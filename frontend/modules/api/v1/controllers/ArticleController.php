@@ -74,4 +74,11 @@ class ArticleController extends ActiveController
         }
         return $model;
     }
+
+    /**
+     * Rest Description: Your endpoint description.
+     * Rest Fields: ['field1', 'field2'].
+     * Rest Filters: ['filter1', 'filter2'].
+     * Rest Expand: ['expandRelation1', 'expandRelation2'].
+     */
 }

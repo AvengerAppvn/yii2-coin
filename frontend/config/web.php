@@ -3,7 +3,7 @@ $config = [
     'homeUrl'=>Yii::getAlias('@frontendUrl'),
     'controllerNamespace' => 'frontend\controllers',
     'defaultRoute' => 'site/index',
-    'bootstrap' => ['maintenance'],
+    'bootstrap' => ['maintenance','doc'],
     'modules' => [
         'user' => [
             'class' => 'frontend\modules\user\Module',
@@ -18,6 +18,9 @@ $config = [
         'ticket' => [
             'class' => 'app\modules\ticket\Module',
         ],
+        'doc' => [
+            'class' => 'nostop8\yii2\rest_api_doc\Module',
+        ]
     ],
     'components' => [
         'authClientCollection' => [

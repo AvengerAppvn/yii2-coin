@@ -53,34 +53,6 @@ $this->beginContent('@frontend/views/layouts/_clear.php')
 
 <footer class="footer">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                Logo
-            </div>
-
-            <div class="col-md-4">
-               <h4>About</h4>
-                <ul class="">
-                  <li class="">First item</li>
-                  <li class="">Second item</li>
-                  <li class="">Third item</li>
-                </ul>
-            </div>
-            
-            <div class="col-md-4">
-                <h4>SUBSCRIBE TO NEWSLETTER</h4>
-                <div>
-                    <input type="text" />
-                </div>
-                <ul>
-                  <li class="">Facebook</li>
-                  <li class="">Youtube</li>
-                  <li class="">Twitter</li>
-                </ul>
-            </div>
-        </div>
-    </div>    
-    <div class="container">
         <p class="pull-left">&copy; <?php echo date('Y') ?> Shareme. All rights reserved. Privacy Policy </p>
         
     </div>

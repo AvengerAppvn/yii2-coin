@@ -16,7 +16,7 @@ use yii\web\NotFoundHttpException;
 /**
  * @author Eugene Terentev <eugene@terentev.net>
  */
-class UserController extends ActiveController
+class HomeController extends ActiveController
 {
     /**
      * @var string
