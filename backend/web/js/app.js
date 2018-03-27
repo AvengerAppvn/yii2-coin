@@ -10,10 +10,4 @@ $(function() {
         zIndex: 999999
     }).disableSelection();
     $(".connectedSortable .box-header, .connectedSortable .nav-tabs-custom").css("cursor", "move");
-    
-
-    
-            
-
-    
 })
