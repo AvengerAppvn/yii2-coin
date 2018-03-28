@@ -2,8 +2,10 @@
 
 namespace frontend\modules\api\v1\controllers;
 
+use backend\models\LoginForm;
 use common\models\User;
 use frontend\modules\api\v1\resources\User as UserResource;
+use yii\filters\AccessControl;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
@@ -33,18 +35,63 @@ class UserController extends ActiveController
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
             'authMethods' => [
-                [
-                    'class' => HttpBasicAuth::className(),
-                    'auth' => function ($username, $password) {
-                        $user = User::findByLogin($username);
-                        return $user->validatePassword($password)
-                            ? $user
-                            : null;
-                    }
-                ],
                 HttpBearerAuth::className(),
-                QueryParamAuth::className()
-            ]
+            ],
+
+        ];
+
+        $behaviors['verbs'] = [
+            'class' => \yii\filters\VerbFilter::className(),
+            'actions' => [
+                'index' => ['get'],
+                'view' => ['get'],
+                'create' => ['post'],
+                'update' => ['put'],
+                'delete' => ['delete'],
+                'login' => ['post'],
+                'me' => ['get', 'post'],
+                'profile' => ['get', 'post'],
+                'emotion' => ['get'],
+                'addresses' => ['get'],
+            ],
+        ];
+
+        // remove authentication filter
+        $auth = $behaviors['authenticator'];
+        unset($behaviors['authenticator']);
+
+        // add CORS filter
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::className(),
+            'cors' => [
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+            ],
+        ];
+
+        // re-add authentication filter
+        $behaviors['authenticator'] = $auth;
+        // avoid authentication on CORS-pre-flight requests (HTTP OPTIONS method)
+        $behaviors['authenticator']['except'] = ['options', 'login', 'signup', 'confirm', 'password-reset-request', 'password-reset-token-verification', 'password-reset'];
+
+
+        // setup access
+        $behaviors['access'] = [
+            'class' => AccessControl::className(),
+            'only' => ['index', 'view', 'create', 'update', 'delete'], //only be applied to
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                    'roles' => ['admin', 'manageUsers'],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => ['me'],
+                    'roles' => ['user']
+                ]
+            ],
         ];
 
         return $behaviors;
@@ -92,10 +139,11 @@ class UserController extends ActiveController
     public function actionLogin()
     {
         $model = new LoginForm();
-        $model->roles = [
-            User::ROLE_USER,
-        ];
-        if ($model->load(Yii::$app->request->post(), '') && $model->login()) {
+//        $model->load(\Yii::$app->request->post(), '');
+//        $response = \Yii::$app->getResponse();
+//        $response->setStatusCode(200);
+//        return $model;
+        if ($model->load(\Yii::$app->request->post(), '') && $model->login()) {
             $user = $model->getUser();
             $user->generateAccessTokenAfterUpdatingClientInfo(true);
 

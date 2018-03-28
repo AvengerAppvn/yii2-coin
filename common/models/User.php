@@ -9,7 +9,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
-
+use yii\db\Expression;
 /**
  * User model
  *
@@ -53,6 +53,11 @@ class User extends ActiveRecord implements IdentityInterface
     const EVENT_AFTER_LOGIN = 'afterLogin';
     
     public $authen_2fa;
+    /**
+     * Store JWT token header items.
+     * @var array
+     */
+    protected static $decodedToken;
     /**
      * @inheritdoc
      */
@@ -305,5 +310,118 @@ class User extends ActiveRecord implements IdentityInterface
             return $this->username;
         }
         return $this->email;
+    }
+
+    /**
+     * Generate access token
+     *  This function will be called every on request to refresh access token.
+     *
+     * @param bool $forceRegenerate whether regenerate access token even if not expired
+     *
+     * @return bool whether the access token is generated or not
+     */
+    public function generateAccessTokenAfterUpdatingClientInfo($forceRegenerate=false)
+    {
+        // update client login, ip
+        $this->last_login_ip = Yii::$app->request->userIP;
+        $this->last_login_at = new Expression('NOW()');
+
+        // check time is expired or not
+        if($forceRegenerate == true
+            || $this->access_token_expired_at == null
+            || (time() > strtotime($this->access_token_expired_at)))
+        {
+            // generate access token
+            $this->generateAccessToken();
+        }
+        $this->save(false);
+        return true;
+    }
+
+    public function generateAccessToken(){
+        // generate access token
+//        $this->access_token = Yii::$app->security->generateRandomString();
+        $tokens = $this->getJWT();
+        $this->access_token = $tokens[0];   // Token
+        $this->access_token_expired_at = date("Y-m-d H:i:s", $tokens[1]['exp']); // Expire
+
+    }
+
+    public function destroyAccessToken(){
+        // generate access token
+//        $this->access_token = Yii::$app->security->generateRandomString();
+        $this->access_token = null;   // Token
+        $this->access_token_expired_at = date("Y-m-d H:i:s", time()); // Expired
+        $this->save(false);
+
+    }
+
+    /**
+     * Encodes model data to create custom JWT with model.id set in it
+     * @return array encoded JWT
+     */
+    public function getJWT()
+    {
+        // Collect all the data
+        $secret      = static::getSecretKey();
+        $currentTime = time();
+        $expire      = $currentTime + 86400; // 1 day
+        $request     = Yii::$app->request;
+        $hostInfo    = '';
+        // There is also a \yii\console\Request that doesn't have this property
+        if ($request instanceof WebRequest) {
+            $hostInfo = $request->hostInfo;
+        }
+
+        // Merge token with presets not to miss any params in custom
+        // configuration
+        $token = array_merge([
+            'iat' => $currentTime,      // Issued at: timestamp of token issuing.
+            'iss' => $hostInfo,         // Issuer: A string containing the name or identifier of the issuer application. Can be a domain name and can be used to discard tokens from other applications.
+            'aud' => $hostInfo,
+            'nbf' => $currentTime,       // Not Before: Timestamp of when the token should start being considered valid. Should be equal to or greater than iat. In this case, the token will begin to be valid 10 seconds
+            'exp' => $expire,           // Expire: Timestamp of when the token should cease to be valid. Should be greater than iat and nbf. In this case, the token will expire 60 seconds after being issued.
+            'data' => [
+                'username'      =>  $this->username,
+                'roleLabel'    =>  $this->getRoleLabel(),
+                'lastLoginAt'   =>  $this->last_login_at,
+            ]
+        ], static::getHeaderToken());
+        // Set up id
+        $token['jti'] = $this->getJTI();    // JSON Token ID: A unique string, could be used to validate a token, but goes against not having a centralized issuer authority.
+        return [JWT::encode($token, $secret, static::getAlgo()), $token];
+    }
+
+    private function getRoleLabel(){
+        $roleLabel = '';
+        switch($this->role) {
+            case self::ROLE_USER:
+                $roleLabel = Yii::t('common', 'User');
+                break;
+            case self::ROLE_MANAGER:
+                $roleLabel = Yii::t('common', 'Manager');
+                break;
+            case self::ROLE_ADMIN:
+                $roleLabel = Yii::t('common', 'Administrator');
+                break;
+        }
+        return $roleLabel;
+    }
+
+
+    /*
+     * JWT Related Functions
+     */
+
+
+    protected static function getSecretKey()
+    {
+        return Yii::$app->params['jwtSecretCode'];
+    }
+
+    // And this one if you wish
+    protected static function getHeaderToken()
+    {
+        return [];
     }
 }

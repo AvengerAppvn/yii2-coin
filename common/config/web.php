@@ -1,6 +1,12 @@
 <?php
 $config = [
     'components' => [
+        'request' => [
+            'cookieValidationKey' => 'K0I9yOJPLBqbaam4IWrqtelfxp1m1zEXB04f5H6D',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
             'linkAssets' => env('LINK_ASSETS'),
